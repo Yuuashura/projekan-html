@@ -65,7 +65,6 @@ function tampilkanError(container, message) {
     const errorText = document.createElement('p');
     errorText.textContent = message;
     errorDiv.appendChild(errorText);
-    // console.log(container);
     container.appendChild(errorDiv);
 }
 
@@ -180,10 +179,6 @@ function buildSlider(mainSlider, data) {
 
 function slideSesudah() {
     const slides = document.querySelectorAll('.update-container');
-    // console.log(slides[idxSekarang]);
-    // console.log(idxSekarang);
-
-
     slides[idxSekarang].style.opacity = '0';
     idxSekarang = (idxSekarang + 1) % slides.length;
 
@@ -195,8 +190,6 @@ function slideSesudah() {
 function slideSebelum() {
     const slides = document.querySelectorAll('.update-container');
 
-    // console.log(slides[idxSekarang]);
-    // console.log(idxSekarang);
 
     slides[idxSekarang].style.opacity = '0';
     idxSekarang = (idxSekarang - 1 + slides.length) % slides.length;
