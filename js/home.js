@@ -4,41 +4,39 @@ const containerTerbaru = document.querySelector("#items-terbaru");
 const slidesData = [
     {
         link: "alya.html",
-        bgImage: "/assets/bg3.jpeg",
+        bgImage: "assets/bg3.jpeg",
         chapter: "Chapter 112",
         title: "Alya Sometimes Hides Her Feelings in Russian",
         description: "Orang tua perlu tahu bahwa Alya Sometimes Hides Her Feelings in Russian adalah drama sekolah menengah tentang dua teman sekelas yang berusaha mencari tahu perasaan mereka satu sama lain...",
         genres: ["Comedy", "Romance", "School", "Slice of Life"],
-        cover1: "/assets/alya-cover.jpeg",
-        cover2: "/assets/alya-cover3.jpeg"
+        cover1: "assets/alya-cover.jpeg",
+        cover2: "assets/alya-cover3.jpeg"
     },
     {
         link: "otonari-no-tenshi-sama.html",
-        bgImage: "/assets/mahiru-bg.jpg",
+        bgImage: "assets/mahiru-bg.jpg",
         chapter: "Chapter 66",
         title: "Otonari No Tenshi Sama",
         description: "Cerita ini mengikuti kehidupan seorang gadis yang selama ini dianggap biasa-biasa saja dan tidak berarti oleh...",
         genres: ["Romance", "Comedy", "School Life", "Slice Of Life"],
-        cover1: "/assets/mahiru-cover1.jpeg",
-        cover2: "/assets/mahiru-cover2.jpeg"
+        cover1: "assets/mahiru-cover1.jpeg",
+        cover2: "assets/mahiru-cover2.jpeg"
     },
     {
         link: "my-kisah.html",
-        bgImage: "/assets/waguri-bg.jpeg",
+        bgImage: "assets/waguri-bg.jpeg",
         chapter: "Chapter 157",
         title: "Kaoru Hana Wa Rin To Saku",
         description: "Kaoru hidup dengan ketegasan yang menjadi ciri khasnya, dimana dia selalu menunjukkan sikap kuat dan tegas dalam setiap langkahnya. Kehidupan sehari-harinya...",
         genres: ["Comedy", "Drama", "Romance", "Shounen"],
-        cover1: "/assets/waguri-cover1.jpeg",
-        cover2: "/assets/waguri-cover2.jpeg"
+        cover1: "assets/waguri-cover1.jpeg",
+        cover2: "assets/waguri-cover2.jpeg"
     }
 ];
 
-// Variable untuk autoplay
-let currentSlideIndex = 0;
+let idxSekarang = 0;
 let autoplayInterval;
 
-// Replace the buildSlider function in your home.js file with this updated version:
 
 function buildSlider(containerId, data) {
     const sliderParent = document.getElementById(containerId);
@@ -134,22 +132,15 @@ function buildSlider(containerId, data) {
         sliderItemsContainer.appendChild(link);
     });
 
-    // REMOVED: Fixed height setting - let CSS handle responsive heights
-    // sliderItemsContainer.style.height = '500px';
-    
-    // Set position relative untuk container
     sliderItemsContainer.style.position = 'relative';
-    // Use CSS height instead of hardcoded JavaScript height
     sliderItemsContainer.style.height = 'inherit';
 
     sliderParent.appendChild(prevButton);
     sliderParent.appendChild(sliderItemsContainer);
     sliderParent.appendChild(nextButton);
 
-    // Inisialisasi autoplay
     startAutoplay();
     
-    // Event listeners untuk tombol
     prevButton.addEventListener('click', () => {
         previousSlide();
         resetAutoplay();
@@ -164,30 +155,24 @@ function buildSlider(containerId, data) {
 function nextSlide() {
     const slides = document.querySelectorAll('.update-container');
     
-    // Fade out slide saat ini
-    slides[currentSlideIndex].setAttribute('style', slides[currentSlideIndex].getAttribute('style').replace(/opacity:\s*[^;]*/, 'opacity: 0'));
+    slides[idxSekarang].setAttribute('style', slides[idxSekarang].getAttribute('style').replace(/opacity:\s*[^;]*/, 'opacity: 0'));
     
-    // Update index
-    currentSlideIndex = (currentSlideIndex + 1) % slides.length;
+    idxSekarang = (idxSekarang + 1) % slides.length;
     
-    // Fade in slide berikutnya setelah delay singkat
     setTimeout(() => {
-        slides[currentSlideIndex].setAttribute('style', slides[currentSlideIndex].getAttribute('style').replace(/opacity:\s*[^;]*/, 'opacity: 1'));
+        slides[idxSekarang].setAttribute('style', slides[idxSekarang].getAttribute('style').replace(/opacity:\s*[^;]*/, 'opacity: 1'));
     }, 100);
 }
 
 function previousSlide() {
     const slides = document.querySelectorAll('.update-container');
     
-    // Fade out slide saat ini
-    slides[currentSlideIndex].setAttribute('style', slides[currentSlideIndex].getAttribute('style').replace(/opacity:\s*[^;]*/, 'opacity: 0'));
+    slides[idxSekarang].setAttribute('style', slides[idxSekarang].getAttribute('style').replace(/opacity:\s*[^;]*/, 'opacity: 0'));
     
-    // Update index
-    currentSlideIndex = (currentSlideIndex - 1 + slides.length) % slides.length;
+    idxSekarang = (idxSekarang - 1 + slides.length) % slides.length;
     
-    // Fade in slide sebelumnya setelah delay singkat
     setTimeout(() => {
-        slides[currentSlideIndex].setAttribute('style', slides[currentSlideIndex].getAttribute('style').replace(/opacity:\s*[^;]*/, 'opacity: 1'));
+        slides[idxSekarang].setAttribute('style', slides[idxSekarang].getAttribute('style').replace(/opacity:\s*[^;]*/, 'opacity: 1'));
     }, 100);
 }
 
@@ -202,7 +187,6 @@ function resetAutoplay() {
     startAutoplay();
 }
 
-// Pause autoplay saat mouse hover pada slider
 function pauseAutoplayOnHover() {
     const slider = document.getElementById('main-slider');
     
@@ -214,28 +198,23 @@ function pauseAutoplayOnHover() {
         startAutoplay();
     });
 }
-
-// Mobile Navigation Functions
 function initMobileNavigation() {
     const mobileMenuToggle = document.getElementById('mobileMenuToggle');
     const mobileNavOverlay = document.getElementById('mobileNavOverlay');
     const mobileNavClose = document.getElementById('mobileNavClose');
 
-    // Toggle mobile menu
     mobileMenuToggle.addEventListener('click', () => {
         mobileMenuToggle.classList.toggle('active');
         mobileNavOverlay.classList.toggle('active');
         document.body.style.overflow = mobileNavOverlay.classList.contains('active') ? 'hidden' : 'auto';
     });
 
-    // Close mobile menu
     mobileNavClose.addEventListener('click', () => {
         mobileMenuToggle.classList.remove('active');
         mobileNavOverlay.classList.remove('active');
         document.body.style.overflow = 'auto';
     });
 
-    // Close menu when clicking on overlay
     mobileNavOverlay.addEventListener('click', (e) => {
         if (e.target === mobileNavOverlay) {
             mobileMenuToggle.classList.remove('active');
@@ -244,7 +223,6 @@ function initMobileNavigation() {
         }
     });
 
-    // Close menu when clicking nav links
     const navLinks = mobileNavOverlay.querySelectorAll('.nav a');
     navLinks.forEach(link => {
         link.addEventListener('click', () => {
@@ -254,7 +232,6 @@ function initMobileNavigation() {
         });
     });
 
-    // Handle window resize
     window.addEventListener('resize', () => {
         if (window.innerWidth > 768) {
             mobileMenuToggle.classList.remove('active');
@@ -266,9 +243,7 @@ function initMobileNavigation() {
 
 document.addEventListener('DOMContentLoaded', () => {
     buildSlider('main-slider', slidesData);
-    // Tambahkan pause on hover setelah slider dibuat
     setTimeout(pauseAutoplayOnHover, 100);
-    // Initialize mobile navigation
     initMobileNavigation();
 });
 
