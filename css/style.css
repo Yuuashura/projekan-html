@@ -145,15 +145,22 @@
         z-index: 1000;
       }
 
+      .search-a{
+        display: flex;
+       font-size: 0.8rem;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
       .container-search {
-        margin-top: 4px;
+        margin-top: 0px;
         padding: 10px;
         max-width: 225px;
         display: flex;
         background-color: #353535
       }
 
-      .container-search p{
+      .search-a p{
         font-size: 0.8rem;
         white-space: nowrap;
         overflow: hidden;

@@ -65,7 +65,7 @@ function tampilkanError(container, message) {
     const errorText = document.createElement('p');
     errorText.textContent = message;
     errorDiv.appendChild(errorText);
-    console.log(container);
+    // console.log(container);
     container.appendChild(errorDiv);
 }
 
@@ -120,7 +120,7 @@ function buildSlider(mainSlider, data) {
             pGenre.textContent = genreText;
             genres.appendChild(pGenre);
         });
-        
+
         const readingNow = document.createElement('div');
         readingNow.className = 'reading-now';
         const aReadingNow = document.createElement('a');
@@ -146,7 +146,7 @@ function buildSlider(mainSlider, data) {
         leftUp.appendChild(keterangan);
         leftUp.appendChild(genres);
         leftUp.appendChild(readingNow);
-        
+
         rightUp.appendChild(img1);
         rightUp.appendChild(img2);
 
@@ -157,7 +157,7 @@ function buildSlider(mainSlider, data) {
         sliderItemsContainer.appendChild(link);
     });
 
-    
+
     sliderItemsContainer.style.position = 'relative';
     sliderItemsContainer.style.height = 'inherit';
 
@@ -166,12 +166,12 @@ function buildSlider(mainSlider, data) {
     sliderParent.appendChild(nextButton);
 
     startAutoplay();
-    
+
     prevButton.addEventListener('click', () => {
         slideSebelum();
         resetAutoplay();
     });
-    
+
     nextButton.addEventListener('click', () => {
         slideSesudah();
         resetAutoplay();
@@ -180,13 +180,13 @@ function buildSlider(mainSlider, data) {
 
 function slideSesudah() {
     const slides = document.querySelectorAll('.update-container');
-    console.log(slides[idxSekarang]);
-    console.log(idxSekarang);
-    
-    
+    // console.log(slides[idxSekarang]);
+    // console.log(idxSekarang);
+
+
     slides[idxSekarang].style.opacity = '0';
     idxSekarang = (idxSekarang + 1) % slides.length;
-    
+
     setTimeout(() => {
         slides[idxSekarang].style.opacity = '1';
     }, 200);
@@ -195,12 +195,12 @@ function slideSesudah() {
 function slideSebelum() {
     const slides = document.querySelectorAll('.update-container');
 
-    console.log(slides[idxSekarang]);
-    console.log(idxSekarang);
+    // console.log(slides[idxSekarang]);
+    // console.log(idxSekarang);
 
     slides[idxSekarang].style.opacity = '0';
     idxSekarang = (idxSekarang - 1 + slides.length) % slides.length;
-    
+
     setTimeout(() => {
         slides[idxSekarang].style.opacity = '1';
     }, 200);
@@ -219,11 +219,11 @@ function resetAutoplay() {
 
 function pauseAutoplayOnHover() {
     const slider = document.getElementById('main-slider');
-    
+
     slider.addEventListener('mouseenter', () => {
         clearInterval(autoplayInterval);
     });
-    
+
     slider.addEventListener('mouseleave', () => {
         startAutoplay();
     });
@@ -282,7 +282,7 @@ async function fetchWithRetry(url) {
     let percobaan = 0;
     while (percobaan < coba) {
         try {
-            console.log(`Fetching ${url} (percobaan ${percobaan+ 1})`);
+            console.log(`Fetching ${url} (percobaan ${percobaan + 1})`);
             const response = await fetch(url);
             if (!response.ok) {
                 throw new Error(`GAGAL FETCH! status: ${response.status}`);
@@ -307,7 +307,7 @@ async function fetchWithRetry(url) {
 async function komikTop() {
     const loader = createLoader();
     containerPopular.appendChild(loader);
-    
+
     try {
         let data = await fetchWithRetry(`${baseApi}rekomendasi`);
 
@@ -328,7 +328,7 @@ async function komikTop() {
             thumbnailImage.src = manga.thumbnail;
             thumbnailImage.alt = `Sampul ${manga.title}`;
             thumbnailImage.loading = "lazy";
-            
+
             const descriptionContainer = document.createElement("div");
             descriptionContainer.className = "deskripsi-komik";
 
@@ -377,8 +377,8 @@ async function komikTerbaru() {
             const thumbnailImage = document.createElement("img");
             thumbnailImage.src = manga.thumbnail;
             thumbnailImage.alt = `Sampul ${manga.title}`;
-            
-            thumbnailImage.onerror = function() {
+
+            thumbnailImage.onerror = function () {
                 this.src = 'https://via.placeholder.com/170x120/8A2BE2/FFFFFF?text=Gagal+Muat';
             };
 
@@ -400,12 +400,12 @@ async function komikTerbaru() {
             logoContainer.appendChild(thumbnailImage);
             a.appendChild(logoContainer);
             cardTerbaru.appendChild(a);
-            
+
             infoContainer.appendChild(titleHeader);
             infoContainer.appendChild(infoParagraph);
             infoContainer.appendChild(chapterLink);
             cardTerbaru.appendChild(infoContainer);
-            
+
             containerTerbaru.appendChild(cardTerbaru);
         });
     } catch (error) {
@@ -416,21 +416,48 @@ async function komikTerbaru() {
 }
 
 async function searchAnime(value) {
-    const containerSearch = document.getElementById("searchContainer");
-    console.log(containerSearch)
-    const endpoint = baseApi + "search?q=" + encodeURIComponent(keyword);
-    const proxyUrl = api + encodeURIComponent(endpoint);
-
+    const endpoint = baseApi + "search?q=" + encodeURIComponent(value);
+    const proxyUrl = api + endpoint;
     
+    const containerSearch = document.getElementById("searchContainer");
+    const oldResults = containerSearch.querySelectorAll(".container-search");
+    oldResults.forEach(el => containerSearch.removeChild(el));
+
+    let response = await fetch(proxyUrl);
+    let comic = await response.json();
+    let data = comic.data;
+
+    data.forEach((manga) => {
+        const searchCard = document.createElement("div");
+        searchCard.className = "container-search";
+        const img = document.createElement("img");
+        img.src = manga.thumbnail;
+        img.alt = `Sampul ${manga.title}`;
+        const title = document.createElement("p");
+        title.textContent = manga.title;
+        const link = document.createElement("a");
+        link.classList.add("search-a");
+        link.href = `detail-komik.html?${manga.apiDetailLink}`;
+        containerSearch.appendChild(searchCard);
+        searchCard.appendChild(link);
+        link.appendChild(img);
+        link.appendChild(title);
+    });
 }
 
-function cariKomik() {
-  const keyword = document.getElementById("searchInput").value.trim();
-  console.log(keyword);
-  if (keyword) {
-    searchAnime(keyword);
-  }
-}
+// Jalankan saat user mengetik di input
+addEventListener('input', () => {
+    const keyword = document.getElementById("searchInput").value.trim();
+    if (keyword) {
+        searchAnime(keyword);
+    }else{
+
+    const containerSearch = document.getElementById("searchContainer");
+    const oldResults = containerSearch.querySelectorAll(".container-search");
+    oldResults.forEach(el => containerSearch.removeChild(el));
+
+    }
+});
 
 document.addEventListener('DOMContentLoaded', () => {
     buildSlider('main-slider', slidesData);
