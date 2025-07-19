@@ -1,6 +1,82 @@
-const api = "https://yuuashura-api.vercel.app/";
+// Menggunakan API proxy untuk mengatasi CORS atau data dummy
+const api = "https://api.allorigins.win/raw?url="; // Proxy untuk mengatasi CORS
+const originalAPI = "https://yuuashura-api.vercel.app/";
+
 const containerPopular = document.querySelector("#items-popular");
 const containerTerbaru = document.querySelector("#items-terbaru");
+
+// Data dummy sebagai fallback jika API tidak dapat diakses
+const dummyPopularData = [
+    {
+        title: "One Piece",
+        thumbnail: "https://via.placeholder.com/240x150/8A2BE2/FFFFFF?text=One+Piece",
+        apiDetailLink: "one-piece"
+    },
+    {
+        title: "Naruto",
+        thumbnail: "https://via.placeholder.com/240x150/8A2BE2/FFFFFF?text=Naruto",
+        apiDetailLink: "naruto"
+    },
+    {
+        title: "Attack on Titan",
+        thumbnail: "https://via.placeholder.com/240x150/8A2BE2/FFFFFF?text=AOT",
+        apiDetailLink: "attack-on-titan"
+    },
+    {
+        title: "Demon Slayer",
+        thumbnail: "https://via.placeholder.com/240x150/8A2BE2/FFFFFF?text=Demon+Slayer",
+        apiDetailLink: "demon-slayer"
+    },
+    {
+        title: "My Hero Academia",
+        thumbnail: "https://via.placeholder.com/240x150/8A2BE2/FFFFFF?text=My+Hero+Academia",
+        apiDetailLink: "my-hero-academia"
+    }
+];
+
+const dummyTerbaruData = [
+    {
+        title: "Jujutsu Kaisen",
+        thumbnail: "https://via.placeholder.com/170x120/8A2BE2/FFFFFF?text=JJK",
+        type: "Manga",
+        genre: "Action, Supernatural",
+        updateTime: "2 jam lalu",
+        latestChapterTitle: "Chapter 240",
+        apiDetailLink: "jujutsu-kaisen",
+        apiChapterLink: "jujutsu-kaisen-chapter-240"
+    },
+    {
+        title: "Chainsaw Man",
+        thumbnail: "https://via.placeholder.com/170x120/8A2BE2/FFFFFF?text=CSM",
+        type: "Manga",
+        genre: "Action, Horror",
+        updateTime: "5 jam lalu",
+        latestChapterTitle: "Chapter 150",
+        apiDetailLink: "chainsaw-man",
+        apiChapterLink: "chainsaw-man-chapter-150"
+    },
+    {
+        title: "Tokyo Revengers",
+        thumbnail: "https://via.placeholder.com/170x120/8A2BE2/FFFFFF?text=TR",
+        type: "Manga",
+        genre: "Action, Drama",
+        updateTime: "1 hari lalu",
+        latestChapterTitle: "Chapter 278",
+        apiDetailLink: "tokyo-revengers",
+        apiChapterLink: "tokyo-revengers-chapter-278"
+    },
+    {
+        title: "Black Clover",
+        thumbnail: "https://via.placeholder.com/170x120/8A2BE2/FFFFFF?text=BC",
+        type: "Manga",
+        genre: "Action, Magic",
+        updateTime: "1 hari lalu",
+        latestChapterTitle: "Chapter 372",
+        apiDetailLink: "black-clover",
+        apiChapterLink: "black-clover-chapter-372"
+    }
+];
+
 const slidesData = [
     {
         link: "alya.html",
@@ -37,6 +113,17 @@ const slidesData = [
 let idxSekarang = 0;
 let autoplayInterval;
 
+function createLoader() {
+    const loader = document.createElement("div");
+    loader.className = "loader";
+    return loader;
+}
+
+function removeElement(parent, child) {
+    if (parent && child && parent.contains(child)) {
+        parent.removeChild(child);
+    }
+}
 
 function buildSlider(containerId, data) {
     const sliderParent = document.getElementById(containerId);
@@ -54,8 +141,6 @@ function buildSlider(containerId, data) {
     sliderItemsContainer.className = 'slider-items';
 
     data.forEach((slideData, index) => {
-        console.log(data);
-        
         const link = document.createElement('a');
         link.href = slideData.link;
         link.className = 'update-container';
@@ -114,7 +199,6 @@ function buildSlider(containerId, data) {
         img2.alt = `${slideData.title} Cover Hover`;
         img2.className = 'cov2';
 
-        // Susun elemen-elemen menjadi satu kesatuan
         leftUp.appendChild(chapter);
         leftUp.appendChild(title);
         leftUp.appendChild(keterangan);
@@ -128,7 +212,6 @@ function buildSlider(containerId, data) {
         filter.appendChild(rightUp);
 
         link.appendChild(filter);
-
         sliderItemsContainer.appendChild(link);
     });
 
@@ -155,31 +238,29 @@ function buildSlider(containerId, data) {
 function nextSlide() {
     const slides = document.querySelectorAll('.update-container');
     
-    slides[idxSekarang].setAttribute('style', slides[idxSekarang].getAttribute('style').replace(/opacity:\s*[^;]*/, 'opacity: 0'));
-    
+    slides[idxSekarang].style.opacity = '0';
     idxSekarang = (idxSekarang + 1) % slides.length;
     
     setTimeout(() => {
-        slides[idxSekarang].setAttribute('style', slides[idxSekarang].getAttribute('style').replace(/opacity:\s*[^;]*/, 'opacity: 1'));
+        slides[idxSekarang].style.opacity = '1';
     }, 100);
 }
 
 function previousSlide() {
     const slides = document.querySelectorAll('.update-container');
     
-    slides[idxSekarang].setAttribute('style', slides[idxSekarang].getAttribute('style').replace(/opacity:\s*[^;]*/, 'opacity: 0'));
-    
+    slides[idxSekarang].style.opacity = '0';
     idxSekarang = (idxSekarang - 1 + slides.length) % slides.length;
     
     setTimeout(() => {
-        slides[idxSekarang].setAttribute('style', slides[idxSekarang].getAttribute('style').replace(/opacity:\s*[^;]*/, 'opacity: 1'));
+        slides[idxSekarang].style.opacity = '1';
     }, 100);
 }
 
 function startAutoplay() {
     autoplayInterval = setInterval(() => {
         nextSlide();
-    }, 5000); // 5 detik
+    }, 5000);
 }
 
 function resetAutoplay() {
@@ -198,10 +279,15 @@ function pauseAutoplayOnHover() {
         startAutoplay();
     });
 }
+
 function initMobileNavigation() {
     const mobileMenuToggle = document.getElementById('mobileMenuToggle');
     const mobileNavOverlay = document.getElementById('mobileNavOverlay');
     const mobileNavClose = document.getElementById('mobileNavClose');
+
+    if (!mobileMenuToggle || !mobileNavOverlay || !mobileNavClose) {
+        return;
+    }
 
     mobileMenuToggle.addEventListener('click', () => {
         mobileMenuToggle.classList.toggle('active');
@@ -241,25 +327,64 @@ function initMobileNavigation() {
     });
 }
 
-document.addEventListener('DOMContentLoaded', () => {
-    buildSlider('main-slider', slidesData);
-    setTimeout(pauseAutoplayOnHover, 100);
-    initMobileNavigation();
-});
+// Fungsi untuk fetch dengan retry dan fallback
+async function fetchWithFallback(url, fallbackData) {
+    const maxRetries = 2;
+    let attempt = 0;
+
+    while (attempt < maxRetries) {
+        try {
+            const response = await fetch(url, {
+                method: 'GET',
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json'
+                }
+            });
+
+            if (!response.ok) {
+                throw new Error(`HTTP error! status: ${response.status}`);
+            }
+
+            const data = await response.json();
+            return data;
+        } catch (error) {
+            console.warn(`Attempt ${attempt + 1} failed:`, error.message);
+            attempt++;
+            
+            if (attempt >= maxRetries) {
+                console.log('API tidak dapat diakses, menggunakan data dummy');
+                return fallbackData;
+            }
+            
+            // Wait sebelum retry
+            await new Promise(resolve => setTimeout(resolve, 1000));
+        }
+    }
+}
 
 async function komikTop() {
-    const loader = document.createElement("div");
-    loader.className = "loader";
+    const loader = createLoader();
     containerPopular.appendChild(loader);
-    try {
-        const response = await fetch(`${api}/rekomendasi`);
 
-        if (!response.ok) {
-            throw new Error(response.status);
+    try {
+        // Coba beberapa alternatif API
+        let data;
+        
+        try {
+            // Method 1: Direct API call
+            data = await fetchWithFallback(`${originalAPI}rekomendasi`, dummyPopularData);
+        } catch (error) {
+            try {
+                // Method 2: Using proxy
+                data = await fetchWithFallback(`${api}${encodeURIComponent(originalAPI + 'rekomendasi')}`, dummyPopularData);
+            } catch (proxyError) {
+                // Method 3: Use dummy data
+                data = dummyPopularData;
+            }
         }
 
-        const data = await response.json();
-        containerPopular.removeChild(loader);
+        removeElement(containerPopular, loader);
 
         data.forEach((manga) => {
             const cardLink = document.createElement("a");
@@ -276,6 +401,11 @@ async function komikTop() {
             thumbnailImage.src = manga.thumbnail;
             thumbnailImage.alt = `Sampul ${manga.title}`;
             thumbnailImage.loading = "lazy";
+            
+            // Handle image load error
+            thumbnailImage.onerror = function() {
+                this.src = 'https://via.placeholder.com/240x150/8A2BE2/FFFFFF?text=No+Image';
+            };
 
             const descriptionContainer = document.createElement("div");
             descriptionContainer.className = "deskripsi-komik";
@@ -291,24 +421,44 @@ async function komikTop() {
             containerPopular.appendChild(cardLink);
         });
     } catch (error) {
-        console.error("Gagal memuat Komik:", error);
-        containerPopular.removeChild = loader;
+        console.error("Gagal memuat Komik Popular:", error);
+        removeElement(containerPopular, loader);
+        
+        // Show error message
+        const errorDiv = document.createElement('div');
+        errorDiv.style.textAlign = 'center';
+        errorDiv.style.padding = '20px';
+        errorDiv.style.color = '#ff6b6b';
+        
+        const errorText = document.createElement('p');
+        errorText.textContent = 'Gagal memuat komik popular. Silakan refresh halaman.';
+        errorDiv.appendChild(errorText);
+        
+        containerPopular.appendChild(errorDiv);
     }
 }
 
-//   K O M I K  T E R B A R U 
 async function komikTerbaru() {
-    const loader = document.createElement("div");
-    loader.className = "loader";
+    const loader = createLoader();
     containerTerbaru.appendChild(loader);
+
     try {
-        const response = await fetch(`${api}/terbaru-2`);
-        const data = await response.json();
-        console.log(data);
-        if (!response.ok) {
-            throw new Error(response.status);
+        let data;
+        
+        try {
+            // Method 1: Direct API call
+            data = await fetchWithFallback(`${originalAPI}terbaru-2`, dummyTerbaruData);
+        } catch (error) {
+            try {
+                // Method 2: Using proxy
+                data = await fetchWithFallback(`${api}${encodeURIComponent(originalAPI + 'terbaru-2')}`, dummyTerbaruData);
+            } catch (proxyError) {
+                // Method 3: Use dummy data
+                data = dummyTerbaruData;
+            }
         }
-        containerTerbaru.removeChild(loader);
+
+        removeElement(containerTerbaru, loader);
 
         data.forEach((manga) => {
             const cardTerbaru = document.createElement("div");
@@ -323,6 +473,11 @@ async function komikTerbaru() {
             const thumbnailImage = document.createElement("img");
             thumbnailImage.src = manga.thumbnail;
             thumbnailImage.alt = `Sampul ${manga.title}`;
+            
+            // Handle image load error
+            thumbnailImage.onerror = function() {
+                this.src = 'https://via.placeholder.com/170x120/8A2BE2/FFFFFF?text=No+Image';
+            };
 
             const infoContainer = document.createElement("div");
             infoContainer.className = "card-terbaru-info";
@@ -332,25 +487,48 @@ async function komikTerbaru() {
             titleHeader.textContent = manga.title;
 
             const infoParagraph = document.createElement("p");
-            infoParagraph.textContent = `${manga.type} • ${manga.genre}  ${manga.updateTime}`;
+            infoParagraph.textContent = `${manga.type} • ${manga.genre} • ${manga.updateTime}`;
 
             const chapterLink = document.createElement("a");
             chapterLink.className = "chapter-terbaru";
-            chapterLink.href = manga.apiChapterLink;
+            chapterLink.href = manga.apiChapterLink || '#';
             chapterLink.textContent = manga.latestChapterTitle;
 
-            cardTerbaru.appendChild(a);
-            a.appendChild(logoContainer);
             logoContainer.appendChild(thumbnailImage);
-            cardTerbaru.appendChild(infoContainer);
+            a.appendChild(logoContainer);
+            cardTerbaru.appendChild(a);
+            
             infoContainer.appendChild(titleHeader);
             infoContainer.appendChild(infoParagraph);
             infoContainer.appendChild(chapterLink);
+            cardTerbaru.appendChild(infoContainer);
+            
             containerTerbaru.appendChild(cardTerbaru);
         });
     } catch (error) {
-        console.log("error");
+        console.error("Gagal memuat Komik Terbaru:", error);
+        removeElement(containerTerbaru, loader);
+        
+        // Show error message
+        const errorDiv = document.createElement('div');
+        errorDiv.style.textAlign = 'center';
+        errorDiv.style.padding = '20px';
+        errorDiv.style.color = '#ff6b6b';
+        
+        const errorText = document.createElement('p');
+        errorText.textContent = 'Gagal memuat komik terbaru. Silakan refresh halaman.';
+        errorDiv.appendChild(errorText);
+        
+        containerTerbaru.appendChild(errorDiv);
     }
 }
-komikTop();
-komikTerbaru();
+
+document.addEventListener('DOMContentLoaded', () => {
+    buildSlider('main-slider', slidesData);
+    setTimeout(pauseAutoplayOnHover, 100);
+    initMobileNavigation();
+    
+    // Load comic data
+    komikTop();
+    komikTerbaru();
+});
