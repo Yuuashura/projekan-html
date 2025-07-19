@@ -4,33 +4,33 @@ const containerTerbaru = document.querySelector("#items-terbaru");
 const slidesData = [
     {
         link: "alya.html",
-        bgImage: "assets/bg3.jpeg",
+        bgImage: "https://raw.githubusercontent.com/Yuuashura/projekan-html/refs/heads/main/assets/bg3.jpeg",
         chapter: "Chapter 112",
         title: "Alya Sometimes Hides Her Feelings in Russian",
         description: "Orang tua perlu tahu bahwa Alya Sometimes Hides Her Feelings in Russian adalah drama sekolah menengah tentang dua teman sekelas yang berusaha mencari tahu perasaan mereka satu sama lain...",
         genres: ["Comedy", "Romance", "School", "Slice of Life"],
-        cover1: "assets/alya-cover.jpeg",
-        cover2: "assets/alya-cover3.jpeg"
+        cover1: "https://raw.githubusercontent.com/Yuuashura/projekan-html/refs/heads/main/assets/alya-cover.jpeg",
+        cover2: "https://raw.githubusercontent.com/Yuuashura/projekan-html/refs/heads/main/assets/alya-cover2.jpeg"
     },
     {
         link: "otonari-no-tenshi-sama.html",
-        bgImage: "assets/mahiru-bg.jpg",
+        bgImage: "https://raw.githubusercontent.com/Yuuashura/projekan-html/refs/heads/main/assets/mahiru-bg.jpg",
         chapter: "Chapter 66",
         title: "Otonari No Tenshi Sama",
         description: "Cerita ini mengikuti kehidupan seorang gadis yang selama ini dianggap biasa-biasa saja dan tidak berarti oleh...",
         genres: ["Romance", "Comedy", "School Life", "Slice Of Life"],
-        cover1: "assets/mahiru-cover1.jpeg",
-        cover2: "assets/mahiru-cover2.jpeg"
+        cover1: "https://raw.githubusercontent.com/Yuuashura/projekan-html/refs/heads/main/assets/mahiru-cover1.jpeg",
+        cover2: "https://raw.githubusercontent.com/Yuuashura/projekan-html/refs/heads/main/assets/mahiru-cover2.jpeg"
     },
     {
         link: "my-kisah.html",
-        bgImage: "assets/waguri-bg.jpeg",
+        bgImage: "https://raw.githubusercontent.com/Yuuashura/projekan-html/refs/heads/main/assets/waguri-bg.jpeg",
         chapter: "Chapter 157",
         title: "Kaoru Hana Wa Rin To Saku",
         description: "Kaoru hidup dengan ketegasan yang menjadi ciri khasnya, dimana dia selalu menunjukkan sikap kuat dan tegas dalam setiap langkahnya. Kehidupan sehari-harinya...",
         genres: ["Comedy", "Drama", "Romance", "Shounen"],
-        cover1: "assets/waguri-cover1.jpeg",
-        cover2: "assets/waguri-cover2.jpeg"
+        cover1: "https://raw.githubusercontent.com/Yuuashura/projekan-html/refs/heads/main/assets/waguri-cover1.jpeg",
+        cover2: "https://raw.githubusercontent.com/Yuuashura/projekan-html/refs/heads/main/assets/waguri-cover2.jpeg"
     }
 ];
 
