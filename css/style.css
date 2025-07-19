@@ -1,4 +1,4 @@
-      * {
+* {
         padding: 0;
         margin: 0;
         box-sizing: border-box;
@@ -264,6 +264,13 @@
         scroll-behavior: smooth;
         scrollbar-width: none;
         -ms-overflow-style: none;
+        height: 100%; /* Make sure it inherits the parent's height */
+        position: relative;
+      }
+
+      /* Ensure update-container respects the responsive heights */
+      .update-container {
+        height: 100% !important; /* Override any JavaScript inline styles */
       }
 
       .btn-slide {
@@ -294,6 +301,8 @@
         left: -25px;
       }
 
+
+      /* K O M I K  P O P U L A R */
       .container-comic {
         width: 1150px;
         margin: 40px auto;
@@ -495,3 +504,440 @@
         margin: 0px auto 1px auto;
         width: 70%;
       }
+
+      /* Mobile Menu Toggle */
+.mobile-menu-toggle {
+  display: none;
+  flex-direction: column;
+  cursor: pointer;
+  padding: 8px;
+  background: none;
+  border: none;
+  color: white;
+}
+
+.mobile-menu-toggle span {
+  width: 25px;
+  height: 3px;
+  background-color: white;
+  margin: 3px 0;
+  transition: 0.3s;
+  border-radius: 2px;
+}
+
+/* Animation untuk hamburger menu */
+.mobile-menu-toggle.active span:nth-child(1) {
+  transform: rotate(-45deg) translate(-5px, 6px);
+}
+
+.mobile-menu-toggle.active span:nth-child(2) {
+  opacity: 0;
+}
+
+.mobile-menu-toggle.active span:nth-child(3) {
+  transform: rotate(45deg) translate(-5px, -6px);
+}
+
+/* Mobile nav overlay - FIXED */
+.mobile-nav-overlay {
+  position: fixed;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100vh;
+  background-color: rgba(27, 27, 27, 0.95);
+  backdrop-filter: blur(10px);
+  z-index: 9999;
+  transition: left 0.3s ease-in-out;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.mobile-nav-overlay.active {
+  left: 0;
+}
+
+/* Override nav styles when inside mobile overlay - FIXED */
+.mobile-nav-overlay .nav {
+  display: flex !important; /* Force display */
+  flex-direction: column;
+  gap: 30px;
+  align-items: center; /* Center the nav items */
+}
+
+.mobile-nav-overlay .nav a {
+  font-size: 1.5rem;
+  padding: 15px 0;
+  text-align: center;
+  border-bottom: none;
+  transition: all 0.3s ease;
+  display: block !important; /* Ensure links are visible */
+}
+
+.mobile-nav-overlay .nav a:hover {
+  color: blueviolet;
+  transform: translateY(-5px);
+}
+
+.mobile-nav-overlay .cari {
+  margin-top: 30px;
+  width: 300px;
+  display: flex; /* Ensure search bar is visible */
+}
+
+/* Close button untuk mobile nav */
+.mobile-nav-close {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  background: none;
+  border: none;
+  color: white;
+  font-size: 2rem;
+  cursor: pointer;
+  padding: 10px;
+}
+
+/* TABLET STYLES (768px - 1024px) */
+@media screen and (max-width: 1024px) {
+  .slider {
+    width: 90%;
+    height: 400px;
+  }
+
+  .slider-items {
+    height: 400px !important;
+  }
+
+  .update-container {
+    height: 400px !important;
+  }
+
+  .filter {
+    padding: 0 20px;
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .left-up {
+    max-width: 100%;
+    margin-bottom: 20px;
+  }
+
+  .right-up {
+    flex-basis: 30%;
+    margin-right: 0;
+    transform: none;
+  }
+
+  .right-up:hover {
+    transform: scale(1.05);
+  }
+
+  .container-comic,
+  .container-terbaru {
+    width: 90%;
+  }
+
+  .items-popular {
+    gap: 10px;
+  }
+
+  .card {
+    min-width: 200px;
+  }
+
+  .logo-komik {
+    width: 200px;
+    height: 130px;
+  }
+
+  .card-terbaru {
+    width: 100%;
+    margin-bottom: 15px;
+  }
+
+  .items-terbaru {
+    flex-direction: column;
+  }
+}
+
+/* MOBILE STYLES (max-width: 768px) */
+@media screen and (max-width: 768px) {
+  /* Header Mobile */
+  header {
+    padding: 10px 15px;
+    flex-wrap: wrap;
+  }
+
+  .judul {
+    font-size: 1.2rem;
+  }
+
+  /* Hide desktop navigation on mobile - FIXED */
+  header .nav {
+    display: none !important;
+  }
+
+  .mobile-menu-toggle {
+    display: flex;
+  }
+
+  .cari {
+    order: 3;
+    width: 100%;
+    margin: 10px 0 0 0;
+  }
+
+  .cari input {
+    width: 100%;
+    padding: 8px 10px;
+  }
+
+  /* Slider Mobile - FIXED */
+  .slider {
+    width: 95%;
+    height: 300px !important; /* Force the height on mobile */
+    margin: 20px auto;
+  }
+
+  .slider-items {
+    height: 300px !important;
+  }
+
+  .update-container {
+    height: 300px !important;
+  }
+
+  .filter {
+    padding: 15px;
+    flex-direction: column;
+    text-align: center;
+    justify-content: center;
+  }
+
+  .left-up {
+    max-width: 100%;
+  }
+
+  .chapter {
+    font-size: 1.2rem;
+    margin-bottom: 10px;
+  }
+
+  .left-up h1 {
+    font-size: 1.2rem;
+    margin-bottom: 10px;
+  }
+
+  .keterangan {
+    font-size: 0.8rem;
+    margin-bottom: 15px;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+
+  .genres {
+    gap: 5px;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  .genres p {
+    font-size: 0.6rem;
+    padding: 4px 8px;
+  }
+
+  .reading-now {
+    font-size: 1rem;
+    padding: 6px 20px;
+    margin: 15px 0 0 0;
+  }
+
+  .right-up {
+    display: none; /* Hide cover image on mobile untuk save space */
+  }
+
+  /* Slider buttons mobile */
+  .btn-slide {
+    width: 40px;
+    height: 40px;
+    font-size: 1.5rem;
+  }
+
+  #next-btn {
+    right: -20px;
+  }
+
+  #prev-btn {
+    left: -20px;
+  }
+
+  /* Container Mobile */
+  .container-comic,
+  .container-terbaru {
+    width: 95%;
+    margin: 20px auto;
+  }
+
+  .header-popular {
+    margin: 10px 0 10px 15px;
+    font-size: 0.9rem;
+  }
+
+  /* Popular Comics Mobile */
+  .items-popular {
+    padding: 0 15px;
+    gap: 10px;
+  }
+
+  .card {
+    min-width: 150px;
+    
+  }
+
+  .logo-komik {
+    width: 150px;
+    height: 100px;
+  }
+
+  .logo-komik img {
+    height: 100px;
+  }
+
+  .deskripsi-komik h3 {
+    font-size: 0.8rem;
+    width: 150px;
+    margin-top: 5px;
+  }
+
+  /* Latest Comics Mobile */
+  .items-terbaru {
+    width: 100%;
+    padding: 0 15px;
+    flex-direction: column;
+  }
+
+  .card-terbaru {
+    width: 100%;
+    padding: 12px;
+    margin-bottom: 10px;
+  }
+
+  .logo-terbaru {
+    width: 120px;
+    height: 80px;
+  }
+
+  .judul-terbaru {
+    font-size: 0.9rem;
+    width: 200px;
+    margin-left: 10px;
+  }
+
+  .card-terbaru-info p {
+    font-size: 0.7rem;
+    margin-left: 10px;
+  }
+
+  .card-terbaru-info .chapter-terbaru {
+    width: 120px;
+    font-size: 0.8rem;
+    margin-left: 8px;
+    padding: 6px 0;
+  }
+
+  /* Footer Mobile */
+  .medsos {
+    margin: 15px 10px;
+    width: 35px;
+  }
+
+  .medsos img {
+    width: 25px;
+  }
+
+  .text-footer {
+    width: 90%;
+    font-size: 0.8rem;
+  }
+}
+
+/* SMALL MOBILE (max-width: 480px) */
+@media screen and (max-width: 480px) {
+  .judul {
+    font-size: 1rem;
+  }
+
+  /* Slider Small Mobile - FIXED */
+  .slider {
+    height: 250px !important; /* Force the height on small mobile */
+  }
+  
+  .slider-items {
+    height: 250px !important;
+  }
+
+  .update-container {
+    height: 250px !important;
+  }
+
+  .chapter {
+    font-size: 1rem;
+  }
+
+  .left-up h1 {
+    font-size: 1rem;
+  }
+
+  .keterangan {
+    font-size: 0.7rem;
+    -webkit-line-clamp: 2;
+  }
+
+  .reading-now {
+    font-size: 0.9rem;
+    padding: 5px 15px;
+  }
+
+  .card {
+    min-width: 130px;
+  }
+
+  .logo-komik {
+    width: 130px;
+    height: 90px;
+  }
+
+  .logo-komik img {
+    height: 90px;
+  }
+
+  .deskripsi-komik h3 {
+    font-size: 0.7rem;
+    width: 130px;
+  }
+
+  .card-terbaru {
+    padding: 10px;
+  }
+
+  .logo-terbaru {
+    width: 100px;
+    height: 70px;
+  }
+
+  .judul-terbaru {
+    font-size: 0.8rem;
+    width: 180px;
+  }
+
+  .chapter-terbaru {
+    width: 100px !important;
+    font-size: 0.7rem !important;
+  }
+}
