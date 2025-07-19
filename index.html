@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>MoonKomik - Baca Komik Online</title>
+    <title>MoonKomik</title>
     <link rel="stylesheet" href="css/style.css" />
     <link
       rel="icon"
@@ -33,7 +33,7 @@
         <a href="tentang.html"><p>Tentang</p></a>
       </div>
 
-      <!-- Mobile Menu Toggle -->
+
       <button class="mobile-menu-toggle" id="mobileMenuToggle">
         <span></span>
         <span></span>
@@ -41,11 +41,25 @@
       </button>
 
       <!-- Search Bar -->
-      <div class="cari">
-        <input type="text" placeholder="Search" />
-        <a href="#"><img src="/assets/search.png" alt="Search"/></a>
-      </div>
-    </header>
+
+         <div class="cari">
+           <input type="text" placeholder="search" id="searchInput" />
+           <a onclick="cariKomik()"><img src="assets/search.png" alt="Search"/></a>
+          </div>
+
+        </header>
+
+        <!-- Penampung hasil cari langsung -->
+        <div class="search-container" id="searchContainer">
+
+          <div class="container-search">
+            <img src="https://thumbnail.komiku.org/uploads/manga/i-who-blocked-the-demon-kings-ultimate-attack-ended-up-as-the-little-heros-nanny/manga_thumbnail-Heros-Nanny-1.jpg?resize=450,235&quality=60" alt="">
+            <p>i who blocked the demon kings ultimate attack ended up as the little heros nanny</p>
+          </div>
+
+          
+        </div>
+        
 
     <!-- Mobile Navigation Overlay -->
     <div class="mobile-nav-overlay" id="mobileNavOverlay">

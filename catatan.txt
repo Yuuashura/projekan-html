@@ -1,0 +1,1 @@
+encodeURIComponent : mengubah spasi ( ) menjadi %20
