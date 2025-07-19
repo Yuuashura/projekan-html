@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <link rel="stylesheet" href="/css/style.css" />
+    <link
+      rel="icon"
+      href="https://github.com/Yuuashura/icon-pack/blob/main/4.gif?raw=true"
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Permanent+Marker&family=Poetsen+One&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <header>
+      <a href="#"
+        ><i
+          ><h1 class="judul">Moon<span>Komik</span></h1></i
+        ></a
+      >
+      <div class="nav">
+        <a href="#" class="home"><p>Home</p></a>
+        <a href="manga-list.html"><p>Manga List</p></a>
+        <a href="login.html"><p>Masuk</p></a>
+        <a href="register.html"><p>Daftar</p></a>
+        <a href="tentang.html"><p>Tentang</p></a>
+      </div>
+      <div class="cari">
+        <input type="text" placeholder="Search" />
+        <a href="#"><img src="/assets/search.png" alt="Search" /></a>
+      </div>
+    </header>
+
+    <div class="slider">
+      <button id="prev-btn" class="btn-slide"><</button>
+      <a href="alya.html">
+        <div class="slider-items">
+          <div
+            class="update-container"
+            style="background-image: url('/assets/bg3.jpeg')"
+          >
+            <div class="filter">
+              <div class="left-up">
+                <p class="chapter">Chapter 112</p>
+                <h1>Alya Sometimes Hides Her Feelings in Russian</h1>
+                <div class="keterangan">
+                  <p>
+                    <!-- D E S C R I P T I O N-->
+                    Orang tua perlu tahu bahwa Alya Sometimes Hides Her Feelings
+                    in Russian adalah drama sekolah menengah tentang dua teman
+                    sekelas yang berusaha mencari tahu perasaan mereka satu sama
+                    lain...
+                  </p>
+                </div>
+                <div class="genres">
+                  <p>Comedy</p>
+                  <p>Romance</p>
+                  <p>School</p>
+                  <p>Slice of Life</p>
+                </div>
+                <div class="reading-now">
+                  <a href="alya.html">Start Read</a>
+                </div>
+              </div>
+              <div class="right-up">
+                <img
+                  src="/assets/alya-cover.jpeg"
+                  alt="Alya Cover"
+                  class="cov1"
+                />
+                <img
+                  src="/assets/alya-cover3.jpeg"
+                  alt="Alya Cover"
+                  class="cov2"
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+      </a>
+      <button id="next-btn" class="btn-slide">></button>
+    </div>
+
+    <div class="container-comic">
+      <div class="header-popular">
+        <h1>Peringkat Komik🔥</h1>
+      </div>
+      <div class="items-popular" id="items-popular"></div>
+    </div>
+
+    <div class="container-terbaru">
+      <div class="header-popular header-terbaru">
+        <h1>Komik Terbaru🔥</h1>
+      </div>
+
+      <div class="items-terbaru" id="items-terbaru">
+        <!-- I T E M S  -->
+      </div>
+    </div>
+
+    <footer>
+      <div class="medsos">
+        <a href="https://instagram.com/yudis.ashura" target="_blank"
+          ><span><img src="/icon/instagram.png" alt="" /></span
+        ></a>
+      </div>
+      <div class="medsos">
+        <a href="https://github.com/yuuashura" target="_blank"
+          ><span><img src="/icon/github.png" alt="" /></span
+        ></a>
+      </div>
+      <div class="medsos">
+        <a href="https://facebook.com/4sa.cyber" target="_blank"
+          ><span><img src="/icon/facebook.png" alt="" /></span
+        ></a>
+      </div>
+      <div class="medsos">
+        <a href="https://telegram.com/#" target="_blank"
+          ><span><img src="/icon/telegram.png" alt="" /></span
+        ></a>
+      </div>
+
+      <div class="text-footer">
+        <p>
+          All the comics on this website are only previews of the original
+          comics,there may be many language errors, character names, and story
+          lines. For the original version, please buy the comic if it's
+          available in your city.
+        </p>
+        <br />
+        <hr />
+        <p>&copy; MoonKomik</p>
+      </div>
+    </footer>
+
+    <script>
+      const api = "https://yuuashura-api.vercel.app/";
+      const containerPopular = document.querySelector("#items-popular");
+      const containerTerbaru = document.querySelector("#items-terbaru");
+
+      async function komikTop() {
+        const loader = document.createElement("div");
+        loader.className = "loader";
+        containerPopular.appendChild(loader);
+        try {
+          const response = await fetch(`${api}/rekomendasi`);
+
+          if (!response.ok) {
+            throw new Error(response.status);
+          }
+
+          const data = await response.json();
+          containerPopular.removeChild(loader);
+
+          data.forEach((manga) => {
+            const cardLink = document.createElement("a");
+            cardLink.className = "card-link";
+            cardLink.href = `html/detail-komik.html?${manga.apiDetailLink}`;
+
+            const card = document.createElement("div");
+            card.className = "card";
+
+            const thumbnailContainer = document.createElement("div");
+            thumbnailContainer.className = "logo-komik";
+
+            const thumbnailImage = document.createElement("img");
+            thumbnailImage.src = manga.thumbnail;
+            thumbnailImage.alt = `Sampul ${manga.title}`;
+            thumbnailImage.loading = "lazy";
+
+            const descriptionContainer = document.createElement("div");
+            descriptionContainer.className = "deskripsi-komik";
+
+            const titleHeader = document.createElement("h3");
+            titleHeader.textContent = manga.title;
+
+            thumbnailContainer.appendChild(thumbnailImage);
+            descriptionContainer.appendChild(titleHeader);
+            card.appendChild(thumbnailContainer);
+            card.appendChild(descriptionContainer);
+            cardLink.appendChild(card);
+            containerPopular.appendChild(cardLink);
+          });
+        } catch (error) {
+          console.error("Gagal memuat Komik:", error);
+          containerPopular.removeChild = loader;
+        }
+      }
+
+      async function komikTerbaru() {
+        const loader = document.createElement("div");
+        loader.className = "loader";
+        containerTerbaru.appendChild(loader);
+        try {
+          const response = await fetch(`${api}/terbaru-2`);
+          const data = await response.json();
+          console.log(data);
+          if (!response.ok) {
+            throw new Error(response.status);
+          }
+          containerTerbaru.removeChild(loader);
+
+          data.forEach((manga) => {
+            const cardTerbaru = document.createElement("div");
+            cardTerbaru.className = "card-terbaru";
+
+            const a = document.createElement("a");
+            a.href = `detail-komik.html?param=${manga.apiDetailLink}`;
+
+            const logoContainer = document.createElement("div");
+            logoContainer.className = "logo-terbaru";
+
+            const thumbnailImage = document.createElement("img");
+            thumbnailImage.src = manga.thumbnail;
+            thumbnailImage.alt = `Sampul ${manga.title}`;
+
+            const infoContainer = document.createElement("div");
+            infoContainer.className = "card-terbaru-info";
+
+            const titleHeader = document.createElement("h3");
+            titleHeader.className = "judul-terbaru";
+            titleHeader.textContent = manga.title;
+
+            const infoParagraph = document.createElement("p");
+            infoParagraph.textContent = `${manga.type} • ${manga.genre}  ${manga.updateTime}`;
+
+            const chapterLink = document.createElement("a");
+            chapterLink.className = "chapter-terbaru";
+            chapterLink.href = manga.apiChapterLink;
+            chapterLink.textContent = manga.latestChapterTitle;
+
+            cardTerbaru.appendChild(a);
+            a.appendChild(logoContainer);
+            logoContainer.appendChild(thumbnailImage);
+            cardTerbaru.appendChild(infoContainer);
+            infoContainer.appendChild(titleHeader);
+            infoContainer.appendChild(infoParagraph);
+            infoContainer.appendChild(chapterLink);
+            containerTerbaru.appendChild(cardTerbaru);
+          });
+        } catch (error) {
+          console.log("error");
+        }
+      }
+      komikTop();
+      komikTerbaru();
+    </script>
+  </body>
+</html>
