@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <title>Fetch API MangaVerse</title>
+</head>
+<body>
+  <h1>Hasil Fetch API</h1>
+  <pre id="output">Loading...</pre>
+
+  <script>
+
+    const api = "https://yuuashura-api.vercel.app/rekomendasi";
+
+    const dataApi = fetch(api).then((response) => response.json()).then((data) =>
+
+     console.log(data)
+    );
+
+    
+
+    function tampilkanData (){
+      
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    // fetch('https://mangaverse-api.p.rapidapi.com/', {
+    //     method: 'GET',
+    //     headers: {
+    //         'x-rapidapi-host': 'mangaverse-api.p.rapidapi.com',
+    //         'x-rapidapi-key': '7de854d2a0msh7f99cf55fce028bp1a5c7ajsn1fb578819cc4'
+    //     }
+    // })
+    // .then(response => response.json())
+    // .then(data => {
+    //     document.getElementById("output").textContent = JSON.stringify(data, null, 2);
+    // })
+    // .catch(error => {
+    //     document.getElementById("output").textContent = 'Terjadi error: ' + error;
+    // });
+  </script>
+</body>
+</html>

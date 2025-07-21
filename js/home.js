@@ -3,28 +3,30 @@ const baseApi = "https://yuuashura-api.vercel.app/";
 
 const containerPopular = document.querySelector("#items-popular");
 const containerTerbaru = document.querySelector("#items-terbaru");
+const header = document.querySelector("header");
+const containerSearch = document.querySelector(".cari");
 
 const slidesData = [
-    {
-        link: "alya.html",
-        bgImage: "https://raw.githubusercontent.com/Yuuashura/projekan-html/refs/heads/main/assets/bg3.jpeg",
-        chapter: "Chapter 112",
-        title: "Alya Sometimes Hides Her Feelings in Russian",
-        description: "Orang tua perlu tahu bahwa Alya Sometimes Hides Her Feelings in Russian adalah drama sekolah menengah tentang dua teman sekelas yang berusaha mencari tahu perasaan mereka satu sama lain...",
-        genres: ["Comedy", "Romance", "School", "Slice of Life"],
-        cover1: "https://raw.githubusercontent.com/Yuuashura/projekan-html/refs/heads/main/assets/alya-cover.jpeg",
-        cover2: "https://raw.githubusercontent.com/Yuuashura/projekan-html/refs/heads/main/assets/alya-cover2.jpeg"
-    },
-    {
-        link: "otonari-no-tenshi-sama.html",
-        bgImage: "https://raw.githubusercontent.com/Yuuashura/projekan-html/refs/heads/main/assets/mahiru-bg.jpg",
-        chapter: "Chapter 66",
-        title: "Otonari No Tenshi Sama",
-        description: "Cerita ini mengikuti kehidupan seorang gadis yang selama ini dianggap biasa-biasa saja dan tidak berarti oleh...",
-        genres: ["Romance", "Comedy", "School Life", "Slice Of Life"],
-        cover1: "https://raw.githubusercontent.com/Yuuashura/projekan-html/refs/heads/main/assets/mahiru-cover1.jpeg",
-        cover2: "https://raw.githubusercontent.com/Yuuashura/projekan-html/refs/heads/main/assets/mahiru-cover2.jpeg"
-    },
+    // {
+    //     link: "alya.html",
+    //     bgImage: "https://raw.githubusercontent.com/Yuuashura/projekan-html/refs/heads/main/assets/bg3.jpeg",
+    //     chapter: "Chapter 112",
+    //     title: "Alya Sometimes Hides Her Feelings in Russian",
+    //     description: "Orang tua perlu tahu bahwa Alya Sometimes Hides Her Feelings in Russian adalah drama sekolah menengah tentang dua teman sekelas yang berusaha mencari tahu perasaan mereka satu sama lain...",
+    //     genres: ["Comedy", "Romance", "School", "Slice of Life"],
+    //     cover1: "https://raw.githubusercontent.com/Yuuashura/projekan-html/refs/heads/main/assets/alya-cover.jpeg",
+    //     cover2: "https://raw.githubusercontent.com/Yuuashura/projekan-html/refs/heads/main/assets/alya-cover2.jpeg"
+    // },
+    // {
+    //     link: "otonari-no-tenshi-sama.html",
+    //     bgImage: "https://raw.githubusercontent.com/Yuuashura/projekan-html/refs/heads/main/assets/mahiru-bg.jpg",
+    //     chapter: "Chapter 66",
+    //     title: "Otonari No Tenshi Sama",
+    //     description: "Cerita ini mengikuti kehidupan seorang gadis yang selama ini dianggap biasa-biasa saja dan tidak berarti oleh...",
+    //     genres: ["Romance", "Comedy", "School Life", "Slice Of Life"],
+    //     cover1: "https://raw.githubusercontent.com/Yuuashura/projekan-html/refs/heads/main/assets/mahiru-cover1.jpeg",
+    //     cover2: "https://raw.githubusercontent.com/Yuuashura/projekan-html/refs/heads/main/assets/mahiru-cover2.jpeg"
+    // },
     {
         link: "my-kisah.html",
         bgImage: "https://raw.githubusercontent.com/Yuuashura/projekan-html/refs/heads/main/assets/waguri-bg.jpeg",
@@ -39,6 +41,19 @@ const slidesData = [
 
 let idxSekarang = 0;
 let autoplayInterval;
+
+
+
+// HEADER KETIKA DI SCROLL
+window.addEventListener("scroll", function () {
+   if (window.scrollY > 50) {
+      header.classList.add('scrolled');
+      containerSearch.classList.add('cariScroll');
+    } else {
+        header.classList.remove('scrolled');
+        containerSearch.classList.remove('cariScroll');
+    }
+});
 
 
 // MEMBUAT LOADING 
@@ -68,7 +83,7 @@ function tampilkanError(container, message) {
     container.appendChild(errorDiv);
 }
 
-// INI SLIDER NYA YANG SEGEDE GABAN ITU 
+// INI SLIDER NYA YANG   SEGEDE GABAN ITU 
 function buildSlider(mainSlider, data) {
     const sliderParent = document.getElementById(mainSlider);
 
@@ -87,7 +102,7 @@ function buildSlider(mainSlider, data) {
     sliderItemsContainer.className = 'slider-items';
 
     data.forEach((slideData, index) => {
-        const link = document.createElement('a');
+        const link  = document.createElement('a');
         link.href = slideData.link;
         link.className = 'update-container';
         link.style.backgroundImage = `url('${slideData.bgImage}')`;
@@ -159,10 +174,11 @@ function buildSlider(mainSlider, data) {
 
     sliderItemsContainer.style.position = 'relative';
     sliderItemsContainer.style.height = 'inherit';
+    // sliderItemsContainer.style.display = 'none';
 
-    sliderParent.appendChild(prevButton);
+    // sliderParent.appendChild(prevButton);
     sliderParent.appendChild(sliderItemsContainer);
-    sliderParent.appendChild(nextButton);
+    // sliderParent.appendChild(nextButton);
 
     startAutoplay();
 
@@ -181,7 +197,6 @@ function slideSesudah() {
     const slides = document.querySelectorAll('.update-container');
     slides[idxSekarang].style.opacity = '0';
     idxSekarang = (idxSekarang + 1) % slides.length;
-
     setTimeout(() => {
         slides[idxSekarang].style.opacity = '1';
     }, 200);
@@ -189,11 +204,8 @@ function slideSesudah() {
 
 function slideSebelum() {
     const slides = document.querySelectorAll('.update-container');
-
-
     slides[idxSekarang].style.opacity = '0';
     idxSekarang = (idxSekarang - 1 + slides.length) % slides.length;
-
     setTimeout(() => {
         slides[idxSekarang].style.opacity = '1';
     }, 200);
@@ -309,7 +321,7 @@ async function komikTop() {
         data.forEach((manga) => {
             const cardLink = document.createElement("a");
             cardLink.className = "card-link";
-            cardLink.href = `html/detail-komik.html?${manga.apiDetailLink}`;
+            cardLink.href = `/html/detail-komik.html?${manga.apiDetailLink}`;
 
             const card = document.createElement("div");
             card.className = "card";
@@ -362,7 +374,7 @@ async function komikTerbaru() {
             cardTerbaru.className = "card-terbaru";
 
             const a = document.createElement("a");
-            a.href = `detail-komik.html?${manga.apiDetailLink}`;
+            a.href = `/html/detail-komik.html?${manga.apiDetailLink}`;
 
             const logoContainer = document.createElement("div");
             logoContainer.className = "logo-terbaru";
@@ -371,9 +383,6 @@ async function komikTerbaru() {
             thumbnailImage.src = manga.thumbnail;
             thumbnailImage.alt = `Sampul ${manga.title}`;
 
-            thumbnailImage.onerror = function () {
-                this.src = 'https://via.placeholder.com/170x120/8A2BE2/FFFFFF?text=Gagal+Muat';
-            };
 
             const infoContainer = document.createElement("div");
             infoContainer.className = "card-terbaru-info";
