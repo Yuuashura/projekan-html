@@ -1,5 +1,5 @@
 const api = "https://api.allorigins.win/raw?url="; //ALLOW CORS
-const baseApi = "https://yuuashura-api.vercel.app/";
+const baseApi = "https://yuuashura-api.vercel.app";
 
 const containerPopular = document.querySelector("#items-popular");
 const containerTerbaru = document.querySelector("#items-terbaru");
@@ -318,11 +318,20 @@ async function komikTop() {
     containerPopular.appendChild(loader);
 
     try {
-        let data = await fetchWithRetry(`${baseApi}rekomendasi`);
+        let data = await fetchWithRetry(`${baseApi}/rekomendasi`);
+        let i = 0;
 
+        let latestChapter = [];
+
+        for (let index = 0; index < data.length; index++) {
+            let data1 = await fetchWithRetry(`${baseApi}${data[index].apiDetailLink}`);
+            latestChapter.push(data1.latestChapter.title);
+        }
+  
         removeElement(containerPopular, loader);
 
         data.forEach((manga) => {
+
             const cardLink = document.createElement("a");
             cardLink.className = "card-link";
             cardLink.href = `/html/detail-komik.html?${manga.apiDetailLink}`;
@@ -344,11 +353,21 @@ async function komikTop() {
             const titleHeader = document.createElement("h3");
             titleHeader.textContent = manga.title;
 
+            const chapterContainer = document.createElement("div");
+            chapterContainer.className = "cont-ch";
+
+            const chapterLink = document.createElement("a");
+            chapterLink.className = "ch-rekomendasi";
+            chapterLink.href = manga.apiChapterLink || `html/detail-komik.html?${manga.apiDetailLink}`;
+            chapterLink.textContent = latestChapter[i++];
+
             thumbnailContainer.appendChild(thumbnailImage);
             descriptionContainer.appendChild(titleHeader);
             card.appendChild(thumbnailContainer);
             card.appendChild(descriptionContainer);
             cardLink.appendChild(card);
+            descriptionContainer.appendChild(chapterContainer);
+            chapterContainer.appendChild(chapterLink);
             containerPopular.appendChild(cardLink);
         });
     } catch (error) {
@@ -364,7 +383,7 @@ async function mangaRekomendasi() {
     containerManga.appendChild(loader);
 
     try {
-        let data = await fetchWithRetry(`${baseApi}komik-populer`);
+        let data = await fetchWithRetry(`${baseApi}/komik-populer`);
         removeElement(containerManga, loader);
         data = data.manga.items;
         console.log(data);
@@ -435,7 +454,7 @@ async function manhwaRekomendasi() {
     containerManhwa.appendChild(loader);
 
     try {
-        let data = await fetchWithRetry(`${baseApi}komik-populer`);
+        let data = await fetchWithRetry(`${baseApi}/komik-populer`);
         removeElement(containerManhwa, loader);
         data = data.manhwa.items;
         console.log(data);
@@ -508,7 +527,7 @@ async function manhuaRekomendasi() {
     containerManhua.appendChild(loader);
 
     try {
-        let data = await fetchWithRetry(`${baseApi}komik-populer`);
+        let data = await fetchWithRetry(`${baseApi}/komik-populer`);
         removeElement(containerManhua, loader);
         data = data.manhua.items;
         console.log(data);
@@ -583,7 +602,7 @@ async function komikTerbaru() {
     try {
         let data;
         try {
-            data = await fetchWithRetry(`${baseApi}terbaru-2`);
+            data = await fetchWithRetry(`${baseApi}/terbaru-2`);
             
         } catch (directError) {
             console.warn("API langsung gagal, mencoba melalui proxy...", directError);
