@@ -539,6 +539,40 @@
       }
 
 
+    
+      /*REKOMENDASI*/
+      .tag-info{
+        margin-top: -9px;
+        margin-bottom: 5px;
+        font-size: 0.8rem;
+      }
+
+      .bulat{
+        width: 230px;
+        height: 140px;
+      }
+
+      .cont-ch{
+        margin: 2px 0px 10px 0px;
+        padding: 10px;
+        border-radius: 4px;
+        text-align: center;
+        background-color: #293755;
+        transition: 0.3s ease;
+      }
+
+      .cont-ch:hover{
+        box-shadow: 0px 0px 4px 1px #37518477;
+        transform: translateY(-2px);
+      }
+
+      .ch-rekomendasi {
+        padding: 2px 7px;
+        font-weight: 500;
+      }
+
+
+
       
         /* F O O T E R */
       footer {

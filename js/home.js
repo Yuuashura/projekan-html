@@ -392,7 +392,7 @@ async function komikTerbaru() {
             titleHeader.textContent = manga.title;
 
             const infoParagraph = document.createElement("p");
-            infoParagraph.textContent = `${manga.type} • ${manga.genre} • ${manga.updateTime}`;
+            infoParagraph.textContent = `${manga.type} • ${manga.genre}  ${manga.updateTime}`;
 
             const chapterLink = document.createElement("a");
             chapterLink.className = "chapter-terbaru";
