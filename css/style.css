@@ -384,17 +384,17 @@
         scroll-behavior: smooth;
         gap: 15px;
         padding: 0 20px;
-        min-height: 200px; 
+        min-height: 200px;
       }
 
       .items-popular::-webkit-scrollbar {
-        background-color: #525252;
-        height: 10px;
+        background-color: #29213f;
+        height: 5px;
       }
       
       .items-popular::-webkit-scrollbar-thumb {
         cursor: pointer;
-        background-color: #969696;
+        background-color: #293755;
         border-radius: 10px;
       }
 

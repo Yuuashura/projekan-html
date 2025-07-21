@@ -3,6 +3,9 @@ const baseApi = "https://yuuashura-api.vercel.app/";
 
 const containerPopular = document.querySelector("#items-popular");
 const containerTerbaru = document.querySelector("#items-terbaru");
+const containerManga = document.querySelector("#manga-rekomendasi");
+const containerManhwa = document.querySelector("#manhwa-rekomendasi");
+const containerManhua = document.querySelector("#manhua-rekomendasi");
 const header = document.querySelector("header");
 const containerSearch = document.querySelector(".cari");
 
@@ -46,9 +49,9 @@ let autoplayInterval;
 
 // HEADER KETIKA DI SCROLL
 window.addEventListener("scroll", function () {
-   if (window.scrollY > 50) {
-      header.classList.add('scrolled');
-      containerSearch.classList.add('cariScroll');
+    if (window.scrollY > 50) {
+        header.classList.add('scrolled');
+        containerSearch.classList.add('cariScroll');
     } else {
         header.classList.remove('scrolled');
         containerSearch.classList.remove('cariScroll');
@@ -102,7 +105,7 @@ function buildSlider(mainSlider, data) {
     sliderItemsContainer.className = 'slider-items';
 
     data.forEach((slideData, index) => {
-        const link  = document.createElement('a');
+        const link = document.createElement('a');
         link.href = slideData.link;
         link.className = 'update-container';
         link.style.backgroundImage = `url('${slideData.bgImage}')`;
@@ -309,6 +312,7 @@ async function fetchWithRetry(url) {
 
 
 
+// PERINGKAT KOMIK 
 async function komikTop() {
     const loader = createLoader();
     containerPopular.appendChild(loader);
@@ -354,6 +358,224 @@ async function komikTop() {
     }
 }
 
+// MANGA REKOMENDASI
+async function mangaRekomendasi() {
+    const loader = createLoader();
+    containerManga.appendChild(loader);
+
+    try {
+        let data = await fetchWithRetry(`${baseApi}komik-populer`);
+        removeElement(containerManga, loader);
+        data = data.manga.items;
+        console.log(data);
+
+        data.forEach((manga) => {
+
+            const cardLink = document.createElement("a");
+            cardLink.className = "card-link";
+            cardLink.href = `/html/detail-komik.html?${manga.apiDetailLink}`;
+
+            const cardDiv = document.createElement("div");
+            cardDiv.className = "card";
+
+            const logoContainer = document.createElement("div");
+            logoContainer.className = "logo-komik bulat";
+
+            const thumbnailImage = document.createElement("img");
+            thumbnailImage.src = manga.thumbnail;
+            thumbnailImage.alt = `Sampul ${manga.title}`;
+            thumbnailImage.loading = "lazy";
+
+            logoContainer.appendChild(thumbnailImage);
+
+            const deskripsiContainer = document.createElement("div");
+            deskripsiContainer.className = "deskripsi-komik";
+
+            const titleHeader = document.createElement("h3");
+            titleHeader.textContent = manga.title;
+
+            const tagInfo = document.createElement("p");
+            tagInfo.className = "tag-info";
+            tagInfo.textContent = `${manga.type} • ${manga.genre}`;
+
+            const chapterContainer = document.createElement("div");
+            chapterContainer.className = "cont-ch";
+
+            const chapterLink = document.createElement("a");
+            chapterLink.className = "ch-rekomendasi";
+            chapterLink.href = manga.apiChapterLink || '#';
+            chapterLink.textContent = manga.latestChapter;
+
+            chapterContainer.appendChild(chapterLink)
+
+            deskripsiContainer.appendChild(titleHeader);
+            deskripsiContainer.appendChild(tagInfo);
+            deskripsiContainer.appendChild(chapterContainer);
+
+            cardDiv.appendChild(logoContainer);
+            cardDiv.appendChild(deskripsiContainer);
+
+            cardLink.appendChild(cardDiv);
+
+            containerManga.appendChild(cardLink);
+          
+
+
+        });
+    } catch (error) {
+        console.error("Gagal total memuat Komik Populer:", error);
+        removeElement(containerManga, loader);
+        tampilkanError(containerManga, 'Gagal memuat komik. Silakan coba muat ulang halaman.');
+    }
+}
+
+// MANHWA REKOMENDASI
+async function manhwaRekomendasi() {
+    const loader = createLoader();
+    containerManhwa.appendChild(loader);
+
+    try {
+        let data = await fetchWithRetry(`${baseApi}komik-populer`);
+        removeElement(containerManhwa, loader);
+        data = data.manhwa.items;
+        console.log(data);
+
+        data.forEach((manga) => {
+
+            const cardLink = document.createElement("a");
+            cardLink.className = "card-link";
+            cardLink.href = `/html/detail-komik.html?${manga.apiDetailLink}`;
+
+            const cardDiv = document.createElement("div");
+            cardDiv.className = "card";
+
+            const logoContainer = document.createElement("div");
+            logoContainer.className = "logo-komik bulat";
+
+            const thumbnailImage = document.createElement("img");
+            thumbnailImage.src = manga.thumbnail;
+            thumbnailImage.alt = `Sampul ${manga.title}`;
+            thumbnailImage.loading = "lazy";
+
+            logoContainer.appendChild(thumbnailImage);
+
+            const deskripsiContainer = document.createElement("div");
+            deskripsiContainer.className = "deskripsi-komik";
+
+            const titleHeader = document.createElement("h3");
+            titleHeader.textContent = manga.title;
+
+            const tagInfo = document.createElement("p");
+            tagInfo.className = "tag-info";
+            tagInfo.textContent = `${manga.type} • ${manga.genre}`;
+
+            const chapterContainer = document.createElement("div");
+            chapterContainer.className = "cont-ch";
+
+            const chapterLink = document.createElement("a");
+            chapterLink.className = "ch-rekomendasi";
+            chapterLink.href = manga.apiChapterLink || '#';
+            chapterLink.textContent = manga.latestChapter;
+
+            chapterContainer.appendChild(chapterLink)
+
+            deskripsiContainer.appendChild(titleHeader);
+            deskripsiContainer.appendChild(tagInfo);
+            deskripsiContainer.appendChild(chapterContainer);
+
+            cardDiv.appendChild(logoContainer);
+            cardDiv.appendChild(deskripsiContainer);
+
+            cardLink.appendChild(cardDiv);
+
+            containerManhwa.appendChild(cardLink);
+          
+
+
+        });
+    } catch (error) {
+        console.error("Gagal total memuat Komik Populer:", error);
+        removeElement(containerManga, loader);
+        tampilkanError(containerManga, 'Gagal memuat komik. Silakan coba muat ulang halaman.');
+    }
+}
+
+
+
+// MANHWA REKOMENDASI
+async function manhuaRekomendasi() {
+    const loader = createLoader();
+    containerManhua.appendChild(loader);
+
+    try {
+        let data = await fetchWithRetry(`${baseApi}komik-populer`);
+        removeElement(containerManhua, loader);
+        data = data.manhua.items;
+        console.log(data);
+
+        data.forEach((manga) => {
+
+            const cardLink = document.createElement("a");
+            cardLink.className = "card-link";
+            cardLink.href = `/html/detail-komik.html?${manga.apiDetailLink}`;
+
+            const cardDiv = document.createElement("div");
+            cardDiv.className = "card";
+
+            const logoContainer = document.createElement("div");
+            logoContainer.className = "logo-komik bulat";
+
+            const thumbnailImage = document.createElement("img");
+            thumbnailImage.src = manga.thumbnail;
+            thumbnailImage.alt = `Sampul ${manga.title}`;
+            thumbnailImage.loading = "lazy";
+
+            logoContainer.appendChild(thumbnailImage);
+
+            const deskripsiContainer = document.createElement("div");
+            deskripsiContainer.className = "deskripsi-komik";
+
+            const titleHeader = document.createElement("h3");
+            titleHeader.textContent = manga.title;
+
+            const tagInfo = document.createElement("p");
+            tagInfo.className = "tag-info";
+            tagInfo.textContent = `${manga.type} • ${manga.genre}`;
+
+            const chapterContainer = document.createElement("div");
+            chapterContainer.className = "cont-ch";
+
+            const chapterLink = document.createElement("a");
+            chapterLink.className = "ch-rekomendasi";
+            chapterLink.href = manga.apiChapterLink || '#';
+            chapterLink.textContent = manga.latestChapter;
+
+            chapterContainer.appendChild(chapterLink)
+
+            deskripsiContainer.appendChild(titleHeader);
+            deskripsiContainer.appendChild(tagInfo);
+            deskripsiContainer.appendChild(chapterContainer);
+
+            cardDiv.appendChild(logoContainer);
+            cardDiv.appendChild(deskripsiContainer);
+
+            cardLink.appendChild(cardDiv);
+
+            containerManhua.appendChild(cardLink);
+          
+
+
+        });
+    } catch (error) {
+        console.error("Gagal total memuat Komik Populer:", error);
+        removeElement(containerManga, loader);
+        tampilkanError(containerManga, 'Gagal memuat komik. Silakan coba muat ulang halaman.');
+    }
+}
+
+
+
+// NEWEST KOMIK
 async function komikTerbaru() {
     const loader = createLoader();
     containerTerbaru.appendChild(loader);
@@ -362,6 +584,7 @@ async function komikTerbaru() {
         let data;
         try {
             data = await fetchWithRetry(`${baseApi}terbaru-2`);
+            
         } catch (directError) {
             console.warn("API langsung gagal, mencoba melalui proxy...", directError);
             data = await fetchWithRetry(`${api}${encodeURIComponent(baseApi + 'terbaru-2')}`);
@@ -417,10 +640,12 @@ async function komikTerbaru() {
     }
 }
 
-async function searchAnime(value) {
+
+// CARI KOMIK 
+async function searchKomik(value) {
     const endpoint = baseApi + "search?q=" + encodeURIComponent(value);
     const proxyUrl = api + endpoint;
-    
+
     const containerSearch = document.getElementById("searchContainer");
     const oldResults = containerSearch.querySelectorAll(".container-search");
     oldResults.forEach(el => containerSearch.removeChild(el));
@@ -452,11 +677,11 @@ addEventListener('input', () => {
     const keyword = document.getElementById("searchInput").value.trim();
     if (keyword) {
         searchAnime(keyword);
-    }else{
+    } else {
 
-    const containerSearch = document.getElementById("searchContainer");
-    const oldResults = containerSearch.querySelectorAll(".container-search");
-    oldResults.forEach(el => containerSearch.removeChild(el));
+        const containerSearch = document.getElementById("searchContainer");
+        const oldResults = containerSearch.querySelectorAll(".container-search");
+        oldResults.forEach(el => containerSearch.removeChild(el));
 
     }
 });
@@ -466,5 +691,8 @@ document.addEventListener('DOMContentLoaded', () => {
     setTimeout(pauseAutoplayOnHover, 1010);
     initMobileNavigation();
     komikTop();
+    mangaRekomendasi();
+    manhwaRekomendasi();
+    manhuaRekomendasi();
     komikTerbaru();
 });
