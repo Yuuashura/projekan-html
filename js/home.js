@@ -49,6 +49,15 @@ let autoplayInterval;
 
 
 // HEADER KETIKA DI SCROLL
+window.addEventListener("scroll", function () {
+    if (window.scrollY > 50) {
+        header.classList.add('scrolled');
+        containerSearch.classList.add('cariScroll');
+    } else {
+        header.classList.remove('scrolled');
+        containerSearch.classList.remove('cariScroll');
+    }
+});
 
 
 // MEMBUAT LOADING 
@@ -326,7 +335,7 @@ async function komikTop() {
 
             const cardLink = document.createElement("a");
             cardLink.className = "card-link";
-            cardLink.href = `/html/detail-komik.html?${manga.apiDetailLink}`;
+            cardLink.href = `html/detail-komik.html?${manga.apiDetailLink}`;
 
             const card = document.createElement("div");
             card.className = "card";
@@ -385,7 +394,7 @@ async function mangaRekomendasi() {
 
             const cardLink = document.createElement("a");
             cardLink.className = "card-link";
-            cardLink.href = `/html/detail-komik.html?${manga.apiDetailLink}`;
+            cardLink.href = `html/detail-komik.html?${manga.apiDetailLink}`;
 
             const cardDiv = document.createElement("div");
             cardDiv.className = "card";
@@ -456,7 +465,7 @@ async function manhwaRekomendasi() {
 
             const cardLink = document.createElement("a");
             cardLink.className = "card-link";
-            cardLink.href = `/html/detail-komik.html?${manga.apiDetailLink}`;
+            cardLink.href = `html/detail-komik.html?${manga.apiDetailLink}`;
 
             const cardDiv = document.createElement("div");
             cardDiv.className = "card";
@@ -529,7 +538,7 @@ async function manhuaRekomendasi() {
 
             const cardLink = document.createElement("a");
             cardLink.className = "card-link";
-            cardLink.href = `/html/detail-komik.html?${manga.apiDetailLink}`;
+            cardLink.href = `html/detail-komik.html?${manga.apiDetailLink}`;
 
             const cardDiv = document.createElement("div");
             cardDiv.className = "card";
@@ -609,10 +618,10 @@ async function komikTerbaru() {
             cardTerbaru.className = "card-terbaru";
 
             const a = document.createElement("a");
-            a.href = `/html/detail-komik.html?${manga.apiDetailLink}`;
+            a.href = `html/detail-komik.html?${manga.apiDetailLink}`;
 
             const atwice = document.createElement("a");
-            atwice.href = `/html/detail-komik.html?${manga.apiDetailLink}`;
+            atwice.href = `html/detail-komik.html?${manga.apiDetailLink}`;
 
             const logoContainer = document.createElement("div");
             logoContainer.className = "logo-terbaru";
@@ -666,7 +675,7 @@ async function searchKomik(value) {
     const oldResults = containerSearch.querySelectorAll(".container-search");
     oldResults.forEach(el => containerSearch.removeChild(el));
 
-
+    
     let response = await fetch(proxyUrl);
     let comic = await response.json();
     let data = comic.data;
