@@ -49,15 +49,6 @@ let autoplayInterval;
 
 
 // HEADER KETIKA DI SCROLL
-window.addEventListener("scroll", function () {
-    if (window.scrollY > 50) {
-        header.classList.add('scrolled');
-        containerSearch.classList.add('cariScroll');
-    } else {
-        header.classList.remove('scrolled');
-        containerSearch.classList.remove('cariScroll');
-    }
-});
 
 
 // MEMBUAT LOADING 
@@ -328,7 +319,7 @@ async function komikTop() {
             let data1 = await fetchWithRetry(`${baseApi}${data[index].apiDetailLink}`);
             latestChapter.push(data1.latestChapter.title);
         }
-  
+
         removeElement(containerPopular, loader);
 
         data.forEach((manga) => {
@@ -352,6 +343,7 @@ async function komikTop() {
             descriptionContainer.className = "deskripsi-komik";
 
             const titleHeader = document.createElement("h3");
+            titleHeader.className = "komik-title-container";
             titleHeader.textContent = manga.title;
 
             const chapterContainer = document.createElement("div");
@@ -438,7 +430,7 @@ async function mangaRekomendasi() {
             cardLink.appendChild(cardDiv);
 
             containerManga.appendChild(cardLink);
-          
+
 
 
         });
@@ -509,7 +501,7 @@ async function manhwaRekomendasi() {
             cardLink.appendChild(cardDiv);
 
             containerManhwa.appendChild(cardLink);
-          
+
 
 
         });
@@ -582,7 +574,7 @@ async function manhuaRekomendasi() {
             cardLink.appendChild(cardDiv);
 
             containerManhua.appendChild(cardLink);
-          
+
 
 
         });
@@ -604,7 +596,7 @@ async function komikTerbaru() {
         let data;
         try {
             data = await fetchWithRetry(`${baseApi}/terbaru-2`);
-            
+
         } catch (directError) {
             console.warn("API langsung gagal, mencoba melalui proxy...", directError);
             data = await fetchWithRetry(`${api}${encodeURIComponent(baseApi + 'terbaru-2')}`);
@@ -618,9 +610,9 @@ async function komikTerbaru() {
 
             const a = document.createElement("a");
             a.href = `/html/detail-komik.html?${manga.apiDetailLink}`;
-            
+
             const atwice = document.createElement("a");
-            a.href = `/html/detail-komik.html?${manga.apiDetailLink}`;
+            atwice.href = `/html/detail-komik.html?${manga.apiDetailLink}`;
 
             const logoContainer = document.createElement("div");
             logoContainer.className = "logo-terbaru";
@@ -649,7 +641,8 @@ async function komikTerbaru() {
             a.appendChild(logoContainer);
             cardTerbaru.appendChild(a);
 
-            infoContainer.appendChild(titleHeader);
+            atwice.appendChild(titleHeader);
+            infoContainer.appendChild(atwice);
             infoContainer.appendChild(infoParagraph);
             infoContainer.appendChild(chapterLink);
             cardTerbaru.appendChild(infoContainer);
@@ -672,6 +665,7 @@ async function searchKomik(value) {
     const containerSearch = document.getElementById("searchContainer");
     const oldResults = containerSearch.querySelectorAll(".container-search");
     oldResults.forEach(el => containerSearch.removeChild(el));
+
 
     let response = await fetch(proxyUrl);
     let comic = await response.json();
@@ -711,7 +705,14 @@ addEventListener('input', () => {
 
 theme.addEventListener('click', () => {
     document.body.classList.toggle('light');
-    
+
+    const headerElement = document.querySelector('header');
+
+    headerElement.classList.toggle('light');
+
+    console.log(headerElement);
+    document.querySelector('.header-popular').classList.toggle('light')
+
 })
 
 document.addEventListener('DOMContentLoaded', () => {
