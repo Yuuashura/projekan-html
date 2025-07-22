@@ -1,0 +1,385 @@
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+  font-family: "Poppins", sans-serif;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+body {
+  background-color: #111827;
+  color: white;
+  overflow-x: hidden;
+}
+
+header {
+  top: 0;
+  position: sticky;
+  display: flex;
+  width: 100%;
+  background-color: #111827;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 20px;
+  transition: 0.3s ease-in-out;
+  z-index: 1000;
+}
+
+header.scrolled {
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2);
+  background-color: #293755;
+  opacity: 0.98;
+
+}
+
+
+.loader {
+  margin: 50px auto;
+  width: 50px;
+  aspect-ratio: 1;
+  display: grid;
+  border: 4px solid #0000;
+  border-radius: 50%;
+  border-color: #ccc #0000;
+  animation: l16 1s infinite linear;
+}
+
+.loader::before,
+.loader::after {
+  content: "";
+  grid-area: 1/1;
+  margin: 2px;
+  border: inherit;
+  border-radius: 50%;
+}
+
+.loader::before {
+  border-color: #f03355 #0000;
+  animation: inherit;
+  animation-duration: 0.5s;
+  animation-direction: reverse;
+}
+
+.loader::after {
+  margin: 8px;
+}
+
+@keyframes l16 {
+  100% {
+    transform: rotate(1turn);
+  }
+}
+
+.nav {
+  display: flex;
+  align-items: center;
+}
+
+.nav .home {
+  border-bottom: 2px solid white;
+}
+
+.judul {
+  color: white;
+}
+
+.judul span {
+  color: aqua;
+}
+
+.nav a {
+  font-size: 1.04rem;
+  margin: 0 15px;
+  padding: 8px 0;
+  color: white;
+  transition: 0.3s ease;
+}
+
+.nav a:hover {
+  color: rgb(200, 200, 200);
+}
+
+.right-head {
+  display: block;
+  position: relative;
+}
+
+.cari {
+  display: flex;
+  background-color: #252e45;
+  border-radius: 4px;
+  margin-right: 20px;
+  transition: 0.3s ease-in-out;
+}
+
+.cari.cariScroll {
+  background-color: #131c2e;
+}
+
+.cari a {
+  display: flex;
+  align-items: center;
+  padding: 0 10px;
+  cursor: pointer;
+}
+
+.cari img {
+  width: 20px;
+  height: 20px;
+}
+
+.cari input {
+  border: none;
+  padding: 10px 10px;
+  border-radius: 4px;
+  color: white;
+  background-color: transparent;
+}
+
+.cari input::placeholder {
+  color: white;
+  opacity: 0.8;
+}
+
+.cari input:focus {
+  outline: none;
+}
+
+.search-container {
+  border-radius: 7px;
+  position: fixed;
+  display: block;
+  width: 225px;
+  height: 46.1px;
+  max-height: 461px;
+  top: 55px;
+  right: 40px;
+  z-index: 1000;
+}
+
+.search-a {
+  display: flex;
+  font-size: 0.8rem;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.container-search {
+  margin-top: 0px;
+  padding: 10px;
+  max-width: 225px;
+  display: flex;
+  background-color: #131c2e
+}
+
+
+
+.search-a p {
+  font-size: 0.8rem;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.container-search img {
+  width: 50px;
+  margin-right: 10px;
+}
+
+footer {
+  background-color: #252e45;
+  text-align: center;
+  padding: 10px 0px 2px 0px;
+}
+
+.medsos {
+  margin: 20px;
+  width: 40px;
+  display: inline-block;
+}
+
+.medsos img {
+  width: 30px;
+  border-radius: 50%;
+  transition: 0.3s;
+}
+
+.medsos img:hover {
+  background-color: #1b1b1b25;
+  transform: scale(1.1);
+}
+
+.text-footer {
+  margin: 0px auto 1px auto;
+  width: 70%;
+}
+
+/* Mobile Menu Toggle */
+.mobile-menu-toggle {
+  display: none;
+  flex-direction: column;
+  cursor: pointer;
+  padding: 8px;
+  background: none;
+  border: none;
+  color: white;
+}
+
+.mobile-menu-toggle span {
+  width: 25px;
+  height: 3px;
+  background-color: white;
+  margin: 3px 0;
+  transition: 0.3s;
+  border-radius: 2px;
+}
+
+/* Animation untuk hamburger menu */
+.mobile-menu-toggle.active span:nth-child(1) {
+  transform: rotate(-45deg) translate(-5px, 6px);
+}
+
+.mobile-menu-toggle.active span:nth-child(2) {
+  opacity: 0;
+}
+
+.mobile-menu-toggle.active span:nth-child(3) {
+  transform: rotate(45deg) translate(-5px, -6px);
+}
+
+/* Mobile nav overlay - FIXED */
+.mobile-nav-overlay {
+  position: fixed;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100vh;
+  background-color: rgba(27, 27, 27, 0.95);
+  backdrop-filter: blur(10px);
+  z-index: 9999;
+  transition: left 0.3s ease-in-out;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.mobile-nav-overlay.active {
+  left: 0;
+}
+
+/* Override nav styles when inside mobile overlay - FIXED */
+.mobile-nav-overlay .nav {
+  display: flex !important;
+  /* Force display */
+  flex-direction: column;
+  gap: 30px;
+  align-items: center;
+  /* Center the nav items */
+}
+
+.mobile-nav-overlay .nav a {
+  font-size: 1.5rem;
+  padding: 15px 0;
+  text-align: center;
+  border-bottom: none;
+  transition: all 0.3s ease;
+  display: block !important;
+  /* Ensure links are visible */
+}
+
+.mobile-nav-overlay .nav a:hover {
+  color: blueviolet;
+  transform: translateY(-5px);
+}
+
+.mobile-nav-overlay .cari {
+  margin-top: 30px;
+  width: 300px;
+  display: flex;
+  /* Ensure search bar is visible */
+}
+
+/* Close button untuk mobile nav */
+.mobile-nav-close {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  background: none;
+  border: none;
+  color: white;
+  font-size: 2rem;
+  cursor: pointer;
+  padding: 10px;
+}
+
+@media screen and (max-width: 1024px) {
+
+
+
+}
+
+@media screen and (max-width: 768px) {
+      /* Header Mobile */
+  header {
+    padding: 10px 15px;
+    flex-wrap: wrap;
+  }
+
+  body::-webkit-scrollbar {
+    display: none;
+  }
+
+  .judul {
+    font-size: 1.2rem;
+  }
+
+  /* Hide desktop navigation on mobile - FIXED */
+  header .nav {
+    display: none !important;
+  }
+
+  .mobile-menu-toggle {
+    display: flex;
+  }
+
+  .cari {
+    order: 3;
+    width: 100%;
+    margin: 10px 0 0 0;
+  }
+
+  .cari input {
+    width: 100%;
+    padding: 8px 10px;
+  }
+
+    /* Footer Mobile */
+  .medsos {
+    margin: 15px 10px;
+    width: 35px;
+  }
+
+  .medsos img {
+    width: 25px;
+  }
+
+  .text-footer {
+    width: 90%;
+    font-size: 0.8rem;
+  }
+
+}
+
+@media screen and (max-width: 480px) {
+  .judul {
+    font-size: 1rem;
+  }
+
+}
+

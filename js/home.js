@@ -325,7 +325,11 @@ async function komikTop() {
 
         for (let index = 0; index < data.length; index++) {
             let data1 = await fetchWithRetry(`${baseApi}${data[index].apiDetailLink}`);
-            latestChapter.push(data1.latestChapter.title);
+
+            latestChapter.push({
+                latestChapter: data1.latestChapter.title,
+                linkChapter : data1.latestChapter.apiLink
+            });
         }
   
         removeElement(containerPopular, loader);
@@ -334,7 +338,7 @@ async function komikTop() {
 
             const cardLink = document.createElement("a");
             cardLink.className = "card-link";
-            cardLink.href = `/html/detail-komik.html?${manga.apiDetailLink}`;
+            cardLink.href = `html/detail-komik.html?${manga.apiDetailLink}`;
 
             const card = document.createElement("div");
             card.className = "card";
@@ -358,8 +362,8 @@ async function komikTop() {
 
             const chapterLink = document.createElement("a");
             chapterLink.className = "ch-rekomendasi";
-            chapterLink.href = manga.apiChapterLink || `html/detail-komik.html?${manga.apiDetailLink}`;
-            chapterLink.textContent = latestChapter[i++];
+            chapterLink.href = manga.apiChapterLink || `html/baca-komik.html?${latestChapter[i].linkChapter}`;
+            chapterLink.textContent = latestChapter[i++].latestChapter;
 
             thumbnailContainer.appendChild(thumbnailImage);
             descriptionContainer.appendChild(titleHeader);
@@ -415,7 +419,7 @@ async function mangaRekomendasi() {
 
             const tagInfo = document.createElement("p");
             tagInfo.className = "tag-info";
-            tagInfo.textContent = `${manga.type} • ${manga.genre}`;
+            tagInfo.textContent = ` ${manga.genre}`;
 
             const chapterContainer = document.createElement("div");
             chapterContainer.className = "cont-ch";
@@ -486,7 +490,7 @@ async function manhwaRekomendasi() {
 
             const tagInfo = document.createElement("p");
             tagInfo.className = "tag-info";
-            tagInfo.textContent = `${manga.type} • ${manga.genre}`;
+            tagInfo.textContent = ` ${manga.genre}`;
 
             const chapterContainer = document.createElement("div");
             chapterContainer.className = "cont-ch";
@@ -559,7 +563,7 @@ async function manhuaRekomendasi() {
 
             const tagInfo = document.createElement("p");
             tagInfo.className = "tag-info";
-            tagInfo.textContent = `${manga.type} • ${manga.genre}`;
+            tagInfo.textContent = ` ${manga.genre}`;
 
             const chapterContainer = document.createElement("div");
             chapterContainer.className = "cont-ch";
@@ -617,6 +621,9 @@ async function komikTerbaru() {
 
             const a = document.createElement("a");
             a.href = `/html/detail-komik.html?${manga.apiDetailLink}`;
+            
+            const atwice = document.createElement("a");
+            atwice.href = `/html/detail-komik.html?${manga.apiDetailLink}`;
 
             const logoContainer = document.createElement("div");
             logoContainer.className = "logo-terbaru";
@@ -648,7 +655,8 @@ async function komikTerbaru() {
             infoContainer.appendChild(titleHeader);
             infoContainer.appendChild(infoParagraph);
             infoContainer.appendChild(chapterLink);
-            cardTerbaru.appendChild(infoContainer);
+            atwice.appendChild(infoContainer);
+            cardTerbaru.appendChild(atwice);
 
             containerTerbaru.appendChild(cardTerbaru);
         });
