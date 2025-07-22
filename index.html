@@ -12,17 +12,12 @@
     />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Permanent+Marker&family=Poetsen+One&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
-      rel="stylesheet"
-    />
   </head>
   <body>
     <header>
       <a href="#"
         ><i
-          ><h1 class="judul">Moon<span>Komik</span></h1></i
-        ></a
+          ><h1 class="judul">Mona<span>Komik</span></h1></i></a
       >
 
       <!-- Desktop Navigation -->
@@ -43,10 +38,14 @@
       <!-- Search Bar -->
 
       <div class="cari">
+
+        <a onclick="cariKomik()" class="theme" id="theme" ><img src="icon/light-mode.png" alt="Search"/></a>
+
+        <span class="material-symbols-outlined light_mode"></span>
+
         <input type="text" placeholder="search" id="searchInput" />
-        <a onclick="cariKomik()"
-          ><img src="assets/search.png" alt="Search"
-        /></a>
+
+        <a onclick="cariKomik()"><img src="assets/search.png" alt="Search"/></a>
       </div>
     </header>
 
@@ -65,10 +64,6 @@
         <a href="register.html"><p>Daftar</p></a>
         <a href="tentang.html"><p>Tentang</p></a>
       </div>
-      <!-- <div class="cari">
-        <input type="text" placeholder="Search manga..." />
-        <a href="#"><img src="/assets/search.png" alt="Search"/></a>
-      </div> -->
     </div>
 
     <div id="main-slider" class="slider">

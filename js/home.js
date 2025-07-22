@@ -8,6 +8,7 @@ const containerManhwa = document.querySelector("#manhwa-rekomendasi");
 const containerManhua = document.querySelector("#manhua-rekomendasi");
 const header = document.querySelector("header");
 const containerSearch = document.querySelector(".cari");
+const theme = document.querySelector("#theme");
 
 const slidesData = [
     // {
@@ -42,7 +43,7 @@ const slidesData = [
     }
 ];
 
-let idxSekarang = 0;
+let idxNow = 0;
 let autoplayInterval;
 
 
@@ -198,19 +199,19 @@ function buildSlider(mainSlider, data) {
 
 function slideSesudah() {
     const slides = document.querySelectorAll('.update-container');
-    slides[idxSekarang].style.opacity = '0';
-    idxSekarang = (idxSekarang + 1) % slides.length;
+    slides[idxNow].style.opacity = '0';
+    idxNow = (idxNow + 1) % slides.length;
     setTimeout(() => {
-        slides[idxSekarang].style.opacity = '1';
+        slides[idxNow].style.opacity = '1';
     }, 200);
 }
 
 function slideSebelum() {
     const slides = document.querySelectorAll('.update-container');
-    slides[idxSekarang].style.opacity = '0';
-    idxSekarang = (idxSekarang - 1 + slides.length) % slides.length;
+    slides[idxNow].style.opacity = '0';
+    idxNow = (idxNow - 1 + slides.length) % slides.length;
     setTimeout(() => {
-        slides[idxSekarang].style.opacity = '1';
+        slides[idxNow].style.opacity = '1';
     }, 200);
 }
 
@@ -325,11 +326,7 @@ async function komikTop() {
 
         for (let index = 0; index < data.length; index++) {
             let data1 = await fetchWithRetry(`${baseApi}${data[index].apiDetailLink}`);
-
-            latestChapter.push({
-                latestChapter: data1.latestChapter.title,
-                linkChapter : data1.latestChapter.apiLink
-            });
+            latestChapter.push(data1.latestChapter.title);
         }
   
         removeElement(containerPopular, loader);
@@ -338,7 +335,7 @@ async function komikTop() {
 
             const cardLink = document.createElement("a");
             cardLink.className = "card-link";
-            cardLink.href = `html/detail-komik.html?${manga.apiDetailLink}`;
+            cardLink.href = `/html/detail-komik.html?${manga.apiDetailLink}`;
 
             const card = document.createElement("div");
             card.className = "card";
@@ -362,8 +359,8 @@ async function komikTop() {
 
             const chapterLink = document.createElement("a");
             chapterLink.className = "ch-rekomendasi";
-            chapterLink.href = manga.apiChapterLink || `html/baca-komik.html?${latestChapter[i].linkChapter}`;
-            chapterLink.textContent = latestChapter[i++].latestChapter;
+            chapterLink.href = manga.apiChapterLink || `html/detail-komik.html?${manga.apiDetailLink}`;
+            chapterLink.textContent = latestChapter[i++];
 
             thumbnailContainer.appendChild(thumbnailImage);
             descriptionContainer.appendChild(titleHeader);
@@ -419,7 +416,7 @@ async function mangaRekomendasi() {
 
             const tagInfo = document.createElement("p");
             tagInfo.className = "tag-info";
-            tagInfo.textContent = ` ${manga.genre}`;
+            tagInfo.textContent = `${manga.genre}`;
 
             const chapterContainer = document.createElement("div");
             chapterContainer.className = "cont-ch";
@@ -490,7 +487,7 @@ async function manhwaRekomendasi() {
 
             const tagInfo = document.createElement("p");
             tagInfo.className = "tag-info";
-            tagInfo.textContent = ` ${manga.genre}`;
+            tagInfo.textContent = `${manga.genre}`;
 
             const chapterContainer = document.createElement("div");
             chapterContainer.className = "cont-ch";
@@ -623,7 +620,7 @@ async function komikTerbaru() {
             a.href = `/html/detail-komik.html?${manga.apiDetailLink}`;
             
             const atwice = document.createElement("a");
-            atwice.href = `/html/detail-komik.html?${manga.apiDetailLink}`;
+            a.href = `/html/detail-komik.html?${manga.apiDetailLink}`;
 
             const logoContainer = document.createElement("div");
             logoContainer.className = "logo-terbaru";
@@ -655,8 +652,7 @@ async function komikTerbaru() {
             infoContainer.appendChild(titleHeader);
             infoContainer.appendChild(infoParagraph);
             infoContainer.appendChild(chapterLink);
-            atwice.appendChild(infoContainer);
-            cardTerbaru.appendChild(atwice);
+            cardTerbaru.appendChild(infoContainer);
 
             containerTerbaru.appendChild(cardTerbaru);
         });
@@ -712,6 +708,11 @@ addEventListener('input', () => {
 
     }
 });
+
+theme.addEventListener('click', () => {
+    document.body.classList.toggle('light');
+    
+})
 
 document.addEventListener('DOMContentLoaded', () => {
     buildSlider('main-slider', slidesData);

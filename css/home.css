@@ -10,6 +10,7 @@
   background-size: cover;
   background-position: center center;
   position: relative;
+  box-shadow: 0px 5px 10px rgba(0, 0, 0);
 }
 
 .filter {
@@ -180,9 +181,12 @@
   width: 1150px;
   margin: 40px auto;
   border-radius: 6px;
-  background-color: #131c2e;
+  /* background-color: #131c2e; */
+  background: linear-gradient(to bottom, #131c2e55, #87449035);
+  backdrop-filter: blur(10px);
   padding-bottom: 20px;
-  padding: 0 20px;
+  padding: 0 20px 20px 20px;
+  border: 1px solid #ffffff25; 
 }
 
 

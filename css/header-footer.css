@@ -16,25 +16,53 @@ body {
   overflow-x: hidden;
 }
 
+body.light{
+  background-color: white;
+}
+
 header {
   top: 0;
   position: sticky;
   display: flex;
   width: 100%;
-  background-color: #111827;
+  /* 1. Latar belakang UTAMA sekarang adalah warna SOLID FINAL */
+  background: #293755;
   justify-content: space-between;
   align-items: center;
   padding: 10px 20px;
-  transition: 0.3s ease-in-out;
+  transition: box-shadow 0.3s ease-in-out; /* Transisi hanya untuk box-shadow */
   z-index: 1000;
+  isolation: isolate; /* Mencegah z-index pseudo-element mengganggu konten */
 }
 
+/* 2. Buat lapisan GRADASI menggunakan pseudo-element ::before */
+header::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  /* Lapisan ini berisi gradasi Anda */
+  background: linear-gradient(to top, #111827, #293755);
+  z-index: -1; /* Letakkan di belakang konten header */
+  
+  /* Atur transisi untuk OPACITY, bukan background */
+  transition: opacity 0.3s ease-in-out;
+  opacity: 1; /* Awalnya terlihat jelas */
+}
+
+/* 3. Saat di-scroll, SEMBUNYIKAN lapisan gradasi */
+header.scrolled::before {
+  opacity: 0; /* Menghilang secara halus */
+}
+
+/* Class .scrolled sekarang hanya mengatur box-shadow dan opacity header */
 header.scrolled {
   box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2);
-  background-color: #293755;
   opacity: 0.98;
-
 }
+
 
 
 .loader {
