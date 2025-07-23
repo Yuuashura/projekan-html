@@ -428,6 +428,7 @@
 
     <script>
       const params = window.location.search.substring(1);
+      const api = "https://api.allorigins.win/raw?url="; //ALLOW CORS
       const baseApi = "https://yuuashura-api.vercel.app";
       const apiComment = "https://komentar2.vercel.app/api/komentar";
       const komikData = {};
@@ -633,7 +634,7 @@
 
           try {
             containerSending.appendChild(sending);
-            const res = await fetch(apiComment, {
+            const res = await fetch(api+apiComment, {
               method: "POST",
               headers: { "Content-Type": "application/json" },
               body: JSON.stringify(data),
