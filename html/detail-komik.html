@@ -18,24 +18,21 @@
         --accent: #64ffda;
       }
 
-      
-@keyframes inAnimation {
-    from {
-        opacity: 0;
-        transform: translateY(30px);
-    }
+      @keyframes inAnimation {
+        from {
+          opacity: 0;
+          transform: translateY(30px);
+        }
 
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
-}
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
 
-
-  main{
-    min-height: 80vh;
-  }
-
+      main {
+        min-height: 80vh;
+      }
 
       .main-container {
         display: flex;
@@ -46,7 +43,6 @@
         border-radius: 8px;
         overflow: hidden;
       }
-
 
       .left-column {
         width: 33%;
@@ -61,8 +57,7 @@
       }
 
       .left-column,
-      .right-column
-      {
+      .right-column {
         animation: inAnimation 0.5s ease-in-out;
       }
 
@@ -211,9 +206,14 @@
         color: var(--lightest-slate);
         font-size: 1em;
         resize: vertical;
+        transition: 0.3s ease;
       }
 
       .comment-form textarea:focus {
+        outline: none;
+        border-color: var(--accent);
+      }
+      .comment-form input[type="text"]:focus {
         outline: none;
         border-color: var(--accent);
       }
@@ -237,17 +237,31 @@
         font-size: 1em;
         font-weight: bold;
         cursor: pointer;
-        transition: opacity 0.3s ease;
+        transition: 0.3s ease;
       }
 
       .comment-form button:hover {
         opacity: 0.8;
+        transform: translateY(-2px);
       }
 
       #comment-list {
         margin-top: 30px;
         max-height: 400px;
         overflow: auto;
+        padding: 4px 10px 5px 10px;
+        background-color: var(--dark-navy);
+        border-radius: 8px;
+      }
+
+      .procces-sending {
+        padding: 15px 0px 5px 0px;
+        display: flex;
+        justify-content: center;
+      }
+
+      .sending {
+        display: inherit;
       }
 
       #comment-list::-webkit-scrollbar {
@@ -269,6 +283,7 @@
         border: 1px solid var(--lightest-navy);
         margin: 20px 0px;
         border-radius: 5px;
+        animation: inAnimation 0.3s ease;
       }
 
       .comment-item:not(:last-child) {
@@ -283,7 +298,7 @@
       }
 
       .comment-author {
-        margin-left: 20px ;
+        margin-left: 20px;
         font-weight: bold;
         color: var(--white);
       }
@@ -347,33 +362,26 @@
       </div>
 
       <div class="comment-container">
-
         <h2>Komentar</h2>
+
         <form class="comment-form" method="post">
-          <input
-            type="text"
-            placeholder="Masukkan Nama"
-            id="name"
-            required
-          />
+          <input type="text" placeholder="Masukkan Nama" id="name" required />
           <textarea
-            placeholder="Tulis komentar Anda di sini..." id="comment"
+            placeholder="Tulis komentar Anda di sini..."
+            id="comment"
             required
           ></textarea>
           <button type="submit" id="submitComment">Kirim</button>
         </form>
 
+        <div class="procces-sending">
+          <!--SENDING-->
 
+          <!--SUKSES SENDING-->
+        </div>
 
-          <div class="comment-item">
-            <div class="comment-header">
-              <span class="comment-author">Rudi Setiawan</span>
-              <span class="comment-date">19 Juli 2025</span>
-            </div>
-            <p class="comment-text">
-              Ada yang tau komik lain yang mirip-mirip kaya gini?
-            </p>
-          </div>
+        <div id="comment-list">
+          <!--COMMENT ITEMS-->
         </div>
       </div>
 
@@ -429,14 +437,18 @@
       const containerSearch = document.querySelector(".cari");
       const theme = document.querySelector("#theme");
       const comment = document.querySelector("#comment");
-    const name = document.querySelector("#name");
-    const submitComment = document.querySelector("#submitComment");
-    
+      const name = document.querySelector("#name");
+      const submitComment = document.querySelector("#submitComment");
+      const containerSending = document.querySelector(".procces-sending");
+      const commentContainer = document.querySelector("#comment-list");
+      const sending = proccesSending();
+      const suksesSending = createSuccessMessage();
+
+      let bool = 0;
 
       async function getData() {
-          mainCOntainer.appendChild(createLoader());
+        mainCOntainer.appendChild(createLoader());
         try {
-          
           const response = await fetch(`${baseApi}${params}`);
           const data = await response.json();
           komikData.thumbnail = data.thumbnail;
@@ -447,6 +459,7 @@
           komikData.chapters = data.chapters;
           komikData.title = data.title;
           mainCOntainer.removeChild(document.querySelector(".loader"));
+          getComment();
           leftData();
           rightData();
         } catch (error) {
@@ -556,49 +569,124 @@
         });
       }
 
+      function createLoader() {
+        const loader = document.createElement("div");
+        loader.className = "loader";
+        return loader;
+      }
 
-
-  function createLoader() {
-    const loader = document.createElement("div");
-    loader.className = "loader";
-    return loader;
-}
-
-
-
-
-
-
-
-
-
-      document.querySelector('.comment-form').addEventListener('submit', async (e) =>{
-        e.preventDefault();
-        const data = {
-            email : name.value,
-            komentar : comment.value
-        };
+      async function getComment() {
+        const response = await fetch(apiComment);
+        const data = await response.json();
         console.log(data);
-        
-        try{
-        const res = await fetch(apiComment, {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify(data)
+        let i = 0;
+        data.forEach((item) => {
+          const nama = item.email;
+          const komentar = item.komentar;
+          const timestamp = parseInt(item.id);
+
+          const tanggal = new Date(timestamp);
+          const options = {
+            day: "numeric",
+            month: "long",
+            year: "numeric",
+          };
+          const dateFormatted = tanggal.toLocaleDateString("id-ID", options);
+
+          console.log(nama, dateFormatted, komentar);
+          const commentItem = document.createElement("div");
+          commentItem.className = "comment-item";
+          const commentHeader = document.createElement("div");
+          commentHeader.className = "comment-header";
+          const commentAuthor = document.createElement("span");
+          commentAuthor.className = "comment-author";
+          commentAuthor.textContent = nama;
+          const commentDate = document.createElement("span");
+          commentDate.className = "comment-date";
+          commentDate.textContent = dateFormatted;
+          const commentText = document.createElement("p");
+          commentText.className = "comment-text";
+          commentText.textContent = komentar;
+          commentHeader.appendChild(commentAuthor);
+          commentHeader.appendChild(commentDate);
+          commentItem.appendChild(commentHeader);
+          commentItem.appendChild(commentText);
+          commentContainer.appendChild(commentItem);
+        });
+      }
+
+      // KODE UNTUK POST KOMENTAR KE API
+      document
+        .querySelector(".comment-form")
+        .addEventListener("submit", async (e) => {
+          e.preventDefault();
+
+          const data = {
+            email: name.value,
+            komentar: comment.value,
+          };
+          console.log(data);
+
+          try {
+            containerSending.appendChild(sending);
+            const res = await fetch(apiComment, {
+              method: "POST",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify(data),
+            });
+
+            name.value = "";
+            comment.value = "";
+
+            if (!res.ok) {
+              throw new Error("Gagal mengirim komentar.");
+            } else {
+              containerSending.removeChild(sending);
+              containerSending.appendChild(suksesSending);
+              const allCommentItems =
+                commentContainer.querySelectorAll(".comment-item");
+              allCommentItems.forEach((item) => {
+                commentContainer.removeChild(item);
+              });
+              getComment();
+              console.log("sukses");
+              setTimeout(() => {
+                containerSending.removeChild(suksesSending);
+              }, 3000);
+            }
+          } catch (err) {
+            console.log(err);
+          }
         });
 
-        if (!res.ok) {
-          throw new Error("Gagal mengirim komentar.");
-        }else{
-            console.log("sukses");
-            
+      function proccesSending() {
+        const sendingContainer = document.createElement("div");
+        sendingContainer.className = "sending";
+        sendingContainer.id = "sending";
+        const sendingText = document.createElement("span");
+        sendingText.textContent = "Sedang Mengirim Komentar";
+        const loadingDotsContainer = document.createElement("div");
+        loadingDotsContainer.className = "loading-dots";
+        for (let i = 0; i < 3; i++) {
+          const dot = document.createElement("div");
+          dot.className = "dot";
+          loadingDotsContainer.appendChild(dot);
         }
-        }catch(err){
-            console.log(err);
-        }
+        sendingContainer.appendChild(sendingText);
+        sendingContainer.appendChild(loadingDotsContainer);
+        return sendingContainer;
+      }
 
-      })
-
+      function createSuccessMessage() {
+        const successContainer = document.createElement("div");
+        successContainer.className = "sending";
+        successContainer.id = "success";
+        const successText = document.createElement("span");
+        successText.textContent = "Komentar Berhasil Dikirim";
+        successText.style.color = "lightgreen";
+        successContainer.appendChild(successText);
+        return successContainer;
+      }
 
       document.addEventListener("DOMContentLoaded", () => {
         getData();

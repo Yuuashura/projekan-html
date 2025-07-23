@@ -1,68 +1,65 @@
 <!DOCTYPE html>
-<html lang="id">
+<html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>Fetch API MangaVerse</title>
+    <meta charset="UTF-8">
+    <title>Loading Dots</title>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #2c3e50;
+        }
+
+        .loading-dots {
+            width: 100px;
+            height: 25px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 8px; /* Jarak antar titik */
+        }
+
+        .loading-dots .dot {
+            width: 12px;
+            height: 12px;
+            background-color: #ecf0f1;
+            border-radius: 50%;
+            
+            /* Panggil animasi */
+            animation: bounce 1.2s infinite ease-in-out;
+        }
+
+        /* Atur jeda animasi agar titik melompat bergantian */
+        .loading-dots .dot:nth-of-type(2) {
+            animation-delay: -0.2s;
+        }
+
+        .loading-dots .dot:nth-of-type(3) {
+            animation-delay: -0.4s;
+        }
+
+        /* Definisi animasi 'bounce' */
+        @keyframes bounce {
+            0%, 80%, 100% {
+                transform: scale(0.8) translateY(0);
+                opacity: 0.8;
+            }
+            40% {
+                transform: scale(1) translateY(-8px);
+                opacity: 1;
+            }
+        }
+    </style>
 </head>
 <body>
-  <h1>Hasil Fetch API</h1>
-  <pre id="output">Loading...</pre>
 
-  <script>
+    <div class="loading-dots">
+        <div class="dot"></div>
+        <div class="dot"></div>
+        <div class="dot"></div>
+    </div>
 
-    const api = "https://yuuashura-api.vercel.app/rekomendasi";
-
-    const dataApi = fetch(api).then((response) => response.json()).then((data) =>
-
-     console.log(data)
-    );
-
-    
-
-    function tampilkanData (){
-      
-    }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    // fetch('https://mangaverse-api.p.rapidapi.com/', {
-    //     method: 'GET',
-    //     headers: {
-    //         'x-rapidapi-host': 'mangaverse-api.p.rapidapi.com',
-    //         'x-rapidapi-key': '7de854d2a0msh7f99cf55fce028bp1a5c7ajsn1fb578819cc4'
-    //     }
-    // })
-    // .then(response => response.json())
-    // .then(data => {
-    //     document.getElementById("output").textContent = JSON.stringify(data, null, 2);
-    // })
-    // .catch(error => {
-    //     document.getElementById("output").textContent = 'Terjadi error: ' + error;
-    // });
-  </script>
 </body>
 </html>
