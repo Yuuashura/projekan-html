@@ -19,6 +19,7 @@ body {
   color: white;
   overflow-x: hidden;
   transition: 0.3s ease-in-out;
+  min-height: 100vh;
 }
 
 body.light{
@@ -230,6 +231,8 @@ footer {
   background-color: #252e45;
   text-align: center;
   padding: 10px 0px 2px 0px;
+  position: relative;
+  bottom: 0;
 }
 
 .medsos {
