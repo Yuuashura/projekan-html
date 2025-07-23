@@ -578,7 +578,7 @@
       async function getComment() {
         commentContainer.appendChild(createLoader());
         console.log(commentContainer);
-        
+
         const response = await fetch(apiComment);
         const data = await response.json();
         console.log(data);
@@ -586,7 +586,7 @@
         data.forEach((item) => {
           const nama = item.email;
           const komentar = item.komentar;
-          const timestamp = parseInt(item.id);
+          const timestamp = item.id;
 
           const tanggal = new Date(timestamp);
           const options = {
@@ -616,7 +616,7 @@
           commentItem.appendChild(commentText);
           commentContainer.appendChild(commentItem);
         });
-        commentContainer.removeChild(document.querySelector(".loader"))
+        commentContainer.removeChild(document.querySelector(".loader"));
       }
 
       // KODE UNTUK POST KOMENTAR KE API
@@ -626,8 +626,10 @@
           e.preventDefault();
 
           const data = {
+            id: Date.now(),
             email: name.value,
             komentar: comment.value,
+            tanggal: new Date().toISOString(),
           };
           console.log(data);
 
