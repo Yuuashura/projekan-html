@@ -576,6 +576,9 @@
       }
 
       async function getComment() {
+        commentContainer.appendChild(createLoader());
+        console.log(commentContainer);
+        
         const response = await fetch(apiComment);
         const data = await response.json();
         console.log(data);
@@ -613,6 +616,7 @@
           commentItem.appendChild(commentText);
           commentContainer.appendChild(commentItem);
         });
+        commentContainer.removeChild(document.querySelector(".loader"))
       }
 
       // KODE UNTUK POST KOMENTAR KE API
