@@ -192,9 +192,17 @@
 
         @media (min-width: 768px) {
             #search-results {
+                grid-template-columns: repeat(1, 1fr);
+            }
+        }
+
+        @media (min-width: 1024px) {
+            #search-results {
                 grid-template-columns: repeat(2, 1fr);
             }
         }
+
+        @media
     </style>
 </head>
 <body>
@@ -222,7 +230,7 @@
       <!-- Search Bar -->
 
         <form class="cari" id="searchForm">
-          <a onclick="cariKomik()" class="theme" id="theme" ><img src="icon/light-mode.png" alt="Search"/></a>
+          <button onclick="cariKomik()" class="theme" id="theme" ><img src="icon/light-mode.png" alt="Search"/></a>
         <input type="text" placeholder="search" id="searchInput"/>
         <button type="submit"><img src="assets/search.png" alt="Search"/></a>
       </form>
