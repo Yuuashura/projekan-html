@@ -675,7 +675,7 @@ searchForm.addEventListener('submit', (event) => {
     event.preventDefault();
     const query = searchInput.value.trim();
     if (query) {
-        window.location.href = `/search.html?q=${encodeURIComponent(query)}`;
+        window.location.href = `html/search.html?q=${encodeURIComponent(query)}`;
     }
 });
 

@@ -4,7 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Hasil Pencarian Komik</title>
-    <link rel="stylesheet" href="css/header-footer.css"/>
+    <link rel="stylesheet" href="../css/header-footer.css"/>
     <style>
 
         * {
@@ -199,14 +199,14 @@
 </head>
 <body>
     <header>
-      <a href="#"
+      <a href="../"
         ><i
           ><h1 class="judul">Mona<span>Komik</span></h1></i></a
       >
 
       <!-- Desktop Navigation -->
       <div class="nav">
-        <a href="#" class="home"><p>Home</p></a>
+        <a href="../" class="home"><p>Home</p></a>
         <a href="manga-list.html"><p>Pustaka</p></a>
         <a href="login.html"><p>Masuk</p></a>
         <a href="register.html"><p>Daftar</p></a>
@@ -321,7 +321,7 @@ window.addEventListener("scroll", function () {
                 resultItem.className = 'result-item';
                 resultItem.style.animationDelay = "0.3s";
                 resultItem.innerHTML = `
-                <a href="html/detail-komik.html?${results[i].href}">
+                <a href="detail-komik.html?${results[i].href}">
                 <img src="${results[i].thumbnail}" alt="${results[i].title}">
                     <div class="result-info">
                         <h3>${results[i].title}</h3>
