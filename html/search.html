@@ -7,12 +7,6 @@
     <link rel="stylesheet" href="../css/header-footer.css"/>
     <style>
 
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-
-        }
         :root {
             --dark-navy: #0a192f;
             --navy: #112240;
@@ -50,11 +44,11 @@
             border-radius: 8px;
             overflow: hidden;
         }
+
         h1 .query-text {
             color: var(--accent);
         }
 
-        /* --- Kotak Pencarian --- */
         .search-box {
             display: flex;
             gap: 10px;
@@ -97,7 +91,7 @@
         /* --- Hasil Pencarian --- */
         #search-results {
             display: grid;
-            grid-template-columns: 1fr; /* 1 kolom untuk mobile */
+            grid-template-columns:repeat(2,1fr);
             gap: 20px;
         }
 
@@ -117,7 +111,7 @@
             border-left: 4px solid transparent;
             transition: 0.3s ease;
             animation: inAnimation 0.5s ease-out forwards;
-            opacity: 0; /* Mulai dari transparan untuk animasi */
+            opacity: 0;
         }
         .result-item a:hover{
             border-left-color: var(--accent);
@@ -138,7 +132,7 @@
         .result-info {
             display: flex;
             flex-direction: column;
-            width: 200px;
+            max-width: 200px;
             justify-content: space-between;
         }
 
@@ -149,7 +143,7 @@
             margin: 0 0 10px 0;
             color: var(--white);
             font-size: 1.2em;
-            width: 100%;
+            width: 200px;
         }
 
         .result-info .genre-tag {
@@ -191,26 +185,35 @@
             font-size: 1.1em;
         }
 
-        @media (min-width: 1024px) {
+        @media (max-width: 1024px) {
             #search-results {
                 grid-template-columns: repeat(2, 1fr);
             }
             
-            .cari{
-                display: flex;
+            .result-info h3{
+            width: 200px;
             }
 
+
         }
-        @media (min-width: 768px) {
+        @media (max-width: 768px) {
             #search-results {
                 grid-template-columns: repeat(1, 1fr);
             }
+            .result-info h3{
+            width: 400px;
+            }
+                        .result-item img{
+                width: 130px;
+                height: 80px;
+            }
+
         }
 
 
 
 
-        @media (min-width: 480px){
+        @media (max-width: 480px){
 
             .result-item{
                 justify-content: center;
@@ -218,8 +221,11 @@
             }
             
             .result-item img{
-                width: 100px;
+                width: 120px;
                 height: 70px;
+            }
+           .result-info h3{
+            width: 200px;
             }
 
         }
