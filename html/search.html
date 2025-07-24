@@ -190,19 +190,38 @@
             font-size: 1.1em;
         }
 
+        @media (min-width: 1024px) {
+            #search-results {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .cari{
+                display: flex;
+            }
+
+        }
         @media (min-width: 768px) {
             #search-results {
                 grid-template-columns: repeat(1, 1fr);
             }
         }
 
-        @media (min-width: 1024px) {
-            #search-results {
-                grid-template-columns: repeat(2, 1fr);
-            }
-        }
 
-        @media
+
+
+        @media (min-width: 480px){
+
+            .result-item{
+                justify-content: center;
+                
+            }
+            
+            .result-item img{
+                width: 100px;
+                height: 70px;
+            }
+
+        }
     </style>
 </head>
 <body>
@@ -229,7 +248,7 @@
 
       <!-- Search Bar -->
 
-        <form class="cari" id="searchForm">
+        <form class="cari search" id="searchForm">
           <button onclick="cariKomik()" class="theme" id="theme" ><img src="icon/light-mode.png" alt="Search"/></a>
         <input type="text" placeholder="search" id="searchInput"/>
         <button type="submit"><img src="assets/search.png" alt="Search"/></a>
