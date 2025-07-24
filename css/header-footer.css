@@ -31,7 +31,9 @@ header {
   position: sticky;
   display: flex;
   width: 100%;
-  background: #29375550;
+  /* background: #29375550; */
+  background: linear-gradient(to top, transparent, transparent);
+
   justify-content: space-between;
   align-items: center;
   padding: 10px 20px;
@@ -48,7 +50,8 @@ header::before {
   left: 0;
   right: 0;
   bottom: 0;
-  background: linear-gradient(to top, #111827, #293755);
+  background: linear-gradient(to top, transparent, #1f293e);
+
   z-index: -1;
   transition: opacity 0.3s ease-in-out;
   opacity: 1;
@@ -210,6 +213,15 @@ header.scrolled {
   cursor: pointer;
 }
 
+.cari button{
+  background-color: transparent;
+  border: none;
+  display: flex;
+  align-items: center;
+  padding: 0 10px;
+  cursor: pointer;
+}
+
 .cari img {
   width: 20px;
   height: 20px;
@@ -232,47 +244,7 @@ header.scrolled {
   outline: none;
 }
 
-.search-container {
-  border-radius: 7px;
-  position: fixed;
-  display: block;
-  width: 225px;
-  height: 46.1px;
-  max-height: 461px;
-  top: 55px;
-  right: 40px;
-  z-index: 1000;
-}
 
-.search-a {
-  display: flex;
-  font-size: 0.8rem;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
-
-.container-search {
-  margin-top: 0px;
-  padding: 10px;
-  max-width: 225px;
-  display: flex;
-  background-color: #131c2e
-}
-
-
-
-.search-a p {
-  font-size: 0.8rem;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
-
-.container-search img {
-  width: 50px;
-  margin-right: 10px;
-}
 
 footer {
   background-color: #252e45;

@@ -37,22 +37,15 @@
 
       <!-- Search Bar -->
 
-      <div class="cari">
-
-        <a onclick="cariKomik()" class="theme" id="theme" ><img src="icon/light-mode.png" alt="Search"/></a>
-
+        <form class="cari" id="searchForm">
+          <a onclick="cariKomik()" class="theme" id="theme" ><img src="icon/light-mode.png" alt="Search"/></a>
         <span class="material-symbols-outlined light_mode"></span>
-
         <input type="text" placeholder="search" id="searchInput" />
-
-        <a onclick="cariKomik()"><img src="assets/search.png" alt="Search"/></a>
-      </div>
+        <button type="submit"><img src="assets/search.png" alt="Search"/></a>
+      </form>
     </header>
 
-    <!-- Penampung hasil cari langsung -->
-    <div class="search-container" id="searchContainer">
-      <!-- I T E M S -->
-    </div>
+
 
     <!-- Mobile Navigation Overlay -->
     <div class="mobile-nav-overlay" id="mobileNavOverlay">

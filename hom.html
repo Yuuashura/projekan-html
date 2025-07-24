@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>MonaKomik - Baca Komik Favoritmu</title>
+    <style>
+        /* --- Variabel Warna & Font Dasar --- */
+        :root {
+            --dark-navy: #0a192f;
+            --navy: #112240;
+            --light-navy: #233554;
+            --lightest-navy: #303c55;
+            --slate: #8892b0;
+            --light-slate: #a8b2d1;
+            --lightest-slate: #ccd6f6;
+            --white: #e6f1ff;
+            --accent: #64ffda;
+            --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+        }
+
+        /* --- Styling Dasar Body --- */
+        body {
+            background-color: var(--dark-navy);
+            color: var(--light-slate);
+            font-family: var(--font-sans);
+            margin: 0;
+            padding: 0;
+        }
+
+        /* --- Hero Section --- */
+        .hero-section {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            background-color: var(--navy);
+            padding: 60px 20px;
+            border-bottom: 1px solid var(--lightest-navy);
+        }
+
+        .hero-section h1 {
+            color: var(--white);
+            font-size: 2.5em;
+            margin: 0 0 10px 0;
+        }
+
+        .hero-section h1 span {
+            color: var(--accent);
+        }
+
+        .hero-section p {
+            font-size: 1.2em;
+            max-width: 600px;
+            margin-bottom: 30px;
+        }
+
+        /* --- Kotak Pencarian di Homepage --- */
+        .search-box-home {
+            display: flex;
+            width: 100%;
+            max-width: 500px;
+            box-shadow: 0 10px 30px -15px rgba(2, 12, 27, 0.7);
+        }
+
+        .search-box-home input {
+            width: 100%;
+            padding: 15px;
+            border: 1px solid var(--lightest-navy);
+            border-right: none;
+            border-radius: 5px 0 0 5px;
+            background-color: var(--light-navy);
+            color: var(--lightest-slate);
+            font-size: 1em;
+        }
+
+        .search-box-home input:focus {
+            outline: none;
+            border-color: var(--accent);
+        }
+
+        .search-box-home button {
+            padding: 0 25px;
+            border: none;
+            background-color: var(--accent);
+            color: var(--dark-navy);
+            font-weight: bold;
+            font-size: 1em;
+            cursor: pointer;
+            border-radius: 0 5px 5px 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .search-box-home button:hover {
+            opacity: 0.8;
+        }
+
+        /* --- Konten Utama --- */
+        .main-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+
+        .main-content h2 {
+            color: var(--white);
+            font-size: 1.8em;
+            border-bottom: 1px solid var(--lightest-navy);
+            padding-bottom: 10px;
+            margin-bottom: 30px;
+        }
+
+        /* --- Grid Komik --- */
+        .comic-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+            gap: 20px;
+        }
+
+        .comic-card {
+            background-color: var(--navy);
+            border-radius: 5px;
+            overflow: hidden;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .comic-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px -10px rgba(2, 12, 27, 0.7);
+        }
+
+        .comic-card img {
+            width: 100%;
+            height: 220px;
+            object-fit: cover;
+        }
+
+        .comic-card-info {
+            padding: 15px;
+        }
+
+        .comic-card-info h3 {
+            color: var(--lightest-slate);
+            margin: 0 0 5px 0;
+            font-size: 1em;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .comic-card-info p {
+            color: var(--slate);
+            margin: 0;
+            font-size: 0.9em;
+        }
+    </style>
+</head>
+<body>
+    <header class="hero-section">
+        <h1>Mona<span>Komik</span></h1>
+        <p>Temukan dan baca ribuan judul komik, manga, dan manhwa favoritmu di sini.</p>
+        
+        <form class="search-box-home" id="searchForm">
+            <input type="text" id="searchInput" placeholder="Cari judul komik..." required />
+            <button type="submit">Cari</button>
+        </form>
+    </header>
+
+    <main class="main-content">
+        <h2>Populer Saat Ini</h2>
+        <div class="comic-grid" id="popularComics">
+            <!-- Kartu komik populer akan diisi oleh JavaScript -->
+        </div>
+    </main>
+
+    <script>
+        // --- DATA CONTOH (Hanya beberapa untuk ditampilkan di homepage) ---
+        const popularComicData = [
+            {
+                title: "Solo Leveling",
+                thumbnail: "https://placehold.co/150x220/0a192f/e6f1ff?text=SL",
+                latestChapter: "Chapter 179"
+            },
+            {
+                title: "One Punch Man",
+                thumbnail: "https://placehold.co/150x220/0a192f/e6f1ff?text=OPM",
+                latestChapter: "Chapter 198"
+            },
+            {
+                title: "Jujutsu Kaisen",
+                thumbnail: "https://placehold.co/150x220/0a192f/e6f1ff?text=JJK",
+                latestChapter: "Chapter 221"
+            },
+            {
+                title: "One Piece",
+                thumbnail: "https://placehold.co/150x220/0a192f/e6f1ff?text=OP",
+                latestChapter: "Chapter 1088"
+            },
+            {
+                title: "Attack on Titan",
+                thumbnail: "https://placehold.co/150x220/0a192f/e6f1ff?text=AoT",
+                latestChapter: "Chapter 139"
+            },
+            {
+                title: "Tower of God",
+                thumbnail: "https://placehold.co/150x220/0a192f/e6f1ff?text=ToG",
+                latestChapter: "Chapter 550"
+            }
+        ];
+
+        // --- Fungsi untuk menampilkan komik populer ---
+        function displayPopularComics() {
+            const container = document.getElementById('popularComics');
+            popularComicData.forEach(comic => {
+                const card = document.createElement('div');
+                card.className = 'comic-card';
+                card.innerHTML = `
+                    <img src="${comic.thumbnail}" alt="${comic.title}">
+                    <div class="comic-card-info">
+                        <h3>${comic.title}</h3>
+                        <p>${comic.latestChapter}</p>
+                    </div>
+                `;
+                container.appendChild(card);
+            });
+        }
+
+        // --- Logika untuk Form Pencarian ---
+        const searchForm = document.getElementById('searchForm');
+        const searchInput = document.getElementById('searchInput');
+
+        searchForm.addEventListener('submit', (event) => {
+            event.preventDefault(); // Mencegah form dari reload halaman
+            const query = searchInput.value.trim();
+            if (query) {
+                // Redirect ke halaman pencarian dengan query
+                window.location.href = `search.html?q=${encodeURIComponent(query)}`;
+            }
+        });
+
+        // --- Panggil fungsi saat halaman dimuat ---
+        document.addEventListener('DOMContentLoaded', displayPopularComics);
+    </script>
+</body>
+</html>

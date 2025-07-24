@@ -1,1 +1,2 @@
 encodeURIComponent : mengubah spasi ( ) menjadi %20
+ urlParams.get('q'); : mengambil data setelah ? pada url

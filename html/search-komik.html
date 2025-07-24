@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Pencarian Komik</title>
+    <link rel="stylesheet" href="../css/header-footer.css">
+    <style>
+        /* --- Variabel Warna & Font Dasar --- */
+        :root {
+            --dark-navy: #0a192f;
+            --navy: #112240;
+            --light-navy: #233554;
+            --lightest-navy: #303c55;
+            --slate: #8892b0;
+            --light-slate: #a8b2d1;
+            --lightest-slate: #ccd6f6;
+            --white: #e6f1ff;
+            --accent: #64ffda;
+            --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto,
+                'Helvetica Neue', Arial, sans-serif;
+        }
+
+
+        @keyframes inAnimation {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .search-container1 {
+            max-width: 900px;
+            margin: 20px auto;
+            padding: 25px;
+            background: var(--navy);
+            box-shadow: 0 10px 30px -15px rgba(2, 12, 27, 0.7);
+            border-radius: 8px;
+        }
+
+        .search-box {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 30px;
+        }
+
+        #searchInput {
+            width: 100%;
+            padding: 12px 15px;
+            background-color: var(--light-navy);
+            border: 1px solid var(--lightest-navy);
+            border-radius: 4px;
+            color: var(--lightest-slate);
+            font-size: 1em;
+            transition: border-color 0.3s ease;
+        }
+
+        #searchInput:focus {
+            outline: none;
+            border-color: var(--accent);
+        }
+
+        #searchButton {
+            padding: 10px 20px;
+            background-color: var(--accent);
+            color: var(--dark-navy);
+            border: none;
+            border-radius: 4px;
+            font-size: 1em;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        #searchButton:hover {
+            opacity: 0.8;
+            transform: translateY(-2px);
+        }
+
+        #search-results {
+            display: grid;
+            grid-template-columns: 1fr; 
+            gap: 20px;
+        }
+
+        .result-item {
+            display: flex;
+            gap: 20px;
+            padding: 15px;
+            background-color: var(--light-navy);
+            border-radius: 5px;
+            border-left: 4px solid transparent;
+            transition: all 0.3s ease;
+            animation: inAnimation 0.5s ease-out forwards;
+            opacity: 0; 
+        }
+
+        .result-item:hover {
+            transform: translateY(-5px);
+            border-left-color: var(--accent);
+            background-color: var(--lightest-navy);
+        }
+
+        .result-item img {
+            width: 100px;
+            height: 140px;
+            object-fit: cover;
+            border-radius: 4px;
+            flex-shrink: 0;
+        }
+
+        .result-info {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .result-info h3 {
+            margin: 0 0 10px 0;
+            color: var(--white);
+            font-size: 1.2em;
+        }
+
+        .result-info .genre-tag {
+            display: inline-block;
+            background-color: var(--accent);
+            color: var(--dark-navy);
+            padding: 3px 10px;
+            border-radius: 15px;
+            font-size: 0.8em;
+            font-weight: bold;
+            margin-right: 5px;
+            margin-bottom: 10px;
+        }
+
+        .result-info p {
+            margin: 0;
+            font-size: 0.95em;
+            line-height: 1.6;
+            color: var(--light-slate);
+        }
+        
+        .status-message {
+            text-align: center;
+            padding: 40px;
+            color: var(--slate);
+            font-size: 1.1em;
+        }
+
+        @media (min-width: 768px) {
+            #search-results {
+            grid-template-columns: repeat(2, 1fr);
+            }
+        }
+    </style>
+</head>
+<body>
+
+        <header>
+      <a href="../"
+        ><i
+          ><h1 class="judul">Mona<span>Komik</span></h1></i></a
+      >
+
+      <!-- Desktop Navigation -->
+      <div class="nav">
+        <a href="../" class="home"><p>Home</p></a>
+        <a href="manga-list.html"><p>Pustaka</p></a>
+        <a href="login.html"><p>Masuk</p></a>
+        <a href="register.html"><p>Daftar</p></a>
+        <a href="tentang.html"><p>Tentang</p></a>
+      </div>
+
+      <button class="mobile-menu-toggle" id="mobileMenuToggle">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+
+      <!-- Search Bar -->
+
+        <form action="html/search-komik.html" class="cari">
+          <a onclick="cariKomik()" class="theme" id="theme" ><img src="icon/light-mode.png" alt="Search"/></a>
+
+        <span class="material-symbols-outlined light_mode"></span>
+
+        <input type="text" placeholder="search" id="searchInput" />
+
+        <button type="submit"><img src="assets/search.png" alt="Search"/></a>
+      </form>
+    </header>
+
+    <div class="search-container1">
+        <h1>Pencarian Komik</h1>
+        <div class="search-box">
+            <input type="text" id="searchInput" placeholder="Ketik judul komik..." />
+            <button id="searchButton">Cari</button>
+        </div>
+        <div id="search-results">
+            <!-- Hasil pencarian akan ditampilkan di sini oleh JavaScript -->
+        </div>
+    </div>
+
+    <script>
+        const mockComicData = [
+            {
+                title: "Solo Leveling",
+                thumbnail: "https://placehold.co/100x140/0a192f/e6f1ff?text=SL",
+                genres: ["Action", "Fantasy", "Adventure"],
+                synopsis: "Kisah Sung Jin-Woo, hunter terlemah di dunia, yang mendapatkan kesempatan kedua untuk menjadi yang terkuat melalui sistem misterius."
+            },
+            {
+                title: "One Punch Man",
+                thumbnail: "https://placehold.co/100x140/0a192f/e6f1ff?text=OPM",
+                genres: ["Action", "Comedy", "Superhero"],
+                synopsis: "Saitama, seorang pahlawan yang bisa mengalahkan musuh manapun dengan satu pukulan, menghadapi krisis eksistensial karena terlalu kuat."
+            },
+            {
+                title: "Attack on Titan",
+                thumbnail: "https://placehold.co/100x140/0a192f/e6f1ff?text=AoT",
+                genres: ["Action", "Dark Fantasy", "Post-apocalyptic"],
+                synopsis: "Umat manusia berjuang untuk bertahan hidup di dalam kota berdinding dari serangan para Titan, raksasa pemakan manusia."
+            },
+            {
+                title: "Jujutsu Kaisen",
+                thumbnail: "https://placehold.co/100x140/0a192f/e6f1ff?text=JJK",
+                genres: ["Action", "Dark Fantasy", "Supernatural"],
+                synopsis: "Yuji Itadori bergabung dengan organisasi penyihir Jujutsu untuk melawan kutukan setelah menelan benda terkutuk."
+            },
+            {
+                title: "Tower of God",
+                thumbnail: "https://placehold.co/100x140/0a192f/e6f1ff?text=ToG",
+                genres: ["Adventure", "Fantasy", "Action"],
+                synopsis: "Seorang anak laki-laki bernama Bam memasuki menara misterius untuk mengejar temannya, Rachel, dan menghadapi berbagai ujian mematikan."
+            },
+             {
+                title: "One Piece",
+                thumbnail: "https://placehold.co/100x140/0a192f/e6f1ff?text=OP",
+                genres: ["Adventure", "Fantasy", "Action", "Comedy"],
+                synopsis: "Monkey D. Luffy dan krunya berlayar mencari harta karun legendaris 'One Piece' untuk menjadi Raja Bajak Laut."
+            }
+        ];
+
+        // --- Mendapatkan Elemen dari DOM ---
+        const searchInput = document.getElementById('searchInput');
+        const searchButton = document.getElementById('searchButton');
+        const resultsContainer = document.getElementById('search-results');
+
+        function displayResults(results) {
+            resultsContainer.innerHTML = '';
+
+            if (results.length === 0) {
+                resultsContainer.innerHTML = `<div class="status-message">Komik tidak ditemukan. Coba kata kunci lain.</div>`;
+                return;
+            }
+
+            results.forEach((comic, index) => {
+                const resultItem = document.createElement('div');
+                resultItem.className = 'result-item';
+                
+                // Menambahkan delay animasi agar muncul satu per satu
+                resultItem.style.animationDelay = `${index * 0.1}s`;
+
+                let genresHTML = '';
+                comic.genres.forEach(genre => {
+                    genresHTML += `<span class="genre-tag">${genre}</span>`;
+                });
+
+                resultItem.innerHTML = `
+                    <img src="${comic.thumbnail}" alt="${comic.title}">
+                    <div class="result-info">
+                        <h3>${comic.title}</h3>
+                        <div>${genresHTML}</div>
+                        <p>${comic.synopsis.substring(0, 100)}...</p>
+                    </div>
+                `;
+                resultsContainer.appendChild(resultItem);
+            });
+        }
+
+        // --- Fungsi untuk melakukan pencarian ---
+        function performSearch() {
+            const query = searchInput.value.toLowerCase().trim();
+            
+            // Filter data berdasarkan judul
+            const filteredResults = mockComicData.filter(comic => 
+                comic.title.toLowerCase().includes(query)
+            );
+
+            displayResults(filteredResults);
+        }
+
+        // --- Event Listeners ---
+        searchButton.addEventListener('click', performSearch);
+
+        // Memungkinkan pencarian dengan menekan 'Enter'
+        searchInput.addEventListener('keyup', (event) => {
+            if (event.key === 'Enter') {
+                performSearch();
+            }
+        });
+
+        // --- Tampilkan semua data saat halaman pertama kali dimuat ---
+        document.addEventListener('DOMContentLoaded', () => {
+            displayResults(mockComicData);
+        });
+    </script>
+</body>
+</html>

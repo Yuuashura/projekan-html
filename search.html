@@ -1,0 +1,385 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Hasil Pencarian Komik</title>
+    <link rel="stylesheet" href="css/header-footer.css"/>
+    <style>
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+
+        }
+        :root {
+            --dark-navy: #0a192f;
+            --navy: #112240;
+            --light-navy: #233554;
+            --lightest-navy: #303c55;
+            --slate: #8892b0;
+            --light-slate: #a8b2d1;
+            --lightest-slate: #ccd6f6;
+            --white: #e6f1ff;
+            --accent: #64ffda;
+            --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto,
+                'Helvetica Neue', Arial, sans-serif;
+        }
+
+        /* --- Keyframe Animasi --- */
+        @keyframes inAnimation {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+
+        .search-container {
+            max-width: 1000px;
+            min-height: 600px;
+            margin: 20px auto;
+            padding: 25px;
+            background: var(--navy);
+            box-shadow: 0 10px 30px -15px rgba(2, 12, 27, 0.7);
+            border-radius: 8px;
+        }
+        h1 .query-text {
+            color: var(--accent);
+        }
+
+        /* --- Kotak Pencarian --- */
+        .search-box {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 30px;
+        }
+
+        #searchInput1 {
+            width: 100%;
+            padding: 8px 15px;
+            background-color: var(--light-navy);
+            border: 1px solid var(--lightest-navy);
+            border-radius: 4px;
+            color: var(--lightest-slate);
+            font-size: 1em;
+            transition: border-color 0.3s ease;
+        }
+
+        #searchInput1:focus {
+            outline: none;
+            border-color: var(--accent);
+        }
+
+        #searchButton {
+            padding: 10px 20px;
+            background-color: var(--accent);
+            color: var(--dark-navy);
+            border: none;
+            border-radius: 4px;
+            font-size: 1em;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        #searchButton:hover {
+            opacity: 0.8;
+            transform: translateY(-2px);
+        }
+
+        /* --- Hasil Pencarian --- */
+        #search-results {
+            display: grid;
+            grid-template-columns: 1fr; /* 1 kolom untuk mobile */
+            gap: 20px;
+        }
+
+        /* --- Card untuk setiap item hasil --- */
+
+        .result-item{
+            transition: 0.3s ease;
+
+        }
+        .result-item a{
+            display: flex;
+            position: relative;
+            gap: 20px;
+            padding: 15px;
+            background-color: var(--light-navy);
+            border-radius: 5px;
+            border-left: 4px solid transparent;
+            transition: 0.3s ease;
+            animation: inAnimation 0.5s ease-out forwards;
+            opacity: 0; /* Mulai dari transparan untuk animasi */
+        }
+        .result-item a:hover{
+            border-left-color: var(--accent);
+            background-color: var(--lightest-navy);
+        }
+        .result-item:hover {
+            transform: translateY(-5px);
+        }
+
+        .result-item img {
+            width: 220px;
+            height: 120px;
+            object-fit: cover;
+            border-radius: 4px;
+            flex-shrink: 0;
+        }
+
+        .result-info {
+            display: flex;
+            flex-direction: column;
+            width: 200px;
+            justify-content: space-between;
+        }
+
+        .result-info h3 {
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            margin: 0 0 10px 0;
+            color: var(--white);
+            font-size: 1.2em;
+            width: 100%;
+        }
+
+        .result-info .genre-tag {
+            display: inline-block;
+            background-color: var(--accent);
+            color: var(--dark-navy);
+            padding: 3px 10px;
+            border-radius: 15px;
+            font-size: 0.8em;
+            font-weight: bold;
+            margin-right: 5px;
+            margin-bottom: 10px;
+        }
+
+        .result-info  .red{
+            display: inline-block;
+            background-color:rgb(118, 177, 237);
+            color: var(--dark-navy);
+            padding: 3px 10px;
+            border-radius: 15px;
+            font-size: 0.8em;
+            font-weight: bold;
+            margin-right: 5px;
+            margin-bottom: 10px;
+        }
+
+        .result-info p {
+            margin: 0;
+            font-size: 0.95em;
+            line-height: 1.6;
+            color: var(--light-slate);
+        }
+        
+        /* --- Pesan Status (Loading & Tidak Ditemukan) --- */
+        .status-message {
+            text-align: center;
+            padding: 40px;
+            color: var(--slate);
+            font-size: 1.1em;
+        }
+
+        @media (min-width: 768px) {
+            #search-results {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+      <a href="#"
+        ><i
+          ><h1 class="judul">Mona<span>Komik</span></h1></i></a
+      >
+
+      <!-- Desktop Navigation -->
+      <div class="nav">
+        <a href="#" class="home"><p>Home</p></a>
+        <a href="manga-list.html"><p>Pustaka</p></a>
+        <a href="login.html"><p>Masuk</p></a>
+        <a href="register.html"><p>Daftar</p></a>
+        <a href="tentang.html"><p>Tentang</p></a>
+      </div>
+
+      <button class="mobile-menu-toggle" id="mobileMenuToggle">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+
+      <!-- Search Bar -->
+
+        <form class="cari" id="searchForm">
+          <a onclick="cariKomik()" class="theme" id="theme" ><img src="icon/light-mode.png" alt="Search"/></a>
+        <input type="text" placeholder="search" id="searchInput"/>
+        <button type="submit"><img src="assets/search.png" alt="Search"/></a>
+      </form>
+    </header>
+
+
+    <div class="search-container" id="searchContainer">
+        <h1 id="pageTitle">Hasil Pencarian</h1>
+        <div class="search-box">
+            <input type="text" id="searchInput1" class="cariKey" placeholder="Ketik judul komik..." />
+            <button id="searchButton">Cari</button>
+        </div>
+        <div id="search-results">
+            <!-- Hasil pencarian akan ditampilkan di sini oleh JavaScript -->
+        </div>
+    </div>
+
+        <footer>
+      <div class="medsos">
+        <a href="https://instagram.com/yudis.ashura" target="_blank"
+        ><span><img src="icon/instagram.png" alt="" /></span
+        ></a>
+      </div>
+      <div class="medsos">
+        <a href="https://github.com/yuuashura" target="_blank"
+          ><span><img src="icon/github.png" alt="" /></span
+        ></a>
+      </div>
+      <div class="medsos">
+        <a href="https://facebook.com/4sa.cyber" target="_blank"
+          ><span><img src="icon/facebook.png" alt="" /></span
+        ></a>
+      </div>
+      <div class="medsos">
+        <a href="https://telegram.com/#" target="_blank"
+          ><span><img src="icon/telegram.png" alt="" /></span
+        ></a>
+      </div>
+
+      <div class="text-footer">
+        <p>
+          All the comics on this website are only previews of the original
+          comics,there may be many language errors, character names, and story
+          lines. For the original version, please buy the comic if it's
+          available in your city.
+        </p>
+        <br />
+        <hr />
+        <p>&copy; MoonKomik</p>
+      </div>
+    </footer>
+
+</body>
+
+    <script>
+        const baseApi = "https://yuuashura-api.vercel.app/";
+
+
+
+window.addEventListener("scroll", function () {
+    if (window.scrollY > 50) {
+        document.querySelector("header").classList.add('scrolled');
+        // containerSearch.classList.add('cariScroll');
+    } else {
+        document.querySelector("header").classList.remove('scrolled');
+        // containerSearch.classList.remove('cariScroll');
+    }
+});
+
+
+        document.querySelector(".cari").style.opacity = "0";
+        document.querySelector(".cari").style.zIndex = "-100";
+        const searchInput = document.querySelector('.cariKey');
+        const searchButton = document.getElementById('searchButton');
+        const resultsContainer = document.getElementById('search-results');
+        const pageTitle = document.getElementById('pageTitle');
+        const searchContainer = document.getElementById('searchContainer');
+        const beforeItem = document.querySelector(".result-item");
+
+
+
+        let hasilkomik = [];
+
+
+        function displayResults(results) {
+            if (results[0].slug === "") {
+                resultsContainer.innerHTML = `<div class="status-message">Komik tidak ditemukan. Coba kata kunci lain.</div>`;
+                return;
+            }
+            
+            resultsContainer.innerHTML = '';
+
+            for(let i = 0; i < results.length ; i++) {
+
+                const resultItem = document.createElement('div');
+                resultItem.className = 'result-item';
+                resultItem.style.animationDelay = "0.3s";
+                resultItem.innerHTML = `
+                <a href="html/detail-komik.html?${results[i].href}">
+                <img src="${results[i].thumbnail}" alt="${results[i].title}">
+                    <div class="result-info">
+                        <h3>${results[i].title}</h3>
+                        <p>${results[0].description}...</p>
+                        <div><span class="genre-tag">${results[i].genre}</span>
+                        <span class="red">${results[i].type}</span></div>
+                        </div>
+                    </a>
+                        `;
+                        resultsContainer.appendChild(resultItem);
+                    };
+
+                }
+
+        // CREATE LOADER 
+    function createLoader() {
+    const loader = document.createElement("div");
+    loader.className = "loader";
+    return loader;
+}
+
+
+        // Mengambil data hasil pencarian dari API
+        async function getDataComic(param) {
+            resultsContainer.innerHTML = '';
+            resultsContainer.appendChild(createLoader());
+            const res = await fetch(`${baseApi}search?q=${param}`);
+            const data = await res.json();
+            hasilkomik = data.data;
+            console.log(hasilkomik);
+
+            // resultsContainer.removeChild(document.querySelector(".loader"));
+            displayResults(hasilkomik);
+
+        }
+
+        // --- Fungsi untuk melakukan pencarian ---
+        function performSearch(query) {
+            const lowerCaseQuery = query.toLowerCase().trim();
+            getDataComic(lowerCaseQuery);
+        }
+
+        // --- Event Listeners ---
+        searchButton.addEventListener('click', () => performSearch(searchInput.value));
+        searchInput.addEventListener('keyup', (event) => {
+            if (event.key === 'Enter') {
+                performSearch(searchInput.value);
+            }
+        });
+
+        // --- Logika saat halaman dimuat ---
+        document.addEventListener('DOMContentLoaded', () => {
+            const urlParams = new URLSearchParams(window.location.search);
+            const queryFromUrl = urlParams.get('q');
+            const decodedQuery = decodeURIComponent(queryFromUrl);
+            searchInput.value = decodedQuery;
+            performSearch(decodedQuery);
+            
+        });
+    </script>
+</html>

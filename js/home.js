@@ -11,26 +11,26 @@ const containerSearch = document.querySelector(".cari");
 const theme = document.querySelector("#theme");
 
 const slidesData = [
-    // {
-    //     link: "alya.html",
-    //     bgImage: "https://raw.githubusercontent.com/Yuuashura/projekan-html/refs/heads/main/assets/bg3.jpeg",
-    //     chapter: "Chapter 112",
-    //     title: "Alya Sometimes Hides Her Feelings in Russian",
-    //     description: "Orang tua perlu tahu bahwa Alya Sometimes Hides Her Feelings in Russian adalah drama sekolah menengah tentang dua teman sekelas yang berusaha mencari tahu perasaan mereka satu sama lain...",
-    //     genres: ["Comedy", "Romance", "School", "Slice of Life"],
-    //     cover1: "https://raw.githubusercontent.com/Yuuashura/projekan-html/refs/heads/main/assets/alya-cover.jpeg",
-    //     cover2: "https://raw.githubusercontent.com/Yuuashura/projekan-html/refs/heads/main/assets/alya-cover2.jpeg"
-    // },
-    // {
-    //     link: "otonari-no-tenshi-sama.html",
-    //     bgImage: "https://raw.githubusercontent.com/Yuuashura/projekan-html/refs/heads/main/assets/mahiru-bg.jpg",
-    //     chapter: "Chapter 66",
-    //     title: "Otonari No Tenshi Sama",
-    //     description: "Cerita ini mengikuti kehidupan seorang gadis yang selama ini dianggap biasa-biasa saja dan tidak berarti oleh...",
-    //     genres: ["Romance", "Comedy", "School Life", "Slice Of Life"],
-    //     cover1: "https://raw.githubusercontent.com/Yuuashura/projekan-html/refs/heads/main/assets/mahiru-cover1.jpeg",
-    //     cover2: "https://raw.githubusercontent.com/Yuuashura/projekan-html/refs/heads/main/assets/mahiru-cover2.jpeg"
-    // },
+    {
+        link: "alya.html",
+        bgImage: "https://raw.githubusercontent.com/Yuuashura/projekan-html/refs/heads/main/assets/bg3.jpeg",
+        chapter: "Chapter 112",
+        title: "Alya Sometimes Hides Her Feelings in Russian",
+        description: "Orang tua perlu tahu bahwa Alya Sometimes Hides Her Feelings in Russian adalah drama sekolah menengah tentang dua teman sekelas yang berusaha mencari tahu perasaan mereka satu sama lain...",
+        genres: ["Comedy", "Romance", "School", "Slice of Life"],
+        cover1: "https://raw.githubusercontent.com/Yuuashura/projekan-html/refs/heads/main/assets/alya-cover.jpeg",
+        cover2: "https://raw.githubusercontent.com/Yuuashura/projekan-html/refs/heads/main/assets/alya-cover2.jpeg"
+    },
+    {
+        link: "otonari-no-tenshi-sama.html",
+        bgImage: "https://raw.githubusercontent.com/Yuuashura/projekan-html/refs/heads/main/assets/mahiru-bg.jpg",
+        chapter: "Chapter 66",
+        title: "Otonari No Tenshi Sama",
+        description: "Cerita ini mengikuti kehidupan seorang gadis yang selama ini dianggap biasa-biasa saja dan tidak berarti oleh...",
+        genres: ["Romance", "Comedy", "School Life", "Slice Of Life"],
+        cover1: "https://raw.githubusercontent.com/Yuuashura/projekan-html/refs/heads/main/assets/mahiru-cover1.jpeg",
+        cover2: "https://raw.githubusercontent.com/Yuuashura/projekan-html/refs/heads/main/assets/mahiru-cover2.jpeg"
+    },
     {
         link: "my-kisah.html",
         bgImage: "https://raw.githubusercontent.com/Yuuashura/projekan-html/refs/heads/main/assets/waguri-bg.jpeg",
@@ -666,59 +666,26 @@ async function komikTerbaru() {
 }
 
 
-// CARI KOMIK 
-async function searchKomik(value) {
-    const endpoint = baseApi + "search?q=" + encodeURIComponent(value);
-    const proxyUrl = api + endpoint;
 
-    const containerSearch = document.getElementById("searchContainer");
-    const oldResults = containerSearch.querySelectorAll(".container-search");
-    oldResults.forEach(el => containerSearch.removeChild(el));
+// --- Logika untuk Form Pencarian ---
+const searchForm = document.getElementById('searchForm');
+const searchInput = document.getElementById('searchInput');
 
-    
-    let response = await fetch(proxyUrl);
-    let comic = await response.json();
-    let data = comic.data;
-
-    data.forEach((manga) => {
-        const searchCard = document.createElement("div");
-        searchCard.className = "container-search";
-        const img = document.createElement("img");
-        img.src = manga.thumbnail;
-        img.alt = `Sampul ${manga.title}`;
-        const title = document.createElement("p");
-        title.textContent = manga.title;
-        const link = document.createElement("a");
-        link.classList.add("search-a");
-        link.href = `detail-komik.html?${manga.apiDetailLink}`;
-        containerSearch.appendChild(searchCard);
-        searchCard.appendChild(link);
-        link.appendChild(img);
-        link.appendChild(title);
-    });
-}
-
-// Jalankan saat user mengetik di input
-addEventListener('input', () => {
-    const keyword = document.getElementById("searchInput").value.trim();
-    if (keyword) {
-        searchAnime(keyword);
-    } else {
-
-        const containerSearch = document.getElementById("searchContainer");
-        const oldResults = containerSearch.querySelectorAll(".container-search");
-        oldResults.forEach(el => containerSearch.removeChild(el));
-
+searchForm.addEventListener('submit', (event) => {
+    event.preventDefault();
+    const query = searchInput.value.trim();
+    if (query) {
+        window.location.href = `/search.html?q=${encodeURIComponent(query)}`;
     }
 });
 
+
+
+
 theme.addEventListener('click', () => {
     document.body.classList.toggle('light');
-
     const headerElement = document.querySelector('header');
-
     headerElement.classList.toggle('light');
-
     console.log(headerElement);
     document.querySelector('.header-popular').classList.toggle('light')
 
