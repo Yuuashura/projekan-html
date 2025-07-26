@@ -6,13 +6,11 @@ const containerTerbaru = document.querySelector("#items-terbaru");
 const containerManga = document.querySelector("#manga-rekomendasi");
 const containerManhwa = document.querySelector("#manhwa-rekomendasi");
 const containerManhua = document.querySelector("#manhua-rekomendasi");
-const header = document.querySelector("header");
 const containerSearch = document.querySelector(".cari");
-const theme = document.querySelector("#theme");
 
 const slidesData = [
     {
-        link: "alya.html",
+        link: "html/detail-komik.html?/detail-komik/tokidoki-bosotto-roshiago-de-dereru-tonari-no-alya-san/",
         bgImage: "https://raw.githubusercontent.com/Yuuashura/projekan-html/refs/heads/main/assets/bg3.jpeg",
         chapter: "Chapter 112",
         title: "Alya Sometimes Hides Her Feelings in Russian",
@@ -22,7 +20,7 @@ const slidesData = [
         cover2: "https://raw.githubusercontent.com/Yuuashura/projekan-html/refs/heads/main/assets/alya-cover2.jpeg"
     },
     {
-        link: "otonari-no-tenshi-sama.html",
+        link: "html/detail-komik.html?/detail-komik/otonari-no-tenshi-sama-ni-itsunomanika-dame-ningen-ni-sareteita-ken/",
         bgImage: "https://raw.githubusercontent.com/Yuuashura/projekan-html/refs/heads/main/assets/mahiru-bg.jpg",
         chapter: "Chapter 66",
         title: "Otonari No Tenshi Sama",
@@ -32,7 +30,7 @@ const slidesData = [
         cover2: "https://raw.githubusercontent.com/Yuuashura/projekan-html/refs/heads/main/assets/mahiru-cover2.jpeg"
     },
     {
-        link: "my-kisah.html",
+        link: "html/detail-komik.html?/detail-komik/kaoru-hana-wa-rin-to-saku/",
         bgImage: "https://raw.githubusercontent.com/Yuuashura/projekan-html/refs/heads/main/assets/waguri-bg.jpeg",
         chapter: "Chapter 157",
         title: "Kaoru Hana Wa Rin To Saku",
@@ -43,21 +41,9 @@ const slidesData = [
     }
 ];
 
-let idxNow = 0;
+let idxNow = 1;
 let autoplayInterval;
 
-
-
-// HEADER KETIKA DI SCROLL
-window.addEventListener("scroll", function () {
-    if (window.scrollY > 50) {
-        header.classList.add('scrolled');
-        containerSearch.classList.add('cariScroll');
-    } else {
-        header.classList.remove('scrolled');
-        containerSearch.classList.remove('cariScroll');
-    }
-});
 
 
 // MEMBUAT LOADING 
@@ -77,19 +63,19 @@ function removeElement(parent, child) {
 
 // UNTUK MENAMPILKAN ERROR 
 function tampilkanError(container, message) {
-    const errorDiv = document.createElement('div');
-    errorDiv.style.textAlign = 'center';
-    errorDiv.style.padding = '20px';
-    errorDiv.style.color = '#ff6b6b';
+    const errorContainer = document.createElement('div');
+    errorContainer.style.textAlign = 'center';
+    errorContainer.style.padding = '20px';
+    errorContainer.style.color = '#ff6b6b';
     const errorText = document.createElement('p');
     errorText.textContent = message;
-    errorDiv.appendChild(errorText);
-    container.appendChild(errorDiv);
+    errorContainer.appendChild(errorText);
+    container.appendChild(errorContainer);
 }
 
 // INI SLIDER NYA YANG   SEGEDE GABAN ITU 
 function buildSlider(mainSlider, data) {
-    const sliderParent = document.getElementById(mainSlider);
+    const mainSliderContainer = document.getElementById(mainSlider);
 
     const prevButton = document.createElement('button');
     prevButton.id = 'prev-btn';
@@ -110,7 +96,7 @@ function buildSlider(mainSlider, data) {
         link.href = slideData.link;
         link.className = 'update-container';
         link.style.backgroundImage = `url('${slideData.bgImage}')`;
-        link.style.opacity = index === 0 ? '1' : '0'; // tenary wakkk
+        link.style.opacity = idxNow === 1? 1:0; // tenary wakkk
         link.style.transition = 'opacity 0.5s ease-in-out';
         link.style.position = 'absolute';
         link.style.width = '100%';
@@ -180,9 +166,9 @@ function buildSlider(mainSlider, data) {
     sliderItemsContainer.style.height = 'inherit';
     // sliderItemsContainer.style.display = 'none';
 
-    // sliderParent.appendChild(prevButton);
-    sliderParent.appendChild(sliderItemsContainer);
-    // sliderParent.appendChild(nextButton);
+    // mainSliderContainer.appendChild(prevButton);
+    mainSliderContainer.appendChild(sliderItemsContainer);
+    // mainSliderContainer.appendChild(nextButton);
 
     startAutoplay();
 
@@ -200,9 +186,12 @@ function buildSlider(mainSlider, data) {
 function slideSesudah() {
     const slides = document.querySelectorAll('.update-container');
     slides[idxNow].style.opacity = '0';
+    slides[idxNow].classList.remove('z-index');
+    console.log(idxNow);
     idxNow = (idxNow + 1) % slides.length;
     setTimeout(() => {
         slides[idxNow].style.opacity = '1';
+        slides[idxNow].classList.add('z-index');
     }, 200);
 }
 
@@ -210,15 +199,17 @@ function slideSebelum() {
     const slides = document.querySelectorAll('.update-container');
     slides[idxNow].style.opacity = '0';
     idxNow = (idxNow - 1 + slides.length) % slides.length;
+    
     setTimeout(() => {
         slides[idxNow].style.opacity = '1';
+        console.log(idxNow);
     }, 200);
 }
 
 function startAutoplay() {
     autoplayInterval = setInterval(() => {
         slideSesudah();
-    }, 5000);
+    }, 3000);
 }
 
 function resetAutoplay() {
@@ -291,7 +282,7 @@ async function fetchWithRetry(url) {
     let percobaan = 0;
     while (percobaan < coba) {
         try {
-            console.log(`Fetching ${url} (percobaan ${percobaan + 1})`);
+            // console.log(`Fetching ${url} (percobaan ${percobaan + 1})`);
             const response = await fetch(url);
             if (!response.ok) {
                 throw new Error(`GAGAL FETCH! status: ${response.status}`);
@@ -301,7 +292,7 @@ async function fetchWithRetry(url) {
             return await response.json();
 
         } catch (error) {
-            console.log(`percobaan ${percobaan + 1} for ${url} failed:`, error.message);
+            // console.log(`percobaan ${percobaan + 1} for ${url} failed:`, error.message);
             percobaan++;
             if (percobaan >= coba) {
                 throw error;
@@ -389,7 +380,7 @@ async function mangaRekomendasi() {
         let data = await fetchWithRetry(`${baseApi}/komik-populer`);
         removeElement(containerManga, loader);
         data = data.manga.items;
-        console.log(data);
+        // console.log(data);
 
         data.forEach((manga) => {
 
@@ -460,7 +451,7 @@ async function manhwaRekomendasi() {
         let data = await fetchWithRetry(`${baseApi}/komik-populer`);
         removeElement(containerManhwa, loader);
         data = data.manhwa.items;
-        console.log(data);
+        // console.log(data);
 
         data.forEach((manga) => {
 
@@ -533,7 +524,7 @@ async function manhuaRekomendasi() {
         let data = await fetchWithRetry(`${baseApi}/komik-populer`);
         removeElement(containerManhua, loader);
         data = data.manhua.items;
-        console.log(data);
+        // console.log(data);
 
         data.forEach((manga) => {
 
@@ -683,14 +674,7 @@ searchForm.addEventListener('submit', (event) => {
 
 
 
-theme.addEventListener('click', () => {
-    document.body.classList.toggle('light');
-    const headerElement = document.querySelector('header');
-    headerElement.classList.toggle('light');
-    console.log(headerElement);
-    document.querySelector('.header-popular').classList.toggle('light')
 
-})
 
 document.addEventListener('DOMContentLoaded', () => {
     buildSlider('main-slider', slidesData);

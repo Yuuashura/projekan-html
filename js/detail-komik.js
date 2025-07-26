@@ -1,28 +1,269 @@
-const params = window.location.search.substring(1);
-const baseApi = "https://yuuashura-api.vercel.app"
-let chapters = []
-let chapter1st = []
-let chapter2nd = []
-let genre = []
-let info = []
-let komikSerupa = []
-let title;
-let description;
-let thumbnail;
+      const params = window.location.search.substring(1);
+      
+      const baseApi = "https://yuuashura-api.vercel.app";
+      const apiComment = "https://komentar2.vercel.app/api/komentar";
+      const komikData = {};
+      const mainCOntainer = document.querySelector(".main-container");
+      const aside = document.querySelector("aside");
+      const header = document.querySelector("header");
+      const containerSearch = document.querySelector(".cari");
+      const theme = document.querySelector("#theme");
+      const comment = document.querySelector("#comment");
+      const name = document.querySelector("#name");
+      const submitComment = document.querySelector("#submitComment");
+      const containerSending = document.querySelector(".procces-sending");
+      const commentContainer = document.querySelector("#comment-list");
+      const sending = proccesSending();
+      const suksesSending = createSuccessMessage();
 
-async function getKomik() {
-    const response = await fetch(`${baseApi}${params}`);
-    const data = await response.json();
+      let bool = 0;
 
+      async function getData() {
+        mainCOntainer.appendChild(createLoader());
+        try {
+          const response = await fetch(`${baseApi}${params}`);
+          const data = await response.json();
+          komikData.thumbnail = data.thumbnail;
+          komikData.info = data.info;
+          komikData.alternativeTitle = data.alternativeTitle;
+          komikData.sinopsis = data.sinopsis;
+          komikData.genres = data.genres;
+          komikData.chapters = data.chapters;
+          komikData.title = data.title;
+          mainCOntainer.removeChild(document.querySelector(".loader"));
+          getComment();
+          leftData();
+          rightData();
+        } catch (error) {
+          console.log("error response", error);
+        }
+      }
 
-    console.log(data);
-    
-    description = data.sinopsis;
-    title = data.title;
-    chapters = data.chapters;
-}
+      window.addEventListener("scroll", function () {
+        if (window.scrollY > 50) {
+          header.classList.add("scrolled");
+          containerSearch.classList.add("cariScroll");
+        } else {
+          header.classList.remove("scrolled");
+          containerSearch.classList.remove("cariScroll");
+        }
+      });
 
+      function leftData() {
+        //left column
+        const leftColumn = document.createElement("div");
+        leftColumn.className = "left-column";
+        const thumb = document.createElement("img");
+        thumb.className = "thumbnail";
+        thumb.src = komikData.thumbnail;
+        thumb.alt = komikData.title;
+        const infoTitle = document.createElement("h2");
+        infoTitle.textContent = "Informasi Komik";
+        const infoContainer = document.createElement("div");
+        infoContainer.className = "info-details-container";
+        infoContainer.id = "info-details";
 
-addEventListener('DOMContentLoaded', () => {
-    getKomik();
-});
+        mainCOntainer.appendChild(leftColumn);
+        leftColumn.appendChild(thumb);
+        leftColumn.appendChild(infoTitle);
+        leftColumn.appendChild(infoContainer);
+        for (const key in komikData.info) {
+          const infoItem = document.createElement("div");
+          infoItem.className = "info-item";
+          const label = document.createElement("span");
+          label.className = "label";
+          label.textContent = key;
+          const value = document.createElement("span");
+          value.className = "value";
+          value.textContent = komikData.info[key];
+          infoItem.appendChild(label);
+          infoItem.appendChild(value);
+          infoContainer.appendChild(infoItem);
+        }
+      }
+
+      function rightData() {
+        // Kolom Kanan
+        const rightCulumn = document.createElement("div");
+        rightCulumn.className = "right-column";
+        const title = document.createElement("h1");
+        title.id = "title";
+        title.textContent = komikData.title;
+        const alternativeTittle = document.createElement("h3");
+        alternativeTittle.id = "alternative-title";
+        alternativeTittle.textContent = komikData.alternativeTitle;
+        const genresContainer = document.createElement("div");
+        genresContainer.className = "genres";
+        genresContainer.id = "genres";
+        const synopsisTitle = document.createElement("h2");
+        synopsisTitle.textContent = "Sinopsis";
+        const synopsis = document.createElement("p");
+        synopsis.id = "synopsis";
+        synopsis.className = "synopsis";
+        synopsis.textContent = komikData.sinopsis;
+        const chapterTitle = document.createElement("h2");
+        chapterTitle.textContent = "Daftar Chapter";
+        const chapterList = document.createElement("div");
+        chapterList.id = "chapter-list";
+
+        // MEMASUKKAN SEMUA DATA
+        mainCOntainer.appendChild(rightCulumn);
+        rightCulumn.appendChild(title);
+        rightCulumn.appendChild(alternativeTittle);
+        rightCulumn.appendChild(genresContainer);
+        rightCulumn.appendChild(synopsisTitle);
+        rightCulumn.appendChild(synopsis);
+        rightCulumn.appendChild(chapterTitle);
+        rightCulumn.appendChild(chapterList);
+
+        // print genre
+        komikData.genres.forEach((genre) => {
+          const span = document.createElement("span");
+          span.className = "genre-tag";
+          span.textContent = genre;
+          genresContainer.appendChild(span);
+        });
+
+        //SEMUA CHAPTER
+        komikData.chapters.forEach((chapter) => {
+          const chapterDiv = document.createElement("div");
+          chapterDiv.className = "chapter-item";
+          const chapterLink = document.createElement("a");
+          chapterLink.href = chapter.originalLink;
+          chapterLink.textContent = chapter.title;
+          chapterLink.target = "_blank";
+          const chapterDate = document.createElement("span");
+          chapterDate.className = "chapter-date";
+          chapterDate.textContent = chapter.date;
+          chapterDiv.appendChild(chapterLink);
+          chapterDiv.appendChild(chapterDate);
+          chapterList.appendChild(chapterDiv);
+        });
+      }
+
+      function createLoader() {
+        const loader = document.createElement("div");
+        loader.className = "loader";
+        return loader;
+      }
+
+      async function getComment() {
+        commentContainer.appendChild(createLoader());
+        console.log(commentContainer);
+
+        const response = await fetch(apiComment);
+        const data = await response.json();
+        console.log(data);
+        let i = 0;
+        data.forEach((item) => {
+          const nama = item.email;
+          const komentar = item.komentar;
+          const timestamp = item.id;
+
+          const tanggal = new Date(timestamp);
+          const options = {
+            day: "numeric",
+            month: "long",
+            year: "numeric",
+          };
+          const dateFormatted = tanggal.toLocaleDateString("id-ID", options);
+
+          console.log(nama, dateFormatted, komentar);
+          const commentItem = document.createElement("div");
+          commentItem.className = "comment-item";
+          const commentHeader = document.createElement("div");
+          commentHeader.className = "comment-header";
+          const commentAuthor = document.createElement("span");
+          commentAuthor.className = "comment-author";
+          commentAuthor.textContent = nama;
+          const commentDate = document.createElement("span");
+          commentDate.className = "comment-date";
+          commentDate.textContent = dateFormatted;
+          const commentText = document.createElement("p");
+          commentText.className = "comment-text";
+          commentText.textContent = komentar;
+          commentHeader.appendChild(commentAuthor);
+          commentHeader.appendChild(commentDate);
+          commentItem.appendChild(commentHeader);
+          commentItem.appendChild(commentText);
+          commentContainer.appendChild(commentItem);
+        });
+        commentContainer.removeChild(document.querySelector(".loader"));
+      }
+
+      // KODE UNTUK POST KOMENTAR KE API
+      document
+        .querySelector(".comment-form")
+        .addEventListener("submit", async (e) => {
+          e.preventDefault();
+
+          const data = {
+            email: name.value,
+            komentar: comment.value,
+          };
+          console.log(data);
+
+          try {
+            containerSending.appendChild(sending);
+            const res = await fetch(apiComment, {
+              method: "POST",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify(data),
+            });
+
+            name.value = "";
+            comment.value = "";
+
+            if (!res.ok) {
+              throw new Error("Gagal mengirim komentar.");
+            } else {
+              containerSending.removeChild(sending);
+              containerSending.appendChild(suksesSending);
+              const allCommentItems =
+                commentContainer.querySelectorAll(".comment-item");
+              allCommentItems.forEach((item) => {
+                commentContainer.removeChild(item);
+              });
+              getComment();
+              console.log("sukses");
+              setTimeout(() => {
+                containerSending.removeChild(suksesSending);
+              }, 3000);
+            }
+          } catch (err) {
+            console.log(err);
+          }
+        });
+
+      function proccesSending() {
+        const sendingContainer = document.createElement("div");
+        sendingContainer.className = "sending";
+        sendingContainer.id = "sending";
+        const sendingText = document.createElement("span");
+        sendingText.textContent = "Sedang Mengirim Komentar";
+        const loadingDotsContainer = document.createElement("div");
+        loadingDotsContainer.className = "loading-dots";
+        for (let i = 0; i < 3; i++) {
+          const dot = document.createElement("div");
+          dot.className = "dot";
+          loadingDotsContainer.appendChild(dot);
+        }
+        sendingContainer.appendChild(sendingText);
+        sendingContainer.appendChild(loadingDotsContainer);
+        return sendingContainer;
+      }
+
+      function createSuccessMessage() {
+        const successContainer = document.createElement("div");
+        successContainer.className = "sending";
+        successContainer.id = "success";
+        const successText = document.createElement("span");
+        successText.textContent = "Komentar Berhasil Dikirim";
+        successText.style.color = "lightgreen";
+        successContainer.appendChild(successText);
+        return successContainer;
+      }
+
+      document.addEventListener("DOMContentLoaded", () => {
+        getData();
+      });
