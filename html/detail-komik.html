@@ -6,6 +6,8 @@
     <title>Detail Komik - Tema Gelap</title>
     <link rel="stylesheet" href="../css/header-footer.css" />
     <link rel="stylesheet" href="../css/detail-komik.css">
+    <link rel="icon"href="https://github.com/Yuuashura/icon-pack/blob/main/4.gif?raw=true"/>
+
   </head>
   <body>
     <header>
@@ -17,7 +19,7 @@
       <!-- Desktop Navigation -->
       <div class="nav">
         <a href="../" class="home"><p>Home</p></a>
-        <a href="manga-list.html"><p>Pustaka</p></a>
+        <a href="pustaka.html"><p>Pustaka</p></a>
         <a href="login.html"><p>Masuk</p></a>
         <a href="register.html"><p>Daftar</p></a>
         <a href="tentang.html"><p>Tentang</p></a>
@@ -35,16 +37,29 @@
         <a onclick="cariKomik()" class="theme" id="theme"
           ><img src="../icon/light-mode.png" alt="Search"
         /></a>
-
         <span class="material-symbols-outlined light_mode"></span>
 
         <input type="text" placeholder="search" id="searchInput" />
-
         <a onclick="cariKomik()"
           ><img src="../assets/search.png" alt="Search"
         /></a>
       </div>
     </header>
+
+    <div class="mobile-nav-overlay" id="mobileNavOverlay">
+      <button class="mobile-nav-close" id="mobileNavClose">&times;</button>
+      <div class="nav">
+        <a href="../" class="home"><p>Home</p></a>
+        <a href="pustaka.html"><p>Manga List</p></a>
+        <a href="login.html"><p>Masuk</p></a>
+        <a href="register.html"><p>Daftar</p></a>
+        <a href="tentang.html"><p>Tentang</p></a>
+      </div>
+    </div>
+
+
+
+
 
     <main>
       <div class="main-container">
@@ -81,6 +96,8 @@
       </div>
     </main>
 
+
+    
     <footer>
       <div class="medsos">
         <a href="https://instagram.com/yudis.ashura" target="_blank"

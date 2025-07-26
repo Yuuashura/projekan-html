@@ -229,6 +229,11 @@ function pauseAutoplayOnHover() {
     });
 }
 
+
+
+ 
+
+// RESPONSIFE MOBILE 
 function initMobileNavigation() {
     const mobileMenuToggle = document.getElementById('mobileMenuToggle');
     const mobileNavOverlay = document.getElementById('mobileNavOverlay');
@@ -275,6 +280,9 @@ function initMobileNavigation() {
         }
     });
 }
+
+
+
 
 //otak fetch di sini pak, 
 async function fetchWithRetry(url) {

@@ -3,8 +3,9 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Hasil Pencarian Komik</title>
+    <title>Pencarian</title>
     <link rel="stylesheet" href="../css/header-footer.css"/>
+    <link rel="icon"href="https://github.com/Yuuashura/icon-pack/blob/main/4.gif?raw=true"/>
     <style>
 
         :root {
@@ -194,12 +195,24 @@
             width: 200px;
             }
 
+            .cari{
+                display: none;
+            }
 
+            header{
+                padding: 5px 20px;
+            }
+            
+            
         }
         @media (max-width: 768px) {
-            #search-results {
-                grid-template-columns: repeat(1, 1fr);
-            }
+            
+                        header{
+                            justify-content: space-between;
+                        }
+                        #search-results {
+                            grid-template-columns: repeat(1, 1fr);
+                        }
             .result-info h3{
             width: 400px;
             }
@@ -211,8 +224,8 @@
         }
 
 
-
-
+        
+        
         @media (max-width: 480px){
 
             .result-item{
@@ -220,6 +233,9 @@
                 
             }
             
+            header{
+                justify-content: space-between;
+            }
             .result-item img{
                 width: 120px;
                 height: 70px;
@@ -241,7 +257,7 @@
       <!-- Desktop Navigation -->
       <div class="nav">
         <a href="../" class="home"><p>Home</p></a>
-        <a href="manga-list.html"><p>Pustaka</p></a>
+        <a href="pustaka.html"><p>Pustaka</p></a>
         <a href="login.html"><p>Masuk</p></a>
         <a href="register.html"><p>Daftar</p></a>
         <a href="tentang.html"><p>Tentang</p></a>
@@ -261,6 +277,18 @@
         <button type="submit"><img src="assets/search.png" alt="Search"/></a>
       </form>
     </header>
+
+    <div class="mobile-nav-overlay" id="mobileNavOverlay">
+      <button class="mobile-nav-close" id="mobileNavClose">&times;</button>
+      <div class="nav">
+        <a href="../" class="home"><p>Home</p></a>
+        <a href="pustaka.html"><p>Manga List</p></a>
+        <a href="login.html"><p>Masuk</p></a>
+        <a href="register.html"><p>Daftar</p></a>
+        <a href="tentang.html"><p>Tentang</p></a>
+      </div>
+    </div>
+
 
 
     <div class="search-container" id="searchContainer">
@@ -341,6 +369,60 @@ window.addEventListener("scroll", function () {
         let hasilkomik = [];
 
 
+
+        // RESPONSIFE MOBILE 
+function initMobileNavigation() {
+    const mobileMenuToggle = document.getElementById('mobileMenuToggle');
+    const mobileNavOverlay = document.getElementById('mobileNavOverlay');
+    const mobileNavClose = document.getElementById('mobileNavClose');
+
+    if (!mobileMenuToggle || !mobileNavOverlay || !mobileNavClose) {
+        return;
+    }
+
+    mobileMenuToggle.addEventListener('click', () => {
+        mobileMenuToggle.classList.toggle('active');
+        mobileNavOverlay.classList.toggle('active');
+        document.body.style.overflow = mobileNavOverlay.classList.contains('active') ? 'hidden' : 'auto';
+    });
+
+    mobileNavClose.addEventListener('click', () => {
+        mobileMenuToggle.classList.remove('active');
+        mobileNavOverlay.classList.remove('active');
+        document.body.style.overflow = 'auto';
+    });
+
+    mobileNavOverlay.addEventListener('click', (e) => {
+        if (e.target === mobileNavOverlay) {
+            mobileMenuToggle.classList.remove('active');
+            mobileNavOverlay.classList.remove('active');
+            document.body.style.overflow = 'auto';
+        }
+    });
+
+    const navLinks = mobileNavOverlay.querySelectorAll('.nav a');
+    navLinks.forEach(link => {
+        link.addEventListener('click', () => {
+            mobileMenuToggle.classList.remove('active');
+            mobileNavOverlay.classList.remove('active');
+            document.body.style.overflow = 'auto';
+        });
+    });
+
+    window.addEventListener('resize', () => {
+        if (window.innerWidth > 768) {
+            mobileMenuToggle.classList.remove('active');
+            mobileNavOverlay.classList.remove('active');
+            document.body.style.overflow = 'auto';
+        }
+    });
+}
+
+
+
+
+
+
         function displayResults(results) {
             if (results[0].slug === "") {
                 resultsContainer.innerHTML = `<div class="status-message">Komik tidak ditemukan. Coba kata kunci lain.</div>`;
@@ -415,5 +497,9 @@ window.addEventListener("scroll", function () {
             performSearch(decodedQuery);
             
         });
+
+document.addEventListener('DOMContentLoaded', () => {
+    initMobileNavigation();
+});
     </script>
 </html>

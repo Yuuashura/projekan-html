@@ -276,6 +276,10 @@ footer {
   width: 70%;
 }
 
+.text-footer h3{
+  color: white;
+}
+
 /* Mobile Menu Toggle */
 .mobile-menu-toggle {
   display: none;

@@ -1,0 +1,466 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Pustaka Komik - MoonKomik</title>
+    <link rel="stylesheet" href="../css/header-footer.css" />
+    <link rel="icon" href="https://github.com/Yuuashura/icon-pack/blob/main/4.gif?raw=true"/>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+    <style>
+        :root {
+            --dark-navy: #0a192f;
+            --navy: #112240;
+            --light-navy: #233554;
+            --lightest-navy: #303c55;
+            --slate: #8892b0;
+            --light-slate: #a8b2d1;
+            --lightest-slate: #ccd6f6;
+            --white: #e6f1ff;
+            --accent: #64ffda;
+            --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+        }
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: var(--font-sans);
+            background-color: var(--dark-navy);
+            color: var(--light-slate);
+        }
+        main {
+            padding: 20px 0;
+            min-height: 80vh;
+        }
+        .container {
+            width: 90%;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+        .container h1 {
+            text-align: center;
+            margin-bottom: 30px;
+            color: var(--white);
+            font-size: 2.5rem;
+        }
+        .filter-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 40px;
+            background-color: var(--navy);
+            padding: 20px;
+            border-radius: 8px;
+            flex-wrap: wrap;
+        }
+        .filter-container label {
+            font-weight: 600;
+            font-size: 1.1rem;
+            color: var(--lightest-slate);
+        }
+        #genre-select {
+            font-size: 1rem;
+            padding: 10px 15px;
+            background-color: var(--light-navy);
+            color: var(--lightest-slate);
+            border: 1px solid var(--lightest-navy);
+            border-radius: 5px;
+            min-width: 250px;
+            cursor: pointer;
+        }
+        #genre-select:focus {
+            outline: none;
+            border-color: var(--accent);
+        }
+        .comic-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 25px;
+            min-height: 300px;
+        }
+        .card-link {
+            text-decoration: none;
+            color: inherit;
+        }
+        .card {
+            background-color: var(--navy);
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 12px 25px rgba(0,0,0,0.5);
+        }
+        .card-thumbnail {
+            height: 180px;
+            position: relative;
+        }
+        .card-thumbnail img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+        .card-badge {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            background-color: var(--accent);
+            color: var(--dark-navy);
+            padding: 3px 10px;
+            border-radius: 5px;
+            font-size: 0.8rem;
+            font-weight: 700;
+        }
+        .card-content {
+            padding: 15px;
+            display: flex;
+            flex-direction: column;
+            flex-grow: 1; 
+        }
+        .card-content h3 {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: var(--white);
+            margin: 0 0 10px 0;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+        .card-description {
+            font-size: 0.9rem;
+            color: var(--slate);
+            margin-bottom: 15px;
+            display: -webkit-box;
+            -webkit-line-clamp: 3;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+        .card-info {
+            font-size: 0.8rem;
+            color: var(--light-slate);
+            margin-bottom: 15px;
+        }
+        .card-chapters {
+            margin-top: auto;
+            border-top: 1px solid var(--light-navy);
+            padding-top: 10px;
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.9rem;
+        }
+        .card-chapters a {
+            color: var(--accent);
+            font-weight: 500;
+        }
+        .status-message {
+            text-align: center;
+            font-size: 1.2rem;
+            padding: 50px;
+            color: var(--slate);
+            grid-column: 1 / -1;
+        }
+        .pagination-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 20px;
+            margin-top: 40px;
+        }
+        .page-btn {
+            background-color: var(--accent);
+            color: var(--dark-navy);
+            border: none;
+            padding: 10px 25px;
+            font-size: 1rem;
+            font-weight: 600;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: opacity 0.2s ease;
+        }
+        .page-btn:hover:not(:disabled) {
+            opacity: 0.8;
+        }
+        .page-btn:disabled {
+            background-color: var(--lightest-navy);
+            color: var(--slate);
+            cursor: not-allowed;
+        }
+        .page-info {
+            font-size: 1.1rem;
+            font-weight: 500;
+            color: var(--lightest-slate);
+        }
+    </style>
+</head>
+<body>
+    <header>
+      <a href="../"
+        ><i
+          ><h1 class="judul">Mona<span>Komik</span></h1></i></a
+      >
+
+      <!-- Desktop Navigation -->
+      <div class="nav">
+        <a href="../"><p>Home</p></a>
+        <a href="pustaka.html" class="home"><p>Pustaka</p></a>
+        <a href="all-komik.html"><p>All Comic</p></a>
+        <a href="login.html"><p>Masuk</p></a>
+        <a href="register.html"><p>Daftar</p></a>
+        <a href="tentang.html"><p>Tentang</p></a>
+      </div>
+
+      <button class="mobile-menu-toggle" id="mobileMenuToggle">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+
+      <!-- Search Bar -->
+
+        <form class="cari search" id="searchForm">
+          <!-- <button onclick="cariKomik()" class="theme" id="theme" ><img src="icon/light-mode.png" alt="Search"/></a> -->
+        <input type="text" placeholder="search" id="searchInput"/>
+        <button type="submit"><img src="../assets/search.png" alt="Search"/></a>
+      </form>
+    </header>
+
+    <div class="mobile-nav-overlay" id="mobileNavOverlay">
+      <button class="mobile-nav-close" id="mobileNavClose">&times;</button>
+      <div class="nav">
+        <a href="../"><p>Home</p></a>
+        <a href="pustaka.html" class="home"><p>Genre</p></a>
+        <a href="all-komik.html"><p>All Comic</p></a>
+        <a href="login.html"><p>Masuk</p></a>
+        <a href="register.html"><p>Daftar</p></a>
+        <a href="tentang.html"><p>Tentang</p></a>
+      </div>
+    </div>
+
+
+
+    <main>
+        <div class="container">
+            <h1>Pustaka Komik</h1>
+            <div class="filter-container">
+                <label for="genre-select">Filter berdasarkan Genre:</label>
+                <select name="genre" id="genre-select">
+                    <option value="">Memuat genre...</option>
+                </select>
+            </div>
+            <div id="comic-container" class="comic-grid">
+                <!-- Hasil komik akan ditampilkan di sini -->
+            </div>
+            <div id="pagination-controls" class="pagination-container" style="display: none;">
+                <button id="prev-page-btn" class="page-btn">‹ Sebelumnya</button>
+                <span id="page-info" class="page-info">Halaman 1</span>
+                <button id="next-page-btn" class="page-btn">Berikutnya ›</button>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+      <div class="medsos">
+        <a href="https://instagram.com/yudis.ashura" target="_blank"
+        ><span><img src="icon/instagram.png" alt="" /></span
+        ></a>
+      </div>
+      <div class="medsos">
+        <a href="https://github.com/yuuashura" target="_blank"
+          ><span><img src="icon/github.png" alt="" /></span
+        ></a>
+      </div>
+      <div class="medsos">
+        <a href="https://facebook.com/4sa.cyber" target="_blank"
+          ><span><img src="icon/facebook.png" alt="" /></span
+        ></a>
+      </div>
+      <div class="medsos">
+        <a href="https://telegram.com/#" target="_blank"
+          ><span><img src="icon/telegram.png" alt="" /></span
+        ></a>
+      </div>
+
+      <div class="text-footer">
+        <p>
+          All the comics on this website are only previews of the original
+          comics,there may be many language errors, character names, and story
+          lines. For the original version, please buy the comic if it's
+          available in your city.
+        </p>
+        <br />
+        <hr />
+        <p>&copy; MoonKomik</p>
+      </div>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const genreSelect = document.getElementById('genre-select');
+            const comicContainer = document.getElementById('comic-container');
+            const paginationControls = document.getElementById('pagination-controls');
+            const prevButton = document.getElementById('prev-page-btn');
+            const nextButton = document.getElementById('next-page-btn');
+            const pageInfo = document.getElementById('page-info');
+            
+            const API_BASE_URL = 'https://yuuashura-api.vercel.app';
+            let allGenres = [];
+
+            // --- FUNGSI BARU UNTUK MENAMPILKAN KARTU YANG LEBIH LENGKAP ---
+            function displayComics(comics) {
+                comicContainer.innerHTML = '';
+                if (!comics || comics.length === 0) {
+                    comicContainer.innerHTML = `<p class="status-message">Tidak ada komik yang ditemukan.</p>`;
+                    return;
+                }
+                comics.forEach(comic => {
+                    const cardLink = document.createElement('a');
+                    cardLink.className = 'card-link';
+                    cardLink.href = `detail-komik.html?${comic.apiMangaLink}`;
+                    
+                    cardLink.innerHTML = `
+                        <div class="card">
+                            <div class="card-thumbnail">
+                                <img src="${comic.thumbnail}" alt="Sampul ${comic.title}" loading="lazy">
+                                <span class="card-badge">${comic.type}</span>
+                            </div>
+                            <div class="card-content">
+                                <h3>${comic.title}</h3>
+                                <p class="card-description">${comic.description}</p>
+                                <p class="card-info"><strong>Genre:</strong> ${comic.genre}</p>
+                                <p class="card-info"><strong>Info:</strong> ${comic.additionalInfo}</p>
+                                <p class="card-info"><strong>Update:</strong> ${comic.updateStatus}</p>
+                                <div class="card-chapters">
+                                    <a href="#${comic.chapters.first.apiLink}">Awal: ${comic.chapters.first.chapter}</a>
+                                    <a href="#${comic.chapters.latest.apiLink}">Terbaru: ${comic.chapters.latest.chapter}</a>
+                                </div>
+                            </div>
+                        </div>`;
+                    comicContainer.appendChild(cardLink);
+                });
+            }
+
+            async function fetchComics(genre, page) {
+                comicContainer.innerHTML = `<div class="loader"></div>`;
+                paginationControls.style.display = 'flex';
+                
+                const url = `${API_BASE_URL}/genre/${genre}/${page}`;
+                
+                try {
+                    const response = await fetch(url);
+                    if (!response.ok) throw new Error('Gagal mengambil data komik');
+                    
+                    const jsonData = await response.json();
+                    displayComics(jsonData.data);
+                    updatePagination(page, jsonData.hasNextPage);
+
+                } catch (error) {
+                    console.error("Error fetching comics:", error);
+                    comicContainer.innerHTML = `<p class="status-message">Gagal memuat data komik.</p>`;
+                    paginationControls.style.display = 'none';
+                }
+            }
+
+            function updatePagination(currentPage, hasNextPage) {
+                pageInfo.textContent = `Halaman ${currentPage}`;
+                prevButton.disabled = currentPage <= 1;
+                nextButton.disabled = !hasNextPage;
+            }
+
+            function updateURL(genre, page) {
+                const newUrl = `pustaka.html?genre=${genre}&page=${page}`;
+                window.history.pushState({ path: newUrl }, '', newUrl);
+            }
+
+            async function handlePageLoad() {
+                await fetchAllGenres();
+
+                const params = new URLSearchParams(window.location.search);
+                const genre = params.get('genre');
+                const page = parseInt(params.get('page')) || 1;
+
+                populateGenreFilter(genre);
+
+                if (genre) {
+                    fetchComics(genre, page);
+                } else {
+                    comicContainer.innerHTML = '<p class="status-message">Pilih genre untuk memulai.</p>';
+                    paginationControls.style.display = 'none';
+                }
+            }
+
+            async function fetchAllGenres() {
+                try {
+                    const response = await fetch(`${API_BASE_URL}/genre-all`);
+                    if(!response.ok) throw new Error('Gagal mengambil daftar genre');
+                    allGenres = await response.json();
+                } catch (error) {
+                    console.error("Error fetching genres:", error);
+                    genreSelect.innerHTML = '<option value="">Gagal memuat genre</option>';
+                }
+            }
+
+            function populateGenreFilter(selectedGenre) {
+                genreSelect.innerHTML = '';
+                const defaultOption = document.createElement('option');
+                defaultOption.value = "";
+                defaultOption.textContent = "Pilih Genre";
+                genreSelect.appendChild(defaultOption);
+
+                allGenres.forEach(genre => {
+                    const option = document.createElement('option');
+                    option.value = genre.slug;
+                    option.textContent = genre.title;
+                    if (genre.slug === selectedGenre) {
+                        option.selected = true;
+                    }
+                    genreSelect.appendChild(option);
+                });
+            }
+            
+            genreSelect.addEventListener('change', (event) => {
+                const selectedGenre = event.target.value;
+                if (selectedGenre) {
+                    updateURL(selectedGenre, 1);
+                    fetchComics(selectedGenre, 1);
+                }
+            });
+
+            nextButton.addEventListener('click', () => {
+                const params = new URLSearchParams(window.location.search);
+                const genre = params.get('genre');
+                let page = parseInt(params.get('page')) || 1;
+                page++;
+                updateURL(genre, page);
+                fetchComics(genre, page);
+            });
+
+            prevButton.addEventListener('click', () => {
+                const params = new URLSearchParams(window.location.search);
+                const genre = params.get('genre');
+                let page = parseInt(params.get('page')) || 1;
+                if (page > 1) {
+                    page--;
+                    updateURL(genre, page);
+                    fetchComics(genre, page);
+                }
+            });
+
+            window.addEventListener('popstate', handlePageLoad);
+
+            handlePageLoad();
+        });
+    </script>
+</body>
+</html>
