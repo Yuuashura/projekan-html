@@ -96,7 +96,7 @@ function buildSlider(mainSlider, data) {
         link.href = slideData.link;
         link.className = 'update-container';
         link.style.backgroundImage = `url('${slideData.bgImage}')`;
-        link.style.opacity = idxNow === 1? 1:0; // tenary wakkk
+        link.style.opacity = idxNow === 1? 1:0; // set opacity 1 di slide pertama
         link.style.transition = 'opacity 0.5s ease-in-out';
         link.style.position = 'absolute';
         link.style.width = '100%';
@@ -348,6 +348,11 @@ async function komikTop() {
             thumbnailImage.alt = `Sampul ${manga.title}`;
             thumbnailImage.loading = "lazy";
 
+            const peringkat = document.createElement("p");
+            peringkat.className = "peringkat";
+            peringkat.textContent = i + 1;
+
+            
             const descriptionContainer = document.createElement("div");
             descriptionContainer.className = "deskripsi-komik";
 
@@ -357,13 +362,14 @@ async function komikTop() {
 
             const chapterContainer = document.createElement("div");
             chapterContainer.className = "cont-ch";
-
+            
             const chapterLink = document.createElement("a");
             chapterLink.className = "ch-rekomendasi";
             chapterLink.href = manga.apiChapterLink || `html/detail-komik.html?${manga.apiDetailLink}`;
             chapterLink.textContent = latestChapter[i++];
 
             thumbnailContainer.appendChild(thumbnailImage);
+            thumbnailContainer.appendChild(peringkat);
             descriptionContainer.appendChild(titleHeader);
             card.appendChild(thumbnailContainer);
             card.appendChild(descriptionContainer);

@@ -75,6 +75,19 @@ header.scrolled {
   z-index: 2;
 }
 
+@keyframes inAnimation {
+  from {
+    opacity: 0;
+    transform: translateX(-30px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+
 
 .loader {
   margin: 50px auto;
@@ -313,7 +326,6 @@ footer {
   transform: rotate(45deg) translate(-5px, -6px);
 }
 
-/* Mobile nav overlay - FIXED */
 .mobile-nav-overlay {
   position: fixed;
   top: 0;
@@ -334,14 +346,11 @@ footer {
   left: 0;
 }
 
-/* Override nav styles when inside mobile overlay - FIXED */
 .mobile-nav-overlay .nav {
   display: flex !important;
-  /* Force display */
   flex-direction: column;
   gap: 30px;
   align-items: center;
-  /* Center the nav items */
 }
 
 .mobile-nav-overlay .nav a {
@@ -351,7 +360,6 @@ footer {
   border-bottom: none;
   transition: all 0.3s ease;
   display: block !important;
-  /* Ensure links are visible */
 }
 
 .mobile-nav-overlay .nav a:hover {
@@ -359,14 +367,8 @@ footer {
   transform: translateY(-5px);
 }
 
-.mobile-nav-overlay .cari {
-  margin-top: 30px;
-  width: 300px;
-  display: flex;
-  /* Ensure search bar is visible */
-}
 
-/* Close button untuk mobile nav */
+
 .mobile-nav-close {
   position: absolute;
   top: 20px;
@@ -378,6 +380,8 @@ footer {
   cursor: pointer;
   padding: 10px;
 }
+
+
 
 @media screen and (max-width: 1024px) {
 

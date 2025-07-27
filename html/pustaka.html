@@ -95,11 +95,12 @@
             display: flex;
             flex-direction: column;
             height: 100%;
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            transition: 0.3s ease;
+            animation: inAnimation 0.5s ease-in-out;
         }
         .card:hover {
             transform: translateY(-8px);
-            box-shadow: 0 12px 25px rgba(0,0,0,0.5);
+            box-shadow: 0 12px 25px rgba(13, 247, 255, 0.279);
         }
         .card-thumbnail {
             height: 180px;
@@ -175,6 +176,7 @@
             display: flex;
             justify-content: center;
             align-items: center;
+            text-align: center;
             gap: 20px;
             margin-top: 40px;
         }
@@ -202,6 +204,19 @@
             font-weight: 500;
             color: var(--lightest-slate);
         }
+
+        @media (max-width: 480px){
+            .pagination-container{
+                font-size: 0.4rem;
+            }
+
+            .page-btn{
+                font-size: 0.9rem;
+                padding: 6px 15px;
+            }
+        }
+
+
     </style>
 </head>
 <body>
@@ -214,11 +229,12 @@
       <!-- Desktop Navigation -->
       <div class="nav">
         <a href="../"><p>Home</p></a>
-        <a href="pustaka.html" class="home"><p>Pustaka</p></a>
+        <a href="pustaka.html" class="home"><p>Genre</p></a>
         <a href="all-komik.html"><p>All Comic</p></a>
         <a href="login.html"><p>Masuk</p></a>
         <a href="register.html"><p>Daftar</p></a>
         <a href="tentang.html"><p>Tentang</p></a>
+        
       </div>
 
       <button class="mobile-menu-toggle" id="mobileMenuToggle">
@@ -229,8 +245,7 @@
 
       <!-- Search Bar -->
 
-        <form class="cari search" id="searchForm">
-          <!-- <button onclick="cariKomik()" class="theme" id="theme" ><img src="icon/light-mode.png" alt="Search"/></a> -->
+        <form class="cari" id="searchForm">
         <input type="text" placeholder="search" id="searchInput"/>
         <button type="submit"><img src="../assets/search.png" alt="Search"/></a>
       </form>
@@ -256,7 +271,7 @@
             <div class="filter-container">
                 <label for="genre-select">Filter berdasarkan Genre:</label>
                 <select name="genre" id="genre-select">
-                    <option value="">Memuat genre...</option>
+                    <option value="" id="default-option">Memuat genre...</option>
                 </select>
             </div>
             <div id="comic-container" class="comic-grid">
@@ -273,22 +288,22 @@
     <footer>
       <div class="medsos">
         <a href="https://instagram.com/yudis.ashura" target="_blank"
-        ><span><img src="icon/instagram.png" alt="" /></span
+        ><span><img src="../icon/instagram.png" alt="" /></span
         ></a>
       </div>
       <div class="medsos">
         <a href="https://github.com/yuuashura" target="_blank"
-          ><span><img src="icon/github.png" alt="" /></span
+          ><span><img src="../icon/github.png" alt="" /></span
         ></a>
       </div>
       <div class="medsos">
         <a href="https://facebook.com/4sa.cyber" target="_blank"
-          ><span><img src="icon/facebook.png" alt="" /></span
+          ><span><img src="../icon/facebook.png" alt="" /></span
         ></a>
       </div>
       <div class="medsos">
         <a href="https://telegram.com/#" target="_blank"
-          ><span><img src="icon/telegram.png" alt="" /></span
+          ><span><img src="../icon/telegram.png" alt="" /></span
         ></a>
       </div>
 
@@ -314,48 +329,94 @@
             const nextButton = document.getElementById('next-page-btn');
             const pageInfo = document.getElementById('page-info');
             
-            const API_BASE_URL = 'https://yuuashura-api.vercel.app';
+            const baseApi = 'https://yuuashura-api.vercel.app';
             let allGenres = [];
 
             // --- FUNGSI BARU UNTUK MENAMPILKAN KARTU YANG LEBIH LENGKAP ---
             function displayComics(comics) {
-                comicContainer.innerHTML = '';
+                // comicContainer.removeChild(document.querySelector('.loader'));
+                comicContainer.textContent = '';
                 if (!comics || comics.length === 0) {
-                    comicContainer.innerHTML = `<p class="status-message">Tidak ada komik yang ditemukan.</p>`;
+                    const pesanAwal = document.createElement('p');
+                    pesanAwal.textContent = 'Tidak komik yang ditemukan';
+                    pesanAwal.classList.add('status-message');
+                    comicContainer.appendChild(pesanAwal);
                     return;
                 }
                 comics.forEach(comic => {
                     const cardLink = document.createElement('a');
                     cardLink.className = 'card-link';
                     cardLink.href = `detail-komik.html?${comic.apiMangaLink}`;
+                    // card.style.animationDelay = "0.2s";
                     
-                    cardLink.innerHTML = `
-                        <div class="card">
-                            <div class="card-thumbnail">
-                                <img src="${comic.thumbnail}" alt="Sampul ${comic.title}" loading="lazy">
-                                <span class="card-badge">${comic.type}</span>
-                            </div>
-                            <div class="card-content">
-                                <h3>${comic.title}</h3>
-                                <p class="card-description">${comic.description}</p>
-                                <p class="card-info"><strong>Genre:</strong> ${comic.genre}</p>
-                                <p class="card-info"><strong>Info:</strong> ${comic.additionalInfo}</p>
-                                <p class="card-info"><strong>Update:</strong> ${comic.updateStatus}</p>
-                                <div class="card-chapters">
-                                    <a href="#${comic.chapters.first.apiLink}">Awal: ${comic.chapters.first.chapter}</a>
-                                    <a href="#${comic.chapters.latest.apiLink}">Terbaru: ${comic.chapters.latest.chapter}</a>
-                                </div>
-                            </div>
-                        </div>`;
+                    const cardDiv = document.createElement('div');
+                    cardDiv.className = 'card';
+                    const thumbnailDiv = document.createElement('div');
+                    thumbnailDiv.className = 'card-thumbnail';
+                    const thumbnailImg = document.createElement('img');
+                    thumbnailImg.src = comic.thumbnail;
+                    thumbnailImg.alt = `Sampul ${comic.title}`;
+                    thumbnailImg.loading = 'lazy'; 
+                    const typeBadge = document.createElement('span');
+                    typeBadge.className = 'card-badge';
+                    typeBadge.textContent = comic.type;
+                    thumbnailDiv.appendChild(thumbnailImg);
+                    thumbnailDiv.appendChild(typeBadge);
+                    const contentDiv = document.createElement('div');
+                    contentDiv.className = 'card-content';
+                    const titleH3 = document.createElement('h3');
+                    titleH3.textContent = comic.title;
+                    const descriptionP = document.createElement('p');
+                    descriptionP.className = 'card-description';
+                    descriptionP.textContent = comic.description;
+                    const genreP = document.createElement('p');
+                    genreP.className = 'card-info';
+                    const genreStrong = document.createElement('strong');
+                    genreStrong.textContent = 'Genre: ';
+                    genreP.appendChild(genreStrong);
+                    genreP.appendChild(document.createTextNode(comic.genre));
+                    const additionalInfoP = document.createElement('p');
+                    additionalInfoP.className = 'card-info';
+                    const infoStrong = document.createElement('strong');
+                    infoStrong.textContent = 'Info: ';
+                    additionalInfoP.appendChild(infoStrong);
+                    additionalInfoP.appendChild(document.createTextNode(comic.additionalInfo));
+                    const updateStatusP = document.createElement('p');
+                    updateStatusP.className = 'card-info';
+                    const updateStrong = document.createElement('strong');
+                    updateStrong.textContent = 'Update: ';
+                    updateStatusP.appendChild(updateStrong);
+                    updateStatusP.appendChild(document.createTextNode(comic.updateStatus));
+                    const chaptersDiv = document.createElement('div');
+                    chaptersDiv.className = 'card-chapters';
+                    const firstChapterLink = document.createElement('a');
+                    firstChapterLink.href = `#${comic.chapters.first.apiLink}`;
+                    firstChapterLink.textContent = `Awal: ${comic.chapters.first.chapter}`;
+                    const latestChapterLink = document.createElement('a');
+                    latestChapterLink.href = `#${comic.chapters.latest.apiLink}`;
+                    latestChapterLink.textContent = `Terbaru: ${comic.chapters.latest.chapter}`;
+                    chaptersDiv.appendChild(firstChapterLink);
+                    chaptersDiv.appendChild(latestChapterLink);
+                    contentDiv.appendChild(titleH3);
+                    contentDiv.appendChild(descriptionP);
+                    contentDiv.appendChild(genreP);
+                    contentDiv.appendChild(additionalInfoP);
+                    contentDiv.appendChild(updateStatusP);
+                    contentDiv.appendChild(chaptersDiv);
+                    cardDiv.appendChild(thumbnailDiv);
+                    cardDiv.appendChild(contentDiv);
+                    cardLink.appendChild(cardDiv);
                     comicContainer.appendChild(cardLink);
                 });
             }
 
             async function fetchComics(genre, page) {
-                comicContainer.innerHTML = `<div class="loader"></div>`;
+                comicContainer.textContent = '';
+                const loader = document.createElement('div');
+                loader.classList.add("loader");
+                comicContainer.appendChild(loader);
                 paginationControls.style.display = 'flex';
-                
-                const url = `${API_BASE_URL}/genre/${genre}/${page}`;
+                const url = `${baseApi}/genre/${genre}/${page}`;
                 
                 try {
                     const response = await fetch(url);
@@ -367,7 +428,12 @@
 
                 } catch (error) {
                     console.error("Error fetching comics:", error);
-                    comicContainer.innerHTML = `<p class="status-message">Gagal memuat data komik.</p>`;
+                    comicContainer.textContent = '';
+                    const pesanAwal = document.createElement('p');
+                    pesanAwal.textContent = 'Gagal Memuat Data Komik';
+                    pesanAwal.classList.add('status-message');
+                    comicContainer.appendChild(pesanAwal);
+
                     paginationControls.style.display = 'none';
                 }
             }
@@ -395,24 +461,30 @@
                 if (genre) {
                     fetchComics(genre, page);
                 } else {
-                    comicContainer.innerHTML = '<p class="status-message">Pilih genre untuk memulai.</p>';
+                    const pesanAwal = document.createElement('p');
+                    pesanAwal.textContent = 'Pilih genre terlebih dahulu';
+                    pesanAwal.classList.add('status-message');
+                    comicContainer.appendChild(pesanAwal);
                     paginationControls.style.display = 'none';
                 }
             }
 
             async function fetchAllGenres() {
                 try {
-                    const response = await fetch(`${API_BASE_URL}/genre-all`);
+                    const response = await fetch(`${baseApi}/genre-all`);
                     if(!response.ok) throw new Error('Gagal mengambil daftar genre');
                     allGenres = await response.json();
                 } catch (error) {
                     console.error("Error fetching genres:", error);
-                    genreSelect.innerHTML = '<option value="">Gagal memuat genre</option>';
+                    const failedSelect = document.createElement('option');
+                    failedSelect.value = "";
+                    failedSelect.textContent = "Gagal memuat genre";
+                    genreSelect.appendChild(failedSelect);
                 }
             }
 
             function populateGenreFilter(selectedGenre) {
-                genreSelect.innerHTML = '';
+                genreSelect.removeChild(document.querySelector('#default-option'));
                 const defaultOption = document.createElement('option');
                 defaultOption.value = "";
                 defaultOption.textContent = "Pilih Genre";
@@ -423,7 +495,7 @@
                     option.value = genre.slug;
                     option.textContent = genre.title;
                     if (genre.slug === selectedGenre) {
-                        option.selected = true;
+                        option.selected = 1; //turen on yg sedang di pilih
                     }
                     genreSelect.appendChild(option);
                 });
@@ -456,6 +528,81 @@
                     fetchComics(genre, page);
                 }
             });
+
+
+
+
+
+            // ===================  SEARCH  ====================
+            const form = document.querySelector('.cari');
+            form.addEventListener('submit', function(event) {
+            event.preventDefault();
+            lakukanPencarian(); 
+            });
+            function lakukanPencarian() {
+            const kataKunci = document.getElementById('searchInput').value.trim();
+            window.location.href = `search.html?q=${encodeURIComponent(kataKunci)}`;
+            console.log('Kata kunci pencarian:', kataKunci);
+            }
+            //=====================================================================
+
+            
+            //======================================================================
+            // RESPONSIFE MOBILE 
+            //=====================================================================
+            function initMobileNavigation() {
+                const mobileMenuToggle = document.getElementById('mobileMenuToggle');
+                const mobileNavOverlay = document.getElementById('mobileNavOverlay');
+                const mobileNavClose = document.getElementById('mobileNavClose');
+
+                if (!mobileMenuToggle || !mobileNavOverlay || !mobileNavClose) {
+                    return;
+                }
+
+                mobileMenuToggle.addEventListener('click', () => {
+                    mobileMenuToggle.classList.toggle('active');
+                    mobileNavOverlay.classList.toggle('active');
+                    document.body.style.overflow = mobileNavOverlay.classList.contains('active') ? 'hidden' : 'auto';
+                });
+
+                mobileNavClose.addEventListener('click', () => {
+                    mobileMenuToggle.classList.remove('active');
+                    mobileNavOverlay.classList.remove('active');
+                    document.body.style.overflow = 'auto';
+                });
+
+                mobileNavOverlay.addEventListener('click', (e) => {
+                    if (e.target === mobileNavOverlay) {
+                        mobileMenuToggle.classList.remove('active');
+                        mobileNavOverlay.classList.remove('active');
+                        document.body.style.overflow = 'auto';
+                    }
+                });
+
+                const navLinks = mobileNavOverlay.querySelectorAll('.nav a');
+                navLinks.forEach(link => {
+                    link.addEventListener('click', () => {
+                        mobileMenuToggle.classList.remove('active');
+                        mobileNavOverlay.classList.remove('active');
+                        document.body.style.overflow = 'auto';
+                    });
+                });
+
+                window.addEventListener('resize', () => {
+                    if (window.innerWidth > 768) {
+                        mobileMenuToggle.classList.remove('active');
+                        mobileNavOverlay.classList.remove('active');
+                        document.body.style.overflow = 'auto';
+                    }
+                });
+            }
+
+            initMobileNavigation();
+
+            //==================================================================
+
+
+
 
             window.addEventListener('popstate', handlePageLoad);
 

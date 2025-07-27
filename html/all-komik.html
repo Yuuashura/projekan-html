@@ -91,7 +91,8 @@
             display: flex;
             flex-direction: column;
             height: 100%;
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            transition:0.3s ease;
+            animation: inAnimation 0.3s ease;
         }
         .card:hover {
             transform: translateY(-8px);
@@ -198,6 +199,12 @@
             font-weight: 500;
             color: var(--lightest-slate);
         }
+
+        @media (max-width: 480px){
+            .pagination-container{
+                font-size: 0.4rem;
+            }
+        }
     </style>
 </head>
 <body>
@@ -210,7 +217,7 @@
       <!-- Desktop Navigation -->
       <div class="nav">
         <a href="../"><p>Home</p></a>
-        <a href="pustaka.html"><p>Pustaka</p></a>
+        <a href="pustaka.html"><p>Genre</p></a>
         <a href="all-komik.html" class="home"><p>All Comic</p></a>
         <a href="login.html"><p>Masuk</p></a>
         <a href="register.html"><p>Daftar</p></a>
@@ -225,7 +232,7 @@
 
       <!-- Search Bar -->
 
-        <form class="cari search" id="searchForm">
+        <form class="cari" id="searchForm">
           <!-- <button onclick="cariKomik()" class="theme" id="theme" ><img src="../icon/light-mode.png" alt="Search"/></a> -->
         <input type="text" placeholder="search" id="searchInput"/>
         <button type="submit"><img src="../assets/search.png" alt="Search"/></a>
@@ -236,7 +243,7 @@
       <button class="mobile-nav-close" id="mobileNavClose">&times;</button>
       <div class="nav">
         <a href="../" class="home"><p>Home</p></a>
-        <a href="pustaka.html"><p>Manga List</p></a>
+        <a href="pustaka.html"><p>Genre</p></a>
         <a href="login.html"><p>Masuk</p></a>
         <a href="register.html"><p>Daftar</p></a>
         <a href="tentang.html"><p>Tentang</p></a>
@@ -262,22 +269,22 @@
     <footer>
       <div class="medsos">
         <a href="https://instagram.com/yudis.ashura" target="_blank"
-        ><span><img src="icon/instagram.png" alt="" /></span
+        ><span><img src="../icon/instagram.png" alt="" /></span
         ></a>
       </div>
       <div class="medsos">
         <a href="https://github.com/yuuashura" target="_blank"
-          ><span><img src="icon/github.png" alt="" /></span
+          ><span><img src="../icon/github.png" alt="" /></span
         ></a>
       </div>
       <div class="medsos">
         <a href="https://facebook.com/4sa.cyber" target="_blank"
-          ><span><img src="icon/facebook.png" alt="" /></span
+          ><span><img src="../icon/facebook.png" alt="" /></span
         ></a>
       </div>
       <div class="medsos">
         <a href="https://telegram.com/#" target="_blank"
-          ><span><img src="icon/telegram.png" alt="" /></span
+          ><span><img src="../icon/telegram.png" alt="" /></span
         ></a>
       </div>
 
@@ -297,18 +304,24 @@
 
     <script>
         document.addEventListener('DOMContentLoaded', () => {
+            initMobileNavigation();
             const comicContainer = document.getElementById('comic-container');
             const paginationControls = document.getElementById('pagination-controls');
             const prevButton = document.getElementById('prev-page-btn');
             const nextButton = document.getElementById('next-page-btn');
             const pageInfo = document.getElementById('page-info');
+
             
             const API_BASE_URL = 'https://yuuashura-api.vercel.app/pustaka';
 
             function displayComics(comics) {
-                comicContainer.innerHTML = '';
+                comicContainer.textContent = '';
                 if (!comics || comics.length === 0) {
-                    comicContainer.innerHTML = `<p class="status-message">Tidak ada komik yang ditemukan.</p>`;
+
+                    const pesanAwal = document.createElement('p');
+                    pesanAwal.textContent = 'Tidak komik yang ditemukan';
+                    pesanAwal.classList.add('status-message');
+                    comicContainer.appendChild(pesanAwal);
                     return;
                 }
                 comics.forEach(comic => {
@@ -338,7 +351,10 @@
             }
 
             async function fetchComics(page) {
-                comicContainer.innerHTML = `<div class="loader"></div>`;
+                comicContainer.textContent = '';
+                const loader = document.createElement('div');
+                loader.classList.add("loader");
+                comicContainer.appendChild(loader);
                 paginationControls.style.display = 'flex';
                 
                 const url = `${API_BASE_URL}/${page}`;
@@ -354,7 +370,11 @@
 
                 } catch (error) {
                     console.error("Error fetching comics:", error);
-                    comicContainer.innerHTML = `<p class="status-message">Gagal memuat data.</p>`;
+                    comicContainer.textContent = '';
+                    const pesanAwal = document.createElement('p');
+                    pesanAwal.textContent = 'Gagal Memuat Data Komik';
+                    pesanAwal.classList.add('status-message');
+                    comicContainer.appendChild(pesanAwal);
                     paginationControls.style.display = 'none';
                 }
             }
@@ -393,6 +413,58 @@
                     fetchComics(page);
                 }
             });
+
+//======================================================================================
+                        // RESPONSIFE MOBILE 
+            function initMobileNavigation() {
+                const mobileMenuToggle = document.getElementById('mobileMenuToggle');
+                const mobileNavOverlay = document.getElementById('mobileNavOverlay');
+                const mobileNavClose = document.getElementById('mobileNavClose');
+
+                if (!mobileMenuToggle || !mobileNavOverlay || !mobileNavClose) {
+                    return;
+                }
+
+                mobileMenuToggle.addEventListener('click', () => {
+                    mobileMenuToggle.classList.toggle('active');
+                    mobileNavOverlay.classList.toggle('active');
+                    document.body.style.overflow = mobileNavOverlay.classList.contains('active') ? 'hidden' : 'auto';
+                });
+
+                mobileNavClose.addEventListener('click', () => {
+                    mobileMenuToggle.classList.remove('active');
+                    mobileNavOverlay.classList.remove('active');
+                    document.body.style.overflow = 'auto';
+                });
+
+                mobileNavOverlay.addEventListener('click', (e) => {
+                    if (e.target === mobileNavOverlay) {
+                        mobileMenuToggle.classList.remove('active');
+                        mobileNavOverlay.classList.remove('active');
+                        document.body.style.overflow = 'auto';
+                    }
+                });
+
+                const navLinks = mobileNavOverlay.querySelectorAll('.nav a');
+                navLinks.forEach(link => {
+                    link.addEventListener('click', () => {
+                        mobileMenuToggle.classList.remove('active');
+                        mobileNavOverlay.classList.remove('active');
+                        document.body.style.overflow = 'auto';
+                    });
+                });
+
+                window.addEventListener('resize', () => {
+                    if (window.innerWidth > 768) {
+                        mobileMenuToggle.classList.remove('active');
+                        mobileNavOverlay.classList.remove('active');
+                        document.body.style.overflow = 'auto';
+                    }
+                });
+            }
+
+            //===============================================================
+
 
             window.addEventListener('popstate', handlePageLoad);
 
