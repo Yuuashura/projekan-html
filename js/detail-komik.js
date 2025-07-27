@@ -183,7 +183,7 @@ function initMobileNavigation() {
           const chapterDiv = document.createElement("div");
           chapterDiv.className = "chapter-item";
           const chapterLink = document.createElement("a");
-          chapterLink.href = chapter.originalLink;
+          chapterLink.href = `baca-chapter.html?${chapter.apiLink}`;
           chapterLink.textContent = chapter.title;
           chapterLink.target = "_blank";
           const chapterDate = document.createElement("span");

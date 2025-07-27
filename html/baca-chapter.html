@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Baca Chapter</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --dark-navy: #0a192f;
+            --navy: #112240;
+            --light-navy: #233554;
+            --lightest-navy: #303c55;
+            --slate: #8892b0;
+            --light-slate: #a8b2d1;
+            --lightest-slate: #ccd6f6;
+            --white: #e6f1ff;
+            --accent: #64ffda;
+            --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+        }
+        html {
+            font-size: 16px; /* Ukuran font dasar */
+        }
+        body {
+            background-color: var(--dark-navy);
+            color: var(--slate);
+            font-family: var(--font-sans);
+            margin: 0;
+            padding: 0;
+            line-height: 1.6;
+            font-size: 1rem;
+        }
+        .container {
+            max-width: 800px;
+            margin: 20px auto;
+            padding: 0 15px;
+        }
+        .loading-placeholder {
+            text-align: center;
+            padding: 50px;
+            font-size: 1.2rem;
+            color: var(--accent);
+        }
+        header, footer {
+            background-color: var(--navy);
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+        }
+        h1 {
+             color: var(--lightest-slate);
+             border-bottom: 2px solid var(--light-navy);
+             padding-bottom: 10px;
+             font-size: 1.8rem;
+             text-align: center;
+        }
+        .navigation {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 10px;
+            margin-top: 15px;
+        }
+        .nav-button {
+            background-color: var(--light-navy);
+            color: var(--white);
+            padding: 10px 15px;
+            text-decoration: none;
+            border: none;
+            border-radius: 5px;
+            font-family: var(--font-sans);
+            font-weight: 500;
+            font-size: 0.9rem;
+            transition: background-color 0.3s ease;
+            flex-grow: 1;
+            text-align: center;
+            cursor: pointer;
+        }
+        .nav-button:hover {
+            background-color: var(--lightest-navy);
+            color: var(--accent);
+        }
+        .nav-button:disabled {
+            background-color: var(--lightest-navy);
+            color: var(--slate);
+            pointer-events: none;
+            cursor: not-allowed;
+        }
+        .chapter-info {
+            background-color: var(--navy);
+            padding: 20px;
+            border-radius: 8px;
+            margin: 20px 0;
+            border-left: 4px solid var(--accent);
+            font-size: 0.95rem;
+        }
+        .chapter-info p { margin: 5px 0; color: var(--light-slate); }
+        .chapter-info strong { color: var(--lightest-slate); }
+        #chapter-images { margin-top: 20px; }
+        #chapter-images img {
+            max-width: 100%;
+            height: auto;
+            display: block;
+            margin: 0 auto 5px;
+            background-color: var(--light-navy);
+        }
+        .additional-info {
+            background-color: transparent;
+            border-top: 1px solid var(--light-navy);
+            padding-top: 15px;
+            margin-top: 20px;
+            color: var(--slate);
+            font-size: 0.9rem;
+            text-align: center;
+        }
+
+        /* --- ATURAN RESPONSIVE --- */
+
+        /* Untuk Tablet dan sejenisnya */
+        @media (max-width: 768px) {
+            html {
+                font-size: 15px; /* Sedikit perkecil font dasar */
+            }
+            h1 {
+                font-size: 1.6rem; /* Perkecil judul utama */
+            }
+        }
+
+        /* Untuk Ponsel */
+        @media (max-width: 480px) {
+            html {
+                font-size: 14px; /* Perkecil lagi font dasar untuk layar sempit */
+            }
+            h1 {
+                font-size: 1.4rem; /* Perkecil lagi judul utama */
+            }
+            .container {
+                padding: 0 10px; /* Kurangi padding samping */
+            }
+            .nav-button {
+                padding: 8px 10px;
+                font-size: 0.85rem; /* Perkecil font tombol */
+            }
+            .chapter-info {
+                padding: 15px;
+                font-size: 0.9rem;
+            }
+        }
+
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <header>
+            <h1 id="chapter-title">Memuat...</h1>
+            <div class="navigation" id="top-nav">
+                <button class="nav-button" id="top-prev-button" disabled>‹ Prev</button>
+                <a href="#" class="nav-button" id="top-all-chapters-button">Daftar Chapter</a>
+                <button class="nav-button" id="top-next-button" disabled>Next ›</button>
+            </div>
+        </header>
+
+        <main>
+            <div class="chapter-info" id="chapter-info-details"></div>
+            <div id="chapter-images">
+                <p class="loading-placeholder">Mengambil data dari server...</p>
+            </div>
+        </main>
+        
+        <footer>
+             <div class="navigation" id="bottom-nav">
+                <button class="nav-button" id="bottom-prev-button" disabled>‹ Prev</button>
+                <a href="#" class="nav-button" id="bottom-all-chapters-button">Daftar Chapter</a>
+                <button class="nav-button" id="bottom-next-button" disabled>Next ›</button>
+            </div>
+            <div class="additional-info">
+                <p id="additional-description"></p>
+            </div>
+        </footer>
+    </div>
+
+    <script>
+        const API_BASE_URL = 'https://yuuashura-api.vercel.app';
+
+        const elements = {
+            title: document.getElementById('chapter-title'),
+            infoDetails: document.getElementById('chapter-info-details'),
+            imagesContainer: document.getElementById('chapter-images'),
+            additionalDesc: document.getElementById('additional-description'),
+            top: {
+                prev: document.getElementById('top-prev-button'),
+                next: document.getElementById('top-next-button'),
+                all: document.getElementById('top-all-chapters-button')
+            },
+            bottom: {
+                prev: document.getElementById('bottom-prev-button'),
+                next: document.getElementById('bottom-next-button'),
+                all: document.getElementById('bottom-all-chapters-button')
+            }
+        };
+
+        function loadChapter(apiEndpoint, isPopState = false) {
+            setLoadingState(true);
+            window.scrollTo(0, 0);
+
+            fetch(API_BASE_URL + apiEndpoint)
+                .then(response => {
+                    if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
+                    return response.json();
+                })
+                .then(data => {
+                    buildPage(data);
+                    if (!isPopState) {
+                        const newUrl = `?${apiEndpoint}`;
+                        const newTitle = data.chapterInfo.Judul;
+                        window.history.pushState({ endpoint: apiEndpoint }, newTitle, newUrl);
+                    }
+                })
+                .catch(error => {
+                    console.error("Fetch error:", error);
+                    elements.imagesContainer.innerHTML = `<p class="loading-placeholder" style="color: #ff6464;">Gagal memuat chapter. Silakan coba lagi.</p>`;
+                    elements.title.textContent = "Gagal Memuat";
+                })
+                .finally(() => {
+                    setLoadingState(false);
+                });
+        }
+
+        function buildPage(data) {
+            document.title = data.chapterInfo.Judul;
+            elements.title.textContent = data.chapterInfo.Judul;
+
+            elements.infoDetails.innerHTML = `<p><strong>Deskripsi:</strong> ${data.description}</p><p><strong>Tanggal Rilis:</strong> ${data.chapterInfo['Tanggal Rilis']}</p>`;
+            
+            elements.imagesContainer.innerHTML = '';
+            const fragment = document.createDocumentFragment();
+            data.images.forEach(image => {
+                const imgElement = document.createElement('img');
+                imgElement.src = image.src;
+                imgElement.alt = image.alt;
+                imgElement.loading = 'lazy';
+                fragment.appendChild(imgElement);
+            });
+            elements.imagesContainer.appendChild(fragment);
+
+            elements.additionalDesc.textContent = data.additionalDescription;
+
+            updateNavigation(data.navigation, data.mangaInfo);
+        }
+
+        function updateNavigation(navData, mangaInfo) {
+            [elements.top.all, elements.bottom.all].forEach(btn => btn.href = mangaInfo.originalLink || '#');
+            updateNavButton(elements.top.prev, navData.prevChapter);
+            updateNavButton(elements.bottom.prev, navData.prevChapter);
+            updateNavButton(elements.top.next, navData.nextChapter);
+            updateNavButton(elements.bottom.next, navData.nextChapter);
+        }
+
+        function updateNavButton(button, chapterData) {
+            if (chapterData && chapterData.apiLink) {
+                button.disabled = false;
+                button.textContent = button.id.includes('next') ? `Chapter ${chapterData.chapter} ›` : `‹ Chapter ${chapterData.chapter}`;
+                button.onclick = () => loadChapter(chapterData.apiLink);
+            } else {
+                button.disabled = true;
+                button.textContent = button.id.includes('next') ? 'Akhir ›' : '‹ Awal';
+                button.onclick = null;
+            }
+        }
+
+        function setLoadingState(isLoading) {
+            if (isLoading) {
+                elements.title.textContent = 'Memuat Chapter...';
+                elements.imagesContainer.innerHTML = `<p class="loading-placeholder">Mengambil data...</p>`;
+                elements.infoDetails.innerHTML = '';
+            }
+        }
+
+        window.addEventListener('popstate', (e) => {
+            if (e.state && e.state.endpoint) {
+                loadChapter(e.state.endpoint, true);
+            }
+        });
+
+        document.addEventListener('DOMContentLoaded', () => {
+            const endpointFromUrl = window.location.search.slice(1);
+            const initialEndpoint = endpointFromUrl || '/baca-chapter/martial-peak/1';
+            
+            window.history.replaceState({ endpoint: initialEndpoint }, '', `?${initialEndpoint}`);
+            
+            loadChapter(initialEndpoint, true);
+
+        });
+    </script>
+</body>
+</html>

@@ -257,6 +257,7 @@ function initMobileNavigation() {
 
     mobileNavOverlay.addEventListener('click', (e) => {
         if (e.target === mobileNavOverlay) {
+            console.log(e.target);
             mobileMenuToggle.classList.remove('active');
             mobileNavOverlay.classList.remove('active');
             document.body.style.overflow = 'auto';
