@@ -1,16 +1,3 @@
-
-:root {
-  --dark-navy: #0a192f;
-  --navy: #112240;
-  --light-navy: #233554;
-  --lightest-navy: #303c55;
-  --slate: #8892b0;
-  --light-slate: #a8b2d1;
-  --lightest-slate: #ccd6f6;
-  --white: #e6f1ff;
-  --accent: #64ffda;
-}
-
 @keyframes inAnimation {
   from {
     opacity: 0;
@@ -26,14 +13,14 @@ main {
   min-height: 80vh;
 }
 
-body{
+body {
   background-image: url("../assets/raiden.png");
   background-size: cover;
   background-position: right;
   background-repeat: no-repeat;
 }
 
-body::after{
+body::after {
   content: "";
   position: fixed;
   top: 0;
@@ -43,25 +30,22 @@ body::after{
   background-color: rgba(10, 25, 47, 0.8);
   backdrop-filter: blur(5px);
   z-index: -1;
-
 }
 
 .main-container {
   display: flex;
   max-width: 1200px;
   margin: 20px auto;
-  background: var(--navy);
+  background: #112240;
   box-shadow: 0 10px 30px -15px rgba(2, 12, 27, 0.7);
   border-radius: 8px;
   overflow: hidden;
-
 }
 
 .left-column {
   width: 33%;
   padding: 25px;
-  border-right: 1px solid var(--lightest-navy);
-  /* Menambahkan flex untuk menengahkan thumbnail di mobile */
+  border-right: 1px solid #303c55;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -77,69 +61,71 @@ body::after{
   animation: inAnimation 0.5s ease-in-out;
 }
 
-/* ========================================
-   3. KOMPONEN KIRI (THUMBNAIL & INFO)
-   ======================================== */
 .thumbnail {
   width: 100%;
   max-width: 300px;
   border-radius: 8px;
   margin-bottom: 25px;
-  border: 2px solid var(--lightest-navy);
+  border: 2px solid #303c55;
 }
 
 .info-details-container {
   display: flex;
   flex-direction: column;
   gap: 12px;
-  width: 100%; 
+  width: 100%;
 }
 
 .info-item {
   display: flex;
   flex-direction: column;
   padding: 10px;
-  background-color: var(--light-navy);
+  background-color: #233554;
   border-radius: 5px;
 }
 
 .info-item .label {
   font-weight: bold;
-  color: var(--accent);
+  color: #64ffda;
   font-size: 0.8em;
   margin-bottom: 4px;
 }
 
 .info-item .value {
   font-size: 1em;
-  color: var(--lightest-slate);
+  color: #ccd6f6;
 }
 
-.right-column h1,
-.right-column h2,
-.right-column h3 {
-  color: var(--white);
-}
-
+.left-column h2,
 .right-column h1 {
-  font-size: 2.2em;
-  border-bottom: 1px solid var(--lightest-navy);
+  color: #e6f1ff;
+  border-bottom: 1px solid #303c55;
   padding-bottom: 10px;
-  margin-bottom: 15px;
 }
 
 .right-column h3 {
   padding: 10px 0px;
 }
 
+.right-column h1 {
+  font-size: 2.2em;
+  margin-bottom: 15px;
+}
+
 .genres {
   margin-bottom: 20px;
 }
 
+.comment-container h2 {
+  border-left: 5px solid #64ffda;
+  padding: 0px 0px 0px 10px;
+  margin-bottom: 10px;
+}
+
 .genre-tag {
   display: inline-block;
-  background-color: var(--accent);
-  color: var(--dark-navy);
+  background-color: #64ffda;
+  color: #0a192f;
   padding: 5px 12px;
   border-radius: 15px;
   font-size: 0.9em;
@@ -152,21 +138,33 @@ body::after{
   line-height: 1.7;
   text-align: justify;
   margin-bottom: 20px;
-  color: var(--light-slate);
+  color: #a8b2d1;
 }
 
 #chapter-list {
   max-height: 620px;
   overflow-y: auto;
-  border: 1px solid var(--lightest-navy);
+  border: 1px solid #303c55;
   border-radius: 5px;
   padding: 5px;
 }
 
-#chapter-list::-webkit-scrollbar { width: 8px; }
-#chapter-list::-webkit-scrollbar-track { background: var(--navy); }
-#chapter-list::-webkit-scrollbar-thumb { background: var(--slate); border-radius: 4px; }
-#chapter-list::-webkit-scrollbar-thumb:hover { background: var(--light-slate); }
+#chapter-list::-webkit-scrollbar {
+  width: 8px;
+}
+
+#chapter-list::-webkit-scrollbar-track {
+  background: #112240;
+}
+
+#chapter-list::-webkit-scrollbar-thumb {
+  background: #8892b0;
+  border-radius: 4px;
+}
+
+#chapter-list::-webkit-scrollbar-thumb:hover {
+  background: #a8b2d1;
+}
 
 .chapter-item {
   display: flex;
@@ -178,15 +176,15 @@ body::after{
 }
 
 .chapter-item:not(:last-child) {
-  border-bottom: 1px solid var(--light-navy);
+  border-bottom: 1px solid #233554;
 }
 
 .chapter-item:hover {
-  background-color: var(--light-navy);
+  background-color: #233554;
 }
 
 .chapter-item a {
-  color: var(--accent);
+  color: #64ffda;
   text-decoration: none;
   font-weight: bold;
 }
@@ -197,20 +195,120 @@ body::after{
 
 .chapter-date {
   font-size: 0.9em;
-  color: var(--slate);
+  color: #8892b0;
+}
+
+.similar-comic {
+  width: 98%;
+  max-width: 1200px;
+  margin: 40px auto;
+  border-radius: 8px;
+  background: #112240;
+  padding: 25px;
+  border: 1px solid #233554;
+}
+
+.header-similar h2 {
+  font-size: 1.8rem;
+  color: #e6f1ff;
+  margin-bottom: 20px;
+  border-left: 4px solid #64ffda;
+  padding-left: 15px;
+}
+
+.similar-comic-list {
+  display: flex;
+  gap: 20px;
+  overflow-x: auto;
+  padding-bottom: 15px;
+  scrollbar-width: thin;
+  scrollbar-color: #303c55 #0a192f;
+}
+
+.similar-comic-list::-webkit-scrollbar {
+  height: 8px;
+}
+
+.similar-comic-list::-webkit-scrollbar-track {
+  background: #0a192f;
+  border-radius: 10px;
+}
+
+.similar-comic-list::-webkit-scrollbar-thumb {
+  background-color: #303c55;
+  border-radius: 10px;
+}
+
+.card {
+  width: 200px;
+  flex-shrink: 0;
+  background-color: #233554;
+  border-radius: 8px;
+  overflow: hidden;
+  transition: transform 0.3s ease;
+}
+
+.card:hover {
+  transform: translateY(-5px);
+}
+
+.logo-komik {
+  height: 250px;
+  overflow: hidden;
+}
+
+.card .logo-komik img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.3s ease;
+}
+
+.card:hover .logo-komik img {
+  transform: scale(1.05);
+}
+
+.deskripsi-komik {
+  padding: 15px;
+}
+
+.deskripsi-komik h3 {
+  font-size: 1rem;
+  font-weight: 600;
+  color: #e6f1ff;
+  margin-bottom: 8px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.deskripsi-komik .tag-info {
+  font-size: 0.8rem;
+  color: #8892b0;
+  margin-bottom: 10px;
+}
+
+.deskripsi-komik .synopsis {
+  font-size: 0.9rem;
+  color: #a8b2d1;
+  line-height: 1.5;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
 }
 
 .comment-container {
   max-width: 1200px;
   margin: 25px auto;
   padding: 25px;
-  background: var(--navy);
+  background: #112240;
   box-shadow: 0 10px 30px -15px rgba(2, 12, 27, 0.7);
   border-radius: 8px;
 }
 
 .comment-container h2 {
-  border-left: 5px solid var(--accent);
+  border-left: 5px solid #64ffda;
   padding-left: 10px;
   margin-bottom: 20px;
 }
@@ -220,10 +318,10 @@ body::after{
   width: 100%;
   padding: 10px;
   margin-bottom: 10px;
-  background-color: var(--light-navy);
-  border: 1px solid var(--lightest-navy);
+  background-color: #233554;
+  border: 1px solid #303c55;
   border-radius: 4px;
-  color: var(--lightest-slate);
+  color: #ccd6f6;
   font-size: 1em;
   transition: border-color 0.3s ease;
 }
@@ -236,13 +334,13 @@ body::after{
 .comment-form input[type="text"]:focus,
 .comment-form textarea:focus {
   outline: none;
-  border-color: var(--accent);
+  border-color: #64ffda;
 }
 
 .comment-form button {
   padding: 10px 20px;
-  background-color: var(--accent);
-  color: var(--dark-navy);
+  background-color: #64ffda;
+  color: #0a192f;
   border: none;
   border-radius: 4px;
   font-size: 1em;
@@ -261,7 +359,7 @@ body::after{
   max-height: 400px;
   overflow: auto;
   padding: 10px;
-  background-color: var(--dark-navy);
+  background-color: #0a192f;
   border-radius: 8px;
 }
 
@@ -273,7 +371,7 @@ body::after{
 
 .comment-item {
   padding: 15px;
-  border: 1px solid var(--lightest-navy);
+  border: 1px solid #303c55;
   margin: 15px 0;
   border-radius: 5px;
   animation: inAnimation 0.3s ease;
@@ -288,37 +386,60 @@ body::after{
 
 .comment-author {
   font-weight: bold;
-  color: var(--white);
+  color: #e6f1ff;
 }
 
 .comment-date {
   font-size: 0.8em;
-  color: var(--slate);
+  color: #8892b0;
 }
 
 .comment-text {
   line-height: 1.6;
-  color: var(--light-slate);
+  color: #a8b2d1;
 }
-
 
 @media (max-width: 768px) {
   .main-container {
     flex-direction: column;
   }
-
   .left-column,
   .right-column {
     width: 100%;
   }
-
   .left-column {
     border-right: none;
-    border-bottom: 1px solid var(--lightest-navy);
+    border-bottom: 1px solid #303c55;
   }
-
-  .left-column h2{
+  .left-column h2 {
     opacity: 0;
+  }
+  .similar-comic {
+    padding: 20px;
+    margin: 30px auto;
+  }
+  .header-similar h2 {
+    font-size: 1.6rem;
+    padding-left: 12px;
+  }
+  .similar-comic-list {
+    gap: 15px;
+  }
+  .card {
+    width: 180px;
+  }
+  .logo-komik {
+    height: 230px;
+  }
+  .deskripsi-komik {
+    padding: 12px;
+  }
+  .deskripsi-komik h3 {
+    font-size: 0.95rem;
+  }
+  .deskripsi-komik .synopsis {
+    font-size: 0.85rem;
+    -webkit-line-clamp: 2;
   }
 }
 
@@ -327,11 +448,42 @@ body::after{
   .comment-container {
     padding: 15px;
   }
-  
-  .left-column h2{
+  .left-column h2 {
     opacity: 0;
   }
   .right-column h1 {
     font-size: 1.8em;
+  }
+  .similar-comic {
+    width: 100%;
+    border-radius: 0;
+    padding: 15px 0;
+  }
+  .header-similar h2 {
+    font-size: 1.3rem;
+    margin-left: 15px;
+  }
+  .similar-comic-list {
+    gap: 12px;
+    padding-left: 15px;
+    padding-right: 15px;
+  }
+  .card {
+    width: 150px;
+  }
+  .logo-komik {
+    height: 200px;
+  }
+  .deskripsi-komik {
+    padding: 10px;
+  }
+  .deskripsi-komik h3 {
+    font-size: 0.9rem;
+  }
+  .deskripsi-komik .tag-info {
+    font-size: 0.7rem;
+  }
+  .deskripsi-komik .synopsis {
+    display: none;
   }
 }

@@ -220,9 +220,6 @@ body::after{
   font-size: 2rem;
 }
 
-.header-popular.light{
-  color: black;
-}
 
 .items-popular {
   display: flex;

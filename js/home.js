@@ -96,7 +96,7 @@ function buildSlider(mainSlider, data) {
         link.href = slideData.link;
         link.className = 'update-container';
         link.style.backgroundImage = `url('${slideData.bgImage}')`;
-        link.style.opacity = idxNow === 1? 1:0; // set opacity 1 di slide pertama
+        link.style.opacity = idxNow === 1 ? 1 : 0; // set opacity 1 di slide pertama
         link.style.transition = 'opacity 0.5s ease-in-out';
         link.style.position = 'absolute';
         link.style.width = '100%';
@@ -199,7 +199,7 @@ function slideSebelum() {
     const slides = document.querySelectorAll('.update-container');
     slides[idxNow].style.opacity = '0';
     idxNow = (idxNow - 1 + slides.length) % slides.length;
-    
+
     setTimeout(() => {
         slides[idxNow].style.opacity = '1';
         console.log(idxNow);
@@ -231,7 +231,7 @@ function pauseAutoplayOnHover() {
 
 
 
- 
+
 
 // RESPONSIFE MOBILE 
 function initMobileNavigation() {
@@ -324,10 +324,12 @@ async function komikTop() {
         let i = 0;
 
         let latestChapter = [];
+        let apiChapterLink = []
 
         for (let index = 0; index < data.length; index++) {
             let data1 = await fetchWithRetry(`${baseApi}${data[index].apiDetailLink}`);
             latestChapter.push(data1.latestChapter.title);
+            apiChapterLink.push(data1.latestChapter.apiLink);
         }
 
         removeElement(containerPopular, loader);
@@ -353,7 +355,7 @@ async function komikTop() {
             peringkat.className = "peringkat";
             peringkat.textContent = i + 1;
 
-            
+
             const descriptionContainer = document.createElement("div");
             descriptionContainer.className = "deskripsi-komik";
 
@@ -363,10 +365,10 @@ async function komikTop() {
 
             const chapterContainer = document.createElement("div");
             chapterContainer.className = "cont-ch";
-            
+
             const chapterLink = document.createElement("a");
             chapterLink.className = "ch-rekomendasi";
-            chapterLink.href = manga.apiChapterLink || `html/detail-komik.html?${manga.apiDetailLink}`;
+            chapterLink.href = `html/baca-chapter.html?${apiChapterLink[i]}`;
             chapterLink.textContent = latestChapter[i++];
 
             thumbnailContainer.appendChild(thumbnailImage);
@@ -431,7 +433,7 @@ async function mangaRekomendasi() {
 
             const chapterLink = document.createElement("a");
             chapterLink.className = "ch-rekomendasi";
-            chapterLink.href = manga.apiChapterLink || '#';
+            chapterLink.href = `html/baca-chapter.html?${manga.apiChapterLink}`;
             chapterLink.textContent = manga.latestChapter;
 
             chapterContainer.appendChild(chapterLink)
@@ -502,7 +504,7 @@ async function manhwaRekomendasi() {
 
             const chapterLink = document.createElement("a");
             chapterLink.className = "ch-rekomendasi";
-            chapterLink.href = manga.apiChapterLink || '#';
+            chapterLink.href = `html/baca-chapter.html?${manga.apiChapterLink}`;
             chapterLink.textContent = manga.latestChapter;
 
             chapterContainer.appendChild(chapterLink)
@@ -575,7 +577,7 @@ async function manhuaRekomendasi() {
 
             const chapterLink = document.createElement("a");
             chapterLink.className = "ch-rekomendasi";
-            chapterLink.href = manga.apiChapterLink || '#';
+            chapterLink.href = `html/baca-chapter.html?${manga.apiChapterLink}`;
             chapterLink.textContent = manga.latestChapter;
 
             chapterContainer.appendChild(chapterLink)

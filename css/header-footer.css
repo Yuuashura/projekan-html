@@ -178,34 +178,66 @@ header.scrolled {
   align-items: center;
 }
 
-.nav .home {
-  border-bottom: 2px solid white;
-}
 
 .judul {
   color: white;
 }
 
 .judul span {
-  color: aqua;
+  color: #64ffda;
 }
 
+
 .nav a {
+  position: relative;
   font-size: 1.04rem;
   margin: 0 15px;
   padding: 8px 0;
   color: white;
-  transition: 0.3s ease;
+  transition: color 0.3s ease, transform 0.2s ease;
+}
+
+.nav a::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  bottom: 0;
+  width: 0;
+  background: #64ffda;
+  transition: width 0.3s ease, left 0.3s ease;
 }
 
 .nav a:hover {
-  color: rgb(200, 200, 200);
+  color: #64ffda;
+  transform: translateY(-2px);
+}
+
+.nav a:hover::after {
+  width: 100%;
+  left: 0;
+  height: 2px;
+}
+
+.nav .home::after,
+.nav a.active::after {
+  width: 100%;
+  left: 0;
 }
 
 .right-head {
   display: block;
   position: relative;
 }
+
+.home{
+  border-bottom: 2px solid white;
+  transition: border 0.3s ease-in-out;
+}
+
+.home:hover {
+border: none;
+}
+
 
 .cari {
   display: flex;
