@@ -650,7 +650,7 @@ async function komikTerbaru() {
 
             const chapterLink = document.createElement("a");
             chapterLink.className = "chapter-terbaru";
-            chapterLink.href = manga.apiChapterLink || '#';
+            chapterLink.href = `html/baca-chapter.html?${manga.apiChapterLink}`;
             chapterLink.textContent = manga.latestChapterTitle;
 
             logoContainer.appendChild(thumbnailImage);
