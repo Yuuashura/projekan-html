@@ -252,7 +252,7 @@
         }
 
         function updateNavigation(navData, mangaInfo) {
-            [elements.top.all, elements.bottom.all].forEach(btn => btn.href = mangaInfo.originalLink || '#');
+            [elements.top.all, elements.bottom.all].forEach(btn => btn.href = `detail-komik.html?${mangaInfo.apiLink}`);
             updateNavButton(elements.top.prev, navData.prevChapter);
             updateNavButton(elements.bottom.prev, navData.prevChapter);
             updateNavButton(elements.top.next, navData.nextChapter);
