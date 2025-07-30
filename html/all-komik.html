@@ -3,9 +3,10 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Pustaka Komik - MoonKomik</title>
+    <title>Semua Komik - MoonKomik</title>
     <link rel="stylesheet" href="../css/header-footer.css" />
     <link rel="stylesheet" href="../css/all-komik.css" />
+
     <link rel="icon" href="https://github.com/Yuuashura/icon-pack/blob/main/4.gif?raw=true"/>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -13,12 +14,7 @@
 </head>
 <body>
     <header>
-      <a href="../"
-        ><i
-          ><h1 class="judul">Mona<span>Komik</span></h1></i></a
-      >
-
-      <!-- Desktop Navigation -->
+      <a href="../"><i><h1 class="judul">Mona<span>Komik</span></h1></i></a>
       <div class="nav">
         <a href="../"><p>Home</p></a>
         <a href="pustaka.html"><p>Genre</p></a>
@@ -27,19 +23,14 @@
         <a href="register.html"><p>Daftar</p></a>
         <a href="tentang.html"><p>Tentang</p></a>
       </div>
-
       <button class="mobile-menu-toggle" id="mobileMenuToggle">
         <span></span>
         <span></span>
         <span></span>
       </button>
-
-      <!-- Search Bar -->
-
-        <form class="cari" id="searchForm">
-          <!-- <button onclick="cariKomik()" class="theme" id="theme" ><img src="../icon/light-mode.png" alt="Search"/></a> -->
+      <form class="cari" id="searchForm">
         <input type="text" placeholder="search" id="searchInput"/>
-        <button type="submit"><img src="../assets/search.png" alt="Search"/></a>
+        <button type="submit"><img src="../assets/search.png" alt="Search"/></button>
       </form>
     </header>
 
@@ -54,14 +45,11 @@
       </div>
     </div>
 
-
-
     <main>
         <div class="container">
             <h1>Komik Lainnya</h1>
             <div id="comic-container" class="comic-grid">
-                <!-- Hasil komik akan ditampilkan di sini -->
-            </div>
+                </div>
             <div id="pagination-controls" class="pagination-container">
                 <button id="prev-page-btn" class="page-btn">‹ Sebelumnya</button>
                 <span id="page-info" class="page-info">Halaman 1</span>
@@ -71,225 +59,31 @@
     </main>
 
     <footer>
-      <div class="medsos">
-        <a href="https://instagram.com/yudis.ashura" target="_blank"
-        ><span><img src="../icon/instagram.png" alt="" /></span
-        ></a>
-      </div>
-      <div class="medsos">
-        <a href="https://github.com/yuuashura" target="_blank"
-          ><span><img src="../icon/github.png" alt="" /></span
-        ></a>
-      </div>
-      <div class="medsos">
-        <a href="https://facebook.com/4sa.cyber" target="_blank"
-          ><span><img src="../icon/facebook.png" alt="" /></span
-        ></a>
-      </div>
-      <div class="medsos">
-        <a href="https://telegram.com/#" target="_blank"
-          ><span><img src="../icon/telegram.png" alt="" /></span
-        ></a>
-      </div>
-
-      <div class="text-footer">
-        <p>
-          All the comics on this website are only previews of the original
-          comics,there may be many language errors, character names, and story
-          lines. For the original version, please buy the comic if it's
-          available in your city.
-        </p>
-        <br />
-        <hr />
-        <p>&copy; MoonKomik</p>
-      </div>
+        <div class="medsos">
+            <a href="https://instagram.com/yudis.ashura" target="_blank"><span><img src="../icon/instagram.png" alt="Instagram" /></span></a>
+        </div>
+        <div class="medsos">
+            <a href="https://github.com/yuuashura" target="_blank"><span><img src="../icon/github.png" alt="GitHub" /></span></a>
+        </div>
+        <div class="medsos">
+            <a href="https://facebook.com/4sa.cyber" target="_blank"><span><img src="../icon/facebook.png" alt="Facebook" /></span></a>
+        </div>
+        <div class="medsos">
+            <a href="https://telegram.com/#" target="_blank"><span><img src="../icon/telegram.png" alt="Telegram" /></span></a>
+        </div>
+        <div class="text-footer">
+            <p>
+              All the comics on this website are only previews of the original
+              comics,there may be many language errors, character names, and story
+              lines. For the original version, please buy the comic if it's
+              available in your city.
+            </p>
+            <br />
+            <hr />
+            <p>&copy; MoonKomik</p>
+        </div>
     </footer>
 
-
-    <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            initMobileNavigation();
-            const comicContainer = document.getElementById('comic-container');
-            const paginationControls = document.getElementById('pagination-controls');
-            const prevButton = document.getElementById('prev-page-btn');
-            const nextButton = document.getElementById('next-page-btn');
-            const pageInfo = document.getElementById('page-info');
-
-            
-            const API_BASE_URL = 'https://yuuashura-api.vercel.app/pustaka';
-
-            function displayComics(comics) {
-                comicContainer.textContent = '';
-                if (!comics || comics.length === 0) {
-
-                    const pesanAwal = document.createElement('p');
-                    pesanAwal.textContent = 'Tidak komik yang ditemukan';
-                    pesanAwal.classList.add('status-message');
-                    comicContainer.appendChild(pesanAwal);
-                    return;
-                }
-                comics.forEach(comic => {
-                    const cardLink = document.createElement('a');
-                    cardLink.className = 'card-link';
-                    cardLink.href = `detail-komik.html?${comic.detailUrl}`;
-                    
-                    cardLink.innerHTML = `
-                        <div class="card">
-                            <div class="card-thumbnail">
-                                <img src="${comic.thumbnail}" alt="Sampul ${comic.title}" loading="lazy">
-                                <span class="card-badge">${comic.type}</span>
-                            </div>
-                            <div class="card-content">
-                                <h3>${comic.title}</h3>
-                                <p class="card-description">${comic.description}</p>
-                                <p class="card-info"><strong>Genre:</strong> ${comic.genre}</p>
-                                <p class="card-info"><strong>Info:</strong> ${comic.stats}</p>
-                                <div class="card-chapters">
-                                    <a href="#${comic.firstChapter.apiLink}">Awal: Chapter </a>
-                                    <a href="#${comic.latestChapter.apiLink}">Terbaru: Chapter </a>
-                                </div>
-                            </div>
-                        </div>`;
-                    comicContainer.appendChild(cardLink);
-                });
-            }
-
-            async function fetchComics(page) {
-                comicContainer.textContent = '';
-                const loader = document.createElement('div');
-                loader.classList.add("loader");
-                comicContainer.appendChild(loader);
-                paginationControls.style.display = 'flex';
-                
-                const url = `${API_BASE_URL}/${page}`;
-                
-                try {
-                    const response = await fetch(url);
-                    if (!response.ok) throw new Error('Gagal mengambil data komik');
-                    
-                    const jsonData = await response.json();
-                    displayComics(jsonData.results);
-                    // Asumsi API tidak memberikan hasNextPage, jadi kita cek manual
-                    updatePagination(page, jsonData.results.length > 0);
-
-                } catch (error) {
-                    console.error("Error fetching comics:", error);
-                    comicContainer.textContent = '';
-                    const pesanAwal = document.createElement('p');
-                    pesanAwal.textContent = 'Gagal Memuat Data Komik';
-                    pesanAwal.classList.add('status-message');
-                    comicContainer.appendChild(pesanAwal);
-                    paginationControls.style.display = 'none';
-                }
-            }
-
-            function updatePagination(currentPage, hasNextPage) {
-                pageInfo.textContent = `Halaman ${currentPage}`;
-                prevButton.disabled = currentPage <= 1;
-                nextButton.disabled = !hasNextPage;
-            }
-
-            function updateURL(page) {
-                const newUrl = `pustaka.html?page=${page}`;
-                window.history.pushState({ path: newUrl }, '', newUrl);
-            }
-
-            function handlePageLoad() {
-                const params = new URLSearchParams(window.location.search);
-                const page = parseInt(params.get('page')) || 1;
-                fetchComics(page);
-            }
-            
-            nextButton.addEventListener('click', () => {
-                const params = new URLSearchParams(window.location.search);
-                let page = parseInt(params.get('page')) || 1;
-                page++;
-                updateURL(page);
-                fetchComics(page);
-            });
-
-            prevButton.addEventListener('click', () => {
-                const params = new URLSearchParams(window.location.search);
-                let page = parseInt(params.get('page')) || 1;
-                if (page > 1) {
-                    page--;
-                    updateURL(page);
-                    fetchComics(page);
-                }
-            });
-
-//======================================================================================
-                        // RESPONSIFE MOBILE 
-            function initMobileNavigation() {
-                const mobileMenuToggle = document.getElementById('mobileMenuToggle');
-                const mobileNavOverlay = document.getElementById('mobileNavOverlay');
-                const mobileNavClose = document.getElementById('mobileNavClose');
-
-                if (!mobileMenuToggle || !mobileNavOverlay || !mobileNavClose) {
-                    return;
-                }
-
-                mobileMenuToggle.addEventListener('click', () => {
-                    mobileMenuToggle.classList.toggle('active');
-                    mobileNavOverlay.classList.toggle('active');
-                    document.body.style.overflow = mobileNavOverlay.classList.contains('active') ? 'hidden' : 'auto';
-                });
-
-                mobileNavClose.addEventListener('click', () => {
-                    mobileMenuToggle.classList.remove('active');
-                    mobileNavOverlay.classList.remove('active');
-                    document.body.style.overflow = 'auto';
-                });
-
-                mobileNavOverlay.addEventListener('click', (e) => {
-                    if (e.target === mobileNavOverlay) {
-                        mobileMenuToggle.classList.remove('active');
-                        mobileNavOverlay.classList.remove('active');
-                        document.body.style.overflow = 'auto';
-                    }
-                });
-
-                const navLinks = mobileNavOverlay.querySelectorAll('.nav a');
-                navLinks.forEach(link => {
-                    link.addEventListener('click', () => {
-                        mobileMenuToggle.classList.remove('active');
-                        mobileNavOverlay.classList.remove('active');
-                        document.body.style.overflow = 'auto';
-                    });
-                });
-
-                window.addEventListener('resize', () => {
-                    if (window.innerWidth > 768) {
-                        mobileMenuToggle.classList.remove('active');
-                        mobileNavOverlay.classList.remove('active');
-                        document.body.style.overflow = 'auto';
-                    }
-                });
-            }
-
-            //===============================================================
-
-
-            // ===================  SEARCH  ====================
-            const form = document.querySelector('.cari');
-            form.addEventListener('submit', function(event) {
-            event.preventDefault();
-            lakukanPencarian(); 
-            });
-            function lakukanPencarian() {
-            const kataKunci = document.getElementById('searchInput').value.trim();
-            window.location.href = `search.html?q=${encodeURIComponent(kataKunci)}`;
-            console.log('Kata kunci pencarian:', kataKunci);
-            }
-            //=====================================================================
-
-
-
-
-            window.addEventListener('popstate', handlePageLoad);
-
-            handlePageLoad();
-        });
-    </script>
+    <script src="../js/all-komik.js"></script>
 </body>
 </html>
