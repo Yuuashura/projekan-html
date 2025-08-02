@@ -19,14 +19,12 @@
 
         body {
             font-family: var(--font-sans);
-            /* background-color: var(--dark-navy); */
             color: var(--light-slate);
         }
 
         body {
             background-image: url("../assets/raiden.png") !important;
             background-position: center;
-            /* background-repeat: no-repeat; */
         }
 
         body::after {

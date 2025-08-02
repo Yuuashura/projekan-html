@@ -61,7 +61,7 @@ function removeElement(parent, child) {
 }
 
 
-// UNTUK MENAMPILKAN ERROR 
+// UNTUK MENAMPILKAN ERROR
 function tampilkanError(container, message) {
     const errorContainer = document.createElement('div');
     errorContainer.style.textAlign = 'center';
@@ -91,7 +91,7 @@ function buildSlider(mainSlider, data) {
     const sliderItemsContainer = document.createElement('div');
     sliderItemsContainer.className = 'slider-items';
 
-    data.forEach((slideData, index) => {
+    data.forEach((slideData) => {
         const link = document.createElement('a');
         link.href = slideData.link;
         link.className = 'update-container';
@@ -118,7 +118,7 @@ function buildSlider(mainSlider, data) {
         const genres = document.createElement('div');
         genres.className = 'genres';
 
-        // buat nampilin genre, ARRAY NYA BEDA JUMLAH PAK PUSING SAYA MAH
+        // buat nampilin genre,
         slideData.genres.forEach(genreText => {
             const pGenre = document.createElement('p');
             pGenre.textContent = genreText;
@@ -209,7 +209,7 @@ function slideSebelum() {
 function startAutoplay() {
     autoplayInterval = setInterval(() => {
         slideSesudah();
-    }, 3000);
+    }, 2000);
 }
 
 function resetAutoplay() {
@@ -220,7 +220,7 @@ function resetAutoplay() {
 function pauseAutoplayOnHover() {
     const slider = document.getElementById('main-slider');
 
-    slider.addEventListener('mouseenter', () => {
+    slider.addEventListener('mouseover', () => {
         clearInterval(autoplayInterval);
     });
 

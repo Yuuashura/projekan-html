@@ -418,6 +418,57 @@ footer {
 
 
 @media screen and (max-width: 1024px) {
+      /* Header Mobile */
+  header {
+    padding: 10px 15px;
+    flex-wrap: wrap;
+  }
+
+  body::-webkit-scrollbar {
+    display: none;
+  }
+
+  .judul {
+    font-size: 1.5rem;
+  }
+
+  header .nav {
+    display: none !important;
+  }
+
+  .mobile-menu-toggle {
+    display: flex;
+  }
+
+  .cari {
+    order: 3;
+    width: 100%;
+    margin: 10px 0 0 0;
+  }
+
+  .cari.search {
+    display: none;
+  }
+
+  .cari input {
+    width: 100%;
+    padding: 8px 10px;
+  }
+
+  .medsos {
+    margin: 15px 10px;
+    width: 35px;
+  }
+
+  .medsos img {
+    width: 25px;
+    filter: invert(100%) brightness(200%);
+  }
+
+  .text-footer {
+    width: 90%;
+    font-size: 0.8rem;
+  }
 
 
 

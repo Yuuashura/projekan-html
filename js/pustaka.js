@@ -266,7 +266,7 @@ document.addEventListener('DOMContentLoaded', () => {
         });
 
         window.addEventListener('resize', () => {
-            if (window.innerWidth > 768) {
+            if (window.innerWidth > 900) {
                 mobileMenuToggle.classList.remove('active');
                 mobileNavOverlay.classList.remove('active');
                 document.body.style.overflow = 'auto';
