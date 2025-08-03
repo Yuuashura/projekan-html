@@ -20,45 +20,34 @@ document.addEventListener('DOMContentLoaded', () => {
 
         comics.forEach((comic, index) => {
             const cardLink = document.createElement('a');
+            const card = document.createElement('div');
+            const thumbnailContainer = document.createElement('div');
+            const thumbnailImage = document.createElement('img');
+            const badge = document.createElement('span');
+            const contentContainer = document.createElement('div');
+            const titleHeader = document.createElement('h3');
+            const chapterParagraph = document.createElement('p');
+
             cardLink.className = 'card-link';
             cardLink.href = `detail-komik.html?${comic.detailUrl}`;
-
-            const card = document.createElement('div');
             card.className = 'card';
-
-            const thumbnailContainer = document.createElement('div');
             thumbnailContainer.className = 'card-thumbnail';
-
-            const thumbnailImage = document.createElement('img');
             thumbnailImage.src = comic.thumbnail;
             thumbnailImage.alt = `Sampul ${comic.title}`;
             thumbnailImage.loading = 'lazy';
-
-            const badge = document.createElement('span');
             badge.className = 'card-badge';
             badge.textContent = comic.type;
-            
-            const contentContainer = document.createElement('div');
             contentContainer.className = 'card-content';
-
-            const titleHeader = document.createElement('h3');
             titleHeader.textContent = comic.title;
-
-            const chapterParagraph = document.createElement('p');
             chapterParagraph.textContent = comic.latestChapter.title;
-
-            // Menyusun elemen (Appending)
+            
             thumbnailContainer.appendChild(thumbnailImage);
             thumbnailContainer.appendChild(badge);
-            
             contentContainer.appendChild(titleHeader);
             contentContainer.appendChild(chapterParagraph);
-
             card.appendChild(thumbnailContainer);
             card.appendChild(contentContainer);
-            
             cardLink.appendChild(card);
-            
             comicContainer.appendChild(cardLink);
         });
     }
@@ -67,7 +56,7 @@ document.addEventListener('DOMContentLoaded', () => {
     async function fetchComics(page) {
         comicContainer.textContent = '';
         const loader = document.createElement('div');
-        loader.className = 'loader'; // Pastikan ada style untuk .loader
+        loader.className = 'loader';
         comicContainer.appendChild(loader);
         
         paginationControls.style.display = 'flex';
@@ -81,7 +70,6 @@ document.addEventListener('DOMContentLoaded', () => {
             displayComics(jsonData.results);
             updatePagination(page, jsonData.results.length > 0);
         } catch (error) {
-            console.error("Error fetching comics:", error);
             comicContainer.textContent = 'Gagal memuat data. Silakan coba lagi nanti.';
             paginationControls.style.display = 'none';
         }
@@ -95,13 +83,15 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function updateURL(page) {
-        const newUrl = `all-comics.html?page=${page}`;
+        const newUrl = `all-comics.html?page=${page}`;        
         window.history.pushState({ path: newUrl }, '', newUrl);
     }
 
     function handlePageLoad() {
+        console.log('window.location.search:', window.location.search);
         const params = new URLSearchParams(window.location.search);
         const page = parseInt(params.get('page')) || 1;
+        console.log('Current page:', page);
         fetchComics(page);
     }
     

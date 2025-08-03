@@ -16,6 +16,7 @@
         body {
           background-image: url("../assets/raiden.png") !important;
           background-position: center;
+          background-size: contain;
           /* background-repeat: no-repeat; */
         }
 
@@ -230,7 +231,11 @@
           display: inline-block;
           padding: 0px 15px;
           margin: 15px 0px 15px 0px;
-          border-left: 5px solid #375184;
+          border-left: 5px solid var(--accent)
+        }
+
+        .header-popular-terbaru{
+          margin-left: 30px;
         }
 
         .header-popular h1 {
@@ -317,7 +322,7 @@
         }
 
         .deskripsi-komik h3:hover {
-          color: #375184;
+          color: var(--accent);
         }
 
 
@@ -384,7 +389,7 @@
         }
 
         .judul-terbaru:hover {
-          color: #375184;
+          color: var(--accent);
         }
 
         .card-terbaru-info {
@@ -621,6 +626,7 @@
             font-size: 0.9rem;
           }
 
+          
           .items-popular {
             padding: 0 15px;
             gap: 10px;

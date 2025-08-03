@@ -2,3 +2,10 @@ encodeURIComponent : mengubah spasi ( ) menjadi %20
  urlParams.get('q'); : mengambil data setelah ? pada url
 window.history.pushState({ path: var }, '', var); = UNTUK MNGUBAH URL
 parseInt() = sama kayak atoi()
+Metode/Properti	Fungsi	Memicu popstate?
+history.pushState()	Menambah entri baru ke riwayat	Tidak
+history.replaceState()	Mengubah entri saat ini di riwayat	Tidak
+history.back()	Kembali satu langkah	Ya
+history.forward()	Maju satu langkah	Ya
+history.go()	Berpindah beberapa langkah	Ya
+history.length	Menghitung jumlah entri riwayat	Tidak
