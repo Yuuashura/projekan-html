@@ -62,13 +62,13 @@ function buildPage(data) {
 
     clearContainer(elements.infoDetails);
     const descP = document.createElement('p');
-    const descStrong = document.createElement('strong');
+    const descStrong = document.createElement('p');
     descStrong.textContent = 'Deskripsi: ';
     descP.appendChild(descStrong);
     descP.appendChild(document.createTextNode(data.description));
 
     const rilisP = document.createElement('p');
-    const rilisStrong = document.createElement('strong');
+    const rilisStrong = document.createElement('p');
     rilisStrong.textContent = 'Tanggal Rilis: ';
     rilisP.appendChild(rilisStrong);
     rilisP.appendChild(document.createTextNode(data.chapterInfo['Tanggal Rilis']));
