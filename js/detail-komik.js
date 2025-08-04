@@ -21,6 +21,20 @@ const failedSending = createFailedMessage();
 let bool = 0;
 
 
+    // ===================  SEARCH  ====================
+    containerSearch.addEventListener('submit', function (event) {
+        event.preventDefault();
+        lakukanPencarian();
+    });
+    function lakukanPencarian() {
+        const kataKunci = document.getElementById('searchInput').value.trim();
+        window.location.href = `search.html?q=${encodeURIComponent(kataKunci)}`;
+        console.log('Kata kunci pencarian:', kataKunci);
+    }
+    //=====================================================================
+
+
+
 
 // RESPONSIFE MOBILE 
 function initMobileNavigation() {
@@ -294,7 +308,13 @@ function createSimilarComicCard() {
 })
 }
 
-
+let jsonData = localStorage.getItem('user');
+let nama = JSON.parse(jsonData)?.username;
+if (nama){
+  name.value = nama;
+  name.disabled = true;
+  name.style.cursor = "not-allowed";
+}
 
 // KODE UNTUK POST KOMENTAR KE API
 document
@@ -315,8 +335,13 @@ document
         body: JSON.stringify(data),
       });
 
-      name.value = "";
-      comment.value = "";
+      if(!nama){
+        name.value = "";
+        comment.value = "";
+      }else{
+        name.value = nama;
+        comment.value = "";
+      }
 
       if (!res.ok) {
 

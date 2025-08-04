@@ -11,43 +11,32 @@
   </head>
   <body>
     <header>
-      <a href="../"
-        ><i
-          ><h1 class="judul">Mona<span>Komik</span></h1></i
-        ></a
-      >
-      <!-- Desktop Navigation -->
+      <a href="../"><i><h1 class="judul">Mona<span>Komik</span></h1></i></a>
       <div class="nav">
-        <a href="../" class="home"><p>Home</p></a>
-        <a href="pustaka.html"><p>Genre List</p></a>
+        <a href="../"><p>Home</p></a>
+        <a href="pustaka.html"><p>Genre</p></a>
         <a href="all-komik.html"><p>All Comic</p></a>
         <a href="login.html"><p>Masuk</p></a>
         <a href="register.html"><p>Daftar</p></a>
         <a href="tentang.html"><p>Tentang</p></a>
       </div>
-
       <button class="mobile-menu-toggle" id="mobileMenuToggle">
         <span></span>
         <span></span>
         <span></span>
       </button>
-
-      <!-- Search Bar -->
-
-      <div class="cari">
-        <span class="material-symbols-outlined light_mode"></span>
-
-        <input type="text" placeholder="search" id="searchInput" />
-        <a onclick="cariKomik()"
-          ><img src="../assets/search.png" alt="Search"
-        /></a>
-      </div>
+      <form class="cari" id="searchForm">
+        <input type="text" placeholder="search" id="searchInput"/>
+        <button type="submit"><img src="../assets/search.png" alt="Search"/></button>
+      </form>
     </header>
+
+
 
     <div class="mobile-nav-overlay" id="mobileNavOverlay">
       <button class="mobile-nav-close" id="mobileNavClose">&times;</button>
       <div class="nav">
-        <a href="../" class="home"><p>Home</p></a>
+        <a href="../"><p>Home</p></a>
         <a href="pustaka.html"><p>Genre List</p></a>
         <a href="all-komik.html"><p>All Comic</p></a>
         <a href="login.html"><p>Masuk</p></a>

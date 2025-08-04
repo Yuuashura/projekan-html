@@ -1,0 +1,168 @@
+      :root {
+        --dark-navy: #0a192f;
+        --navy: #112240;
+        --light-navy: #233554;
+        --lightest-navy: #303c55;
+        --slate: #8892b0;
+        --light-slate: #a8b2d1;
+        --white: #e6f1ff;
+        --accent: #64ffda;
+        --font-sans: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI",
+          Roboto, "Helvetica Neue", Arial, sans-serif;
+      }
+
+      body {
+        background-image: url("../assets/raiden.png");
+        background-size: cover;
+        background-position: center;
+        background-attachment: fixed;
+      }
+
+      body::after {
+        content: "";
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(10, 25, 47, 0.85);
+        z-index: -1;
+      }
+
+      .form-container {
+        background-color: var(--navy);
+        padding: 2.5rem;
+        border-radius: 8px;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.25);
+        width: 100%;
+        max-width: 500px;
+        margin: 30px auto;
+        border: 1px solid var(--lightest-navy);
+      }
+
+      h1 {
+        color: var(--white);
+        text-align: center;
+        margin-bottom: 2rem;
+        font-size: 1.8rem;
+      }
+
+      .form-group {
+        margin-bottom: 1.5rem;
+      }
+
+      label {
+        display: block;
+        margin-bottom: 0.5rem;
+        font-weight: 500;
+        color: var(--light-slate);
+      }
+
+      .input-field {
+        width: 100%;
+        padding: 0.75rem;
+        background-color: var(--light-navy);
+        border: 1px solid var(--lightest-navy);
+        border-radius: 5px;
+        color: var(--white);
+        font-size: 1rem;
+        box-sizing: border-box;
+        transition: border-color 0.3s ease, box-shadow 0.3s ease;
+      }
+
+      .input-field:focus {
+        outline: none;
+        border-color: var(--accent);
+        box-shadow: 0 0 0 3px rgba(100, 255, 218, 0.3);
+      }
+
+      .submit-button {
+        width: 100%;
+        padding: 0.85rem;
+        background-color: var(--accent);
+        color: var(--dark-navy);
+        border: none;
+        border-radius: 5px;
+        font-size: 1.1rem;
+        font-weight: 700;
+        cursor: pointer;
+        transition: background-color 0.3s ease, opacity 0.3s ease;
+      }
+
+      .submit-button:disabled {
+        background-color: var(--lightest-navy);
+        color: var(--slate);
+        cursor: not-allowed;
+        opacity: 0.7;
+      }
+
+      .submit-button:hover:not(:disabled) {
+        opacity: 0.8;
+      }
+
+      .form-link {
+        text-align: center;
+        margin-top: 1.5rem;
+        font-size: 0.9rem;
+      }
+
+      .form-link a {
+        color: var(--accent);
+        text-decoration: none;
+        font-weight: 500;
+      }
+
+      .form-link a:hover {
+        text-decoration: underline;
+      }
+
+      /* --- CSS BARU UNTUK POP-UP NOTIFIKASI --- */
+      .popup-notification {
+        position: fixed;
+        top: 20px;
+        right: 20px;
+        padding: 1rem 1.5rem;
+        border-radius: 8px;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+        font-weight: 500;
+        z-index: 9999;
+        animation: slideIn 0.3s ease-out forwards;
+      }
+
+      .popup-notification.success {
+        background-color: #27ae60; /* Hijau untuk sukses */
+        color: var(--white);
+      }
+
+      .popup-notification.error {
+        background-color: #c0392b; /* Merah untuk error */
+        color: var(--white);
+      }
+
+      /* Animasi untuk pop-up */
+      @keyframes slideIn {
+        from {
+          transform: translateX(100%);
+          opacity: 0;
+        }
+        to {
+          transform: translateX(0);
+          opacity: 1;
+        }
+      }
+
+      @media (max-width: 480px) {
+        .form-container {
+          padding: 2rem;
+          margin: 20px auto;
+        }
+        h1 {
+          font-size: 1.6rem;
+        }
+        .popup-notification {
+          top: 10px;
+          right: 10px;
+          left: 10px;
+          text-align: center;
+        }
+      }
