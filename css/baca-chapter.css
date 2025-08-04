@@ -84,7 +84,7 @@ h1 {
     font-size: 0.95rem;
 }
 .chapter-info p { margin: 5px 0; color: #a8b2d1; }
-.chapter-info strong { color: #ccd6f6; }
+.chapter-info p { color: #ccd6f6; }
 #chapter-images { margin-top: 20px; }
 #chapter-images img {
     max-width: 100%;

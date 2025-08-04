@@ -38,14 +38,15 @@ document.addEventListener('DOMContentLoaded', () => {
             contentContainer.className = 'card-content';
             titleHeader.textContent = comic.title;
             chapterParagraph.textContent = comic.latestChapter.title;
+            chapterParagraph.className = 'card-chapters';
             
             thumbnailContainer.appendChild(thumbnailImage);
             thumbnailContainer.appendChild(badge);
             contentContainer.appendChild(titleHeader);
-            contentContainer.appendChild(chapterParagraph);
             card.appendChild(thumbnailContainer);
             card.appendChild(contentContainer);
             cardLink.appendChild(card);
+            contentContainer.appendChild(chapterParagraph);
             comicContainer.appendChild(cardLink);
         });
     }
