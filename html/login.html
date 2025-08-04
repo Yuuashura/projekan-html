@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Daftar Akun Baru</title>
+    <title>Login Akun</title>
     <link rel="stylesheet" href="../css/header-footer.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -129,7 +129,7 @@
     </style>
 </head>
 <body>
-        <header>
+    <header>
       <a href="../"><i><h1 class="judul">Mona<span>Komik</span></h1></i></a>
       <div class="nav">
         <a href="../"><p>Home</p></a>
@@ -149,6 +149,21 @@
         <button type="submit"><img src="../assets/search.png" alt="Search"/></button>
       </form>
     </header>
+
+
+        <div class="mobile-nav-overlay" id="mobileNavOverlay">
+      <button class="mobile-nav-close" id="mobileNavClose">&times;</button>
+      <div class="nav">
+        <a href="../"><p>Home</p></a>
+        <a href="pustaka.html" class="home"><p>Genre List</p></a>
+        <a href="all-komik.html"><p>All Comic</p></a>
+        <a href="login.html"><p>Masuk</p></a>
+        <a href="register.html"><p>Daftar</p></a>
+        <a href="tentang.html"><p>Tentang</p></a>
+      </div>
+    </div>
+
+
 
     <div class="form-container">
         <form>
@@ -192,7 +207,30 @@
             <p>&copy; MoonKomik</p>
         </div>
     </footer>
-
-
 </body>
+
+<script>
+    const apiLogin = 'https://yuu-api-regist.vercel.app/api/login';
+    
+    const loginForm = document.querySelector('form');
+    loginForm.addEventListener('submit', async (e) => {
+        const username = document.getElementById('username').value;
+        const password = document.getElementById('password').value;
+        
+        e.preventDefault();
+        // Get form data
+        const formData = new FormData(this);
+        console.log('Form Data:', formData);
+        
+        const data = {
+            identifier: formData.get('identifier'),
+                password: formData.get('password')
+            };
+
+
+    })
+
+</script>
+
+
 </html>
