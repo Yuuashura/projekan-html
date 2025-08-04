@@ -25,7 +25,7 @@
 
 
     if (localStorage.getItem("isLogin") === "true") {
-      popUpNotification("Kamu sudah login", "error");
+      notifikasi("Kamu sudah login", "error");
       registerForm
         .querySelectorAll("input, button")
         .forEach((el) => (el.disabled = true));
@@ -41,7 +41,7 @@
         localStorage.removeItem("token");
         localStorage.removeItem("user");
         localStorage.setItem("isLogin", false);
-        popUpNotification("Kamu telah keluar", "success");
+        notifikasi("Kamu telah keluar", "success");
         setTimeout(() => {
           window.location.href = "../";
         }, 1000);
@@ -70,7 +70,7 @@
           if (!response.ok) {
             throw new Error(data.message || "Terjadi kesalahan pada API");
           }
-          popUpNotification(
+          notifikasi(
             "Akun berhasil dibuat! Mengarahkan ke halaman login...",
             "success"
           );
@@ -79,14 +79,14 @@
           }, 2000);
         } catch (error) {
           console.error("Error:", error);
-          popUpNotification(error.message, "error");
+          notifikasi(error.message, "error");
           submitButton.disabled = false;
           submitButton.textContent = "Register";
         }
       });
     }
 
-    function popUpNotification(message, type) {
+    function notifikasi(message, type) {
       const notification = document.createElement("div");
       notification.className = `popup-notification ${type}`;
       notification.textContent = message;

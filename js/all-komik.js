@@ -1,15 +1,13 @@
 document.addEventListener('DOMContentLoaded', () => {
-    // --- SELEKSI ELEMEN ---
     const comicContainer = document.getElementById('comic-container');
     const paginationControls = document.getElementById('pagination-controls');
     const prevButton = document.getElementById('prev-page-btn');
     const nextButton = document.getElementById('next-page-btn');
     const pageInfo = document.getElementById('page-info');
-    const API_BASE_URL = 'https://yuuashura-api.vercel.app/pustaka';
+    const api = 'https://yuuashura-api.vercel.app/pustaka';
 
-    // --- FUNGSI TAMPILKAN KOMIK (TANPA INNERHTML) ---
     function displayComics(comics) {
-        comicContainer.textContent = ''; // Cara aman untuk mengosongkan kontainer
+        comicContainer.textContent = '';
         if (!comics || comics.length === 0) {
             const message = document.createElement('p');
             message.className = 'status-message';
@@ -18,7 +16,7 @@ document.addEventListener('DOMContentLoaded', () => {
             return;
         }
 
-        comics.forEach((comic, index) => {
+        comics.forEach((comic) => {
             const cardLink = document.createElement('a');
             const card = document.createElement('div');
             const thumbnailContainer = document.createElement('div');
@@ -60,7 +58,7 @@ document.addEventListener('DOMContentLoaded', () => {
         comicContainer.appendChild(loader);
         
         paginationControls.style.display = 'flex';
-        const url = `${API_BASE_URL}/${page}`;
+        const url = `${api}/${page}`;
         
         try {
             const response = await fetch(url);

@@ -1,4 +1,4 @@
-const API_BASE_URL = 'https://yuuashura-api.vercel.app';
+const api = 'https://yuuashura-api.vercel.app';
 
 const elements = {
     title: document.getElementById('chapter-title'),
@@ -27,9 +27,9 @@ function loadChapter(apiEndpoint, isPopState = false) {
     setLoadingState(true);
     window.scrollTo(0, 0);
 
-    fetch(API_BASE_URL + apiEndpoint)
+    fetch(api + apiEndpoint)
         .then(response => {
-            if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
+            if (!response.ok) throw new Error(`${response.status}`);
             return response.json();
         })
         .then(data => {
@@ -132,7 +132,7 @@ window.addEventListener('popstate', (e) => {
 
 document.addEventListener('DOMContentLoaded', () => {
     const endpointFromUrl = window.location.search.slice(1);
-    const initialEndpoint = endpointFromUrl || '/baca-chapter/martial-peak/1';
+    const initialEndpoint = endpointFromUrl;
     
     window.history.replaceState({ endpoint: initialEndpoint }, '', `?${initialEndpoint}`);
     
