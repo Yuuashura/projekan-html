@@ -10,11 +10,13 @@
             --accent: #64ffda;
             --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
         }
+
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
         }
+
         body {
             font-family: var(--font-sans);
             background-image: url("../assets/raiden.png") !important;
@@ -25,7 +27,7 @@
             min-height: 100vh;
         }
 
-        body::after{
+        body::after {
             content: "";
             position: fixed;
             top: 0;
@@ -55,12 +57,14 @@
             align-items: center;
             padding: 40px 20px;
         }
+
         .about-container {
             max-width: 800px;
             width: 100%;
             text-align: center;
             animation: animasiMasuk .5s ease-in-out;
         }
+
         .profile-picture {
             width: 150px;
             height: 150px;
@@ -71,19 +75,23 @@
             object-fit: cover;
             box-shadow: 0 0 20px rgba(100, 255, 218, 0.2);
         }
+
         .about-container h1 {
             color: var(--lightest-slate);
             font-size: 2.5rem;
             margin-bottom: 10px;
         }
+
         .about-container h1 span {
             color: var(--accent);
         }
+
         .about-container .subtitle {
             font-size: 1.2rem;
             color: var(--slate);
             margin-bottom: 25px;
         }
+
         .about-container .bio {
             font-size: 1rem;
             line-height: 1.7;
@@ -91,18 +99,29 @@
             margin: 0 auto 30px auto;
             color: var(--light-slate);
         }
+
         .social-links {
             display: flex;
             justify-content: center;
             gap: 20px;
         }
+
+
         .social-links a {
             color: var(--slate);
             font-size: 1.5rem;
-            transition: color 0.3s ease, transform 0.3s ease;
         }
-        .social-links a:hover {
-            box-shadow: 0 0 10px var(--accent);
+
+        .social-links img {
+            transition: color 0.3s ease, transform 0.3s ease;
+            width: 25px;
+            filter: invert(100%) brightness(200%);
+            border-radius: 50%;
+        }
+        
+        .social-links img:hover {
+            box-shadow: 0 0 10px var(--slate);
+            filter: invert(100%) brightness(200%);
             transform: translateY(-5px);
         }
 
@@ -111,21 +130,17 @@
                 opacity: 0;
                 transform: translateY(20px);
             }
+
             to {
                 opacity: 1;
                 transform: translateY(0);
             }
         }
-        .puji-divdik{
+
+        .puji-divdik {
             display: flex;
             justify-content: center;
             gap: 5rem;
             margin-bottom: 10px;
             margin-top: 10px;
-        }
-        
-        .social-links img{
-        width: 25px;
-         filter: invert(100%) brightness(200%);
-
         }
