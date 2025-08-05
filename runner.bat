@@ -1,4 +1,1 @@
-@echo off
-echo Membuka VS Code...
-start code .
-exit
+start code . && start https://github.com/Yuuashura/projekan-html && start https://projekan-html.vercel.app/ && exit

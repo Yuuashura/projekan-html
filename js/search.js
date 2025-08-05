@@ -1,13 +1,5 @@
 const baseApi = "https://yuuashura-api.vercel.app/";
 
-window.addEventListener("scroll", function () {
-    const header = document.querySelector("header");
-    if (window.scrollY > 50) {
-        header.classList.add("scrolled");
-    } else {
-        header.classList.remove("scrolled");
-    }
-});
 
 document.querySelector(".cari").style.opacity = "0";
 document.querySelector(".cari").style.zIndex = "-100";

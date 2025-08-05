@@ -1,17 +1,13 @@
 
 # Wellcome To My Project
 
-
-
-
-
 ## API Reference from
 
 ```http
   https://komiku.org
 ```
 
-#### Get all items
+#### Base API
 
 
 ```http
@@ -26,17 +22,6 @@
 | :-------- | :------- | :------------------------- |
 | `string` | `string` | **Nanti Ada Endpointnya di API** |
 
-#### Get item
-
-```http
-  GET /{slug}/${id}
-```
-
-| Parameter | Type     | Description                       |
-| :-------- | :------- | :-------------------------------- |
-| `id`      | `string` | **Required**. Id of item to fetch |
-
-
 
 ## Authors
 
@@ -48,10 +33,6 @@
 
 🧠 I'm currently learning...
 
-😄 Pronouns...
-
-⚡️ Fun fact...
-
 
 ## 🔗 Links
 [![github](https://img.shields.io/badge/Yuuashura-000?style=for-the-badge&logo=github&logoColor=white)](https://katherineoelsner.com/)
@@ -61,7 +42,19 @@
 
 ## Screenshots
 
+![App Screenshot](https://files.catbox.moe/4k6cxb.png)
+
 ![App Screenshot](https://files.catbox.moe/lv624m.png)
 
-![App Screenshot](https://files.catbox.moe/4k6cxb.png)
+![App Screenshot](https://files.catbox.moe/fyxaqd.png)
+
+![App Screenshot](https://files.catbox.moe/q19oqc.png)
+
+![App Screenshot](https://files.catbox.moe/8d09yl.png)
+
+![App Screenshot](https://files.catbox.moe/n4i81y.png)
+
+![App Screenshot](https://files.catbox.moe/tivubt.png)
+
+
 
