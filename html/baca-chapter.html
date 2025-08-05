@@ -1,48 +1,131 @@
 <!DOCTYPE html>
 <html lang="id">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Baca Chapter</title>
-    <link rel="stylesheet" href="../css/baca-chapter.css">
-    <link rel="icon" href="https://github.com/Yuuashura/icon-pack/blob/main/4.gif?raw=true" />
+    <link rel="stylesheet" href="../css/baca-chapter.css" />
+    <link rel="stylesheet" href="../css/header-footer.css" />
+    <link
+      rel="icon"
+      href="https://github.com/Yuuashura/icon-pack/blob/main/4.gif?raw=true"
+    />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap" rel="stylesheet" />
-</head>
-<body>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <header>
+      <a href="../"
+        ><h1 class="judul">Moon<span>Komik</span></h1></a
+      >
+      <div class="nav">
+        <a href="../"><p>Home</p></a>
+        <a href="pustaka.html"><p>Genre List</p></a>
+        <a href="all-komik.html" class="home"><p>All Comic</p></a>
+        <a href="login.html"><p>Masuk</p></a>
+        <a href="register.html"><p>Daftar</p></a>
+        <a href="tentang.html"><p>Tentang</p></a>
+      </div>
+      <button class="mobile-menu-toggle" id="mobileMenuToggle">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+      <form class="cari" id="searchForm">
+        <input type="text" placeholder="search" id="searchInput" />
+        <button type="submit">
+          <img src="../assets/search.png" alt="Search" />
+        </button>
+      </form>
+    </header>
 
-    <img src="../assets/raiden.png" class="raiden" alt="">
+    <div class="filter-sidebar"></div>
 
-    <div class="container">
-        <header>
-            <h1 id="chapter-title">Memuat...</h1>
-            <div class="navigation" id="top-nav">
-                <button class="nav-button" id="top-prev-button" disabled>‹ Prev</button>
-                <a href="#" class="nav-button" id="top-all-chapters-button">Daftar Chapter</a>
-                <button class="nav-button" id="top-next-button" disabled>Next ›</button>
-            </div>
-        </header>
-
-        <main>
-            <div class="chapter-info" id="chapter-info-details"></div>
-            <div id="chapter-images">
-                <p class="loading-placeholder">Mengambil data dari server...</p>
-            </div>
-        </main>
-        
-        <footer>
-             <div class="navigation" id="bottom-nav">
-                <button class="nav-button" id="bottom-prev-button" disabled>‹ Prev</button>
-                <a href="#" class="nav-button" id="bottom-all-chapters-button">Daftar Chapter</a>
-                <button class="nav-button" id="bottom-next-button" disabled>Next ›</button>
-            </div>
-            <div class="additional-info">
-                <p id="additional-description"></p>
-            </div>
-        </footer>
+    <div class="mobile-nav-overlay" id="mobileNavOverlay">
+      <button class="mobile-nav-close" id="mobileNavClose">&times;</button>
+      <div class="nav">
+        <a href="../" class="home"><p>Home</p></a>
+        <a href="pustaka.html"><p>Genre List</p></a>
+        <a href="login.html"><p>Masuk</p></a>
+        <a href="register.html"><p>Daftar</p></a>
+        <a href="tentang.html"><p>Tentang</p></a>
+      </div>
     </div>
 
-    <script src="../js/baca-chapter.js"></script>
+    <img src="../assets/raiden.png" class="raiden" alt="" />
+
+    <div class="container">
+      <div class="chapter-panel-top">
+        <h1 id="chapter-title">Memuat...</h1>
+        <div class="navigation" id="top-nav">
+          <button class="nav-button" id="top-prev-button" disabled>
+            ‹ Prev
+          </button>
+          <a href="#" class="nav-button" id="top-all-chapters-button"
+            >Daftar Chapter</a
+          >
+          <button class="nav-button" id="top-next-button" disabled>
+            Next ›
+          </button>
+        </div>
+      </div>
+
+      <main>
+        <div class="chapter-info" id="chapter-info-details"></div>
+        <div id="chapter-images">
+          <p class="loading-placeholder">Mengambil data dari server...</p>
+        </div>
+      </main>
+
+      <div class="chapter-panel-bottom">
+        <div class="navigation" id="bottom-nav">
+          <button class="nav-button" id="bottom-prev-button" disabled>
+            ‹ Prev
+          </button>
+          <a href="#" class="nav-button" id="bottom-all-chapters-button"
+            >Daftar Chapter</a
+          >
+          <button class="nav-button" id="bottom-next-button" disabled>
+            Next ›
+          </button>
+        </div>
+        <div class="additional-info">
+          <p id="additional-description"></p>
+        </div>
+      </div>
+    </div>
+
+        <footer>
+        <div class="medsos">
+            <a href="https://instagram.com/yudis.ashura" target="_blank"><span><img src="../icon/instagram.png" alt="Instagram" /></span></a>
+        </div>
+        <div class="medsos">
+            <a href="https://github.com/yuuashura" target="_blank"><span><img src="../icon/github.png" alt="GitHub" /></span></a>
+        </div>
+        <div class="medsos">
+            <a href="https://facebook.com/4sa.cyber" target="_blank"><span><img src="../icon/facebook.png" alt="Facebook" /></span></a>
+        </div>
+        <div class="medsos">
+            <a href="https://telegram.com/#" target="_blank"><span><img src="../icon/telegram.png" alt="Telegram" /></span></a>
+        </div>
+        <div class="text-footer">
+            <p>
+              All the comics on this website are only previews of the original
+              comics,there may be many language errors, character names, and story
+              lines. For the original version, please buy the comic if it's
+              available in your city.
+            </p>
+            <br />
+            <hr />
+            <p>&copy; MoonKomik</p>
+        </div>
+    </footer>
+
+
 </body>
+<script src="../js/baca-chapter.js"></script>
 </html>

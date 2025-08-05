@@ -32,24 +32,16 @@ header {
   align-items: center;
   padding: 10px 20px;
   backdrop-filter: blur(10px);
-  transition: box-shadow 0.3s ease-in-out;
+  transition: 0.3s ease-in-out;
   z-index: 1000;
   isolation: isolate;
 }
 
-header::before {
-  content: "";
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background: linear-gradient(to top, transparent, #1f293e);
+header.scrolled {
+    transform: translateY(-100%);
 
-  z-index: -1;
-  transition: opacity 0.3s ease-in-out;
-  opacity: 1;
 }
+
 
 
 

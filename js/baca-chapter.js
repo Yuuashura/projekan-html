@@ -21,6 +21,22 @@ const elements = {
 };
 
 
+let lastScroll = window.scrollY;
+
+const header = document.querySelector('header');
+
+window.addEventListener('scroll', () => {
+    let currentScroll = window.scrollY;
+    if(currentScroll > lastScroll){
+        header.classList.add('scrolled');
+    }else{
+        header.classList.remove('scrolled');
+    }
+    lastScroll = currentScroll;
+});
+
+
+
 // fungsi untuk menghapus gambar komik
 function clearContainer(element) {
     while (element.firstChild) {
