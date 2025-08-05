@@ -139,6 +139,7 @@
 
         .puji-divdik {
             display: flex;
+            flex-wrap: wrap;
             justify-content: center;
             gap: 5rem;
             margin-bottom: 10px;

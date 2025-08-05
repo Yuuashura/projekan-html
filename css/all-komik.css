@@ -1,11 +1,18 @@
-body {
-    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
-    color: #a8b2d1;
+/* --- Global Reset & Basic Styling --- */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
 }
 
 body {
-    background-image: url("../assets/raiden.png") !important;
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+    color: #a8b2d1;
+    background-image: url("../assets/raiden.png");
     background-position: center;
+    /* Membuat background tetap saat di-scroll untuk efek visual yang lebih baik */
+    background-attachment: fixed;
+    background-size: cover;
 }
 
 body::after {
@@ -21,7 +28,7 @@ body::after {
 }
 
 main {
-    padding: 20px 0;
+    padding: 40px 0;
     min-height: 80vh;
 }
 
@@ -35,9 +42,11 @@ main {
     text-align: center;
     margin-bottom: 30px;
     color: #e6f1ff;
-    font-size: 2.5rem;
+    /* Menggunakan clamp() untuk font size yang fluid & responsif */
+    font-size: clamp(1.8rem, 5vw, 2.5rem);
 }
 
+/* --- Filter & Form --- */
 .filter-container {
     display: flex;
     justify-content: center;
@@ -63,7 +72,9 @@ main {
     color: #ccd6f6;
     border: 1px solid #303c55;
     border-radius: 5px;
-    min-width: 250px;
+    /* Dibuat fleksibel: lebar 100% dari parentnya, tapi tidak lebih dari 300px */
+    width: 100%;
+    max-width: 300px;
     cursor: pointer;
 }
 
@@ -72,6 +83,7 @@ main {
     border-color: #64ffda;
 }
 
+/* --- Comic Grid & Cards --- */
 #comic-container {
     position: relative;
 }
@@ -80,12 +92,12 @@ main {
     position: absolute;
     top: 20%;
     left: 50%;
-    z-index: 10;
 }
 
 .comic-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    /* Nilai minmax diubah ke 250px agar lebih fleksibel di layar tablet */
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
     gap: 25px;
     min-height: 300px;
 }
@@ -93,6 +105,7 @@ main {
 .card-link {
     text-decoration: none;
     color: inherit;
+    display: flex;
 }
 
 .card {
@@ -103,23 +116,27 @@ main {
     display: flex;
     flex-direction: column;
     height: 100%;
-    transition: 0.3s ease;
-    animation: inAnimation 0.3s ease;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    animation: inAnimation 0.5s ease-in-out;
 }
 
 .card:hover {
     transform: translateY(-8px);
-    box-shadow: 0 12px 25px rgba(0, 0, 0, 0.5);
+    /* Shadow disesuaikan dengan warna tema untuk estetika */
+    box-shadow: 0 12px 25px rgba(100, 255, 218, 0.2);
 }
 
 .card-thumbnail {
-    height: 180px;
+    /* KUNCI RESPONSIVITAS CARD: Menggunakan aspect-ratio, bukan tinggi tetap */
+    aspect-ratio: 16 / 10;
     position: relative;
+    overflow: hidden;
 }
 
 .card-thumbnail img {
     width: 100%;
     height: 100%;
+    /* Memastikan gambar mengisi area tanpa gepeng (akan di-crop jika perlu) */
     object-fit: cover;
     display: block;
 }
@@ -140,6 +157,7 @@ main {
     padding: 15px;
     display: flex;
     flex-direction: column;
+    /* Membuat konten ini mengisi sisa ruang vertikal agar 'chapters' selalu di bawah */
     flex-grow: 1;
 }
 
@@ -171,6 +189,7 @@ main {
 }
 
 .card-chapters {
+    /* Mendorong bagian ini ke paling bawah kartu */
     margin-top: auto;
     border-top: 1px solid #233554;
     padding-top: 10px;
@@ -189,9 +208,11 @@ main {
     font-size: 1.2rem;
     padding: 50px;
     color: #8892b0;
+    /* Membuat elemen ini membentang selebar grid */
     grid-column: 1 / -1;
 }
 
+/* --- Pagination --- */
 .pagination-container {
     display: flex;
     justify-content: center;
@@ -229,17 +250,54 @@ main {
     color: #ccd6f6;
 }
 
-@media (max-width: 768px) {}
+/* === MEDIA QUERIES UNTUK RESPONSIVITAS === */
 
+/* Untuk Tablet dan layar yang lebih kecil */
+@media (max-width: 768px) {
+    .filter-container {
+        /* Filter akan menumpuk ke bawah agar lebih rapi di tablet */
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    #genre-select {
+        /* Hapus max-width agar bisa memenuhi lebar kontainer filter */
+        max-width: none;
+    }
+        .page-info {
+        font-size: 1rem;
+    }
+}
+
+/* Untuk Ponsel */
 @media (max-width: 480px) {
+    main {
+        padding: 20px 0;
+    }
+
+    .comic-grid {
+        /* Mengurangi jarak antar kartu di layar kecil */
+        gap: 15px;
+    }
+    
     .pagination-container {
-        font-size: 0.7rem;
-        gap: 5px;
-        margin-top: 15px;
+        gap: 15px;
+        margin-top: 25px;
+        flex-wrap: wrap;
     }
 
     .page-btn {
-        font-size: 0.8rem;
-        padding: 5px 10px;
+        font-size: 0.6rem;
+        padding: 4px 10px;
+    }
+        .page-info {
+        font-size: 1rem;
+    }
+}
+
+/* Untuk Ponsel Sangat Kecil (mencegah overflow) */
+@media (max-width: 320px) {
+    .comic-grid {
+        grid-template-columns: 1fr;
     }
 }

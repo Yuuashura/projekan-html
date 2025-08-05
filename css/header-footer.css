@@ -51,27 +51,12 @@ header::before {
   opacity: 1;
 }
 
-header.light::before {
-  background: linear-gradient(to top, transparent, transparent);
-}
-
-header.light {
-  background: linear-gradient(to top, transparent, #293755);
-}
-
-header.scrolled::before {
-  opacity: 0;
-}
-
-header.scrolled {
-  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2);
-  opacity: 0.98;
-}
 
 
+/* UNTUK SLIDER PADA HOME PAGE */
 .z-index {
   z-index: 20;
-}
+} 
 
 
 

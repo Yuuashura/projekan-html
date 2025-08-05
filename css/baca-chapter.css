@@ -49,6 +49,7 @@ h1 {
     align-items: center;
     gap: 10px;
     margin-top: 15px;
+    flex-wrap: wrap;
 }
 .nav-button {
     background-color: #233554;
