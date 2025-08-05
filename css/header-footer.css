@@ -27,9 +27,7 @@ header {
   position: sticky;
   display: flex;
   width: 100%;
-  /* background: #29375550; */
   background: linear-gradient(to top, transparent, transparent);
-
   justify-content: space-between;
   align-items: center;
   padding: 10px 20px;
@@ -72,8 +70,10 @@ header.scrolled {
 
 
 .z-index {
-  z-index: 2;
+  z-index: 20;
 }
+
+
 
 @keyframes inAnimation {
   from {
@@ -89,6 +89,7 @@ header.scrolled {
 
 
 
+/* ================================================================ */
 .loader {
   margin: 50px auto;
   width: 50px;
@@ -120,15 +121,17 @@ header.scrolled {
   margin: 8px;
 }
 
-/* --------------------------------------------------- */
 @keyframes l16 {
   100% {
     transform: rotate(1turn);
   }
 }
+/* ================================================================ */
 
-/* -------------------------------------------------- */
 
+
+
+/* ================================================================ */
 .loading-dots {
   width: 100px;
   height: 25px;
@@ -136,7 +139,6 @@ header.scrolled {
   justify-content: center;
   align-items: center;
   gap: 8px;
-  /* Jarak antar titik */
 }
 
 .loading-dots .dot {
@@ -144,12 +146,9 @@ header.scrolled {
   height: 12px;
   background-color: #ecf0f1;
   border-radius: 50%;
-
-  /* Panggil animasi */
   animation: bounce 1.2s infinite ease-in-out;
 }
 
-/* Atur jeda animasi agar titik melompat bergantian */
 .loading-dots .dot:nth-of-type(2) {
   animation-delay: -0.2s;
 }
@@ -157,8 +156,6 @@ header.scrolled {
 .loading-dots .dot:nth-of-type(3) {
   animation-delay: -0.4s;
 }
-
-/* Definisi animasi 'bounce' */
 @keyframes bounce {
   0%, 80%, 100% {
     transform: scale(0.8) translateY(0);
@@ -170,9 +167,7 @@ header.scrolled {
     opacity: 1;
   }
 }
-
-
-/* --------------------------------------------- */
+/* ================================================= */
 
 
 .nav {
@@ -202,11 +197,6 @@ header.scrolled {
     background-position: 200% center;
   }
 }
-
-/* .judul span {
-  color: #64ffda;
-} */
-
 
 .nav a {
   position: relative;
@@ -311,6 +301,10 @@ header.scrolled {
 
 
 
+
+
+
+/* ==================== FOOTER ==================== */
 footer {
   background-color: #252e45;
   text-align: center;
@@ -347,7 +341,9 @@ footer {
   color: white;
 }
 
-/* Mobile Menu Toggle */
+
+
+/* ================== SIDE BAR =================== */
 .mobile-menu-toggle {
   display: none;
   flex-direction: column;
@@ -367,7 +363,6 @@ footer {
   border-radius: 2px;
 }
 
-/* Animation untuk hamburger menu */
 .mobile-menu-toggle.active span:nth-child(1) {
   transform: rotate(-45deg) translate(-5px, 6px);
 }
@@ -380,11 +375,34 @@ footer {
   transform: rotate(45deg) translate(-5px, -6px);
 }
 
+
+.filter-sidebar{
+  position: fixed;
+  top: 0;
+  right: -100%;
+  width: 100%;
+  height: 100vh;
+  background-color: rgba(27, 27, 27, 0.25);
+  backdrop-filter: blur(3px);
+  z-index: 9989;
+  transition: right 0.3s ease-in-out;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.filter-sidebar.active {
+  right: 0;
+}
+
+
+
 .mobile-nav-overlay {
   position: fixed;
   top: 0;
   left: -100%;
-  width: 100%;
+  width: 50%;
   height: 100vh;
   background-color: rgba(27, 27, 27, 0.95);
   backdrop-filter: blur(10px);

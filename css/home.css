@@ -249,7 +249,6 @@
           scroll-behavior: smooth;
           gap: 15px;
           padding: 0 20px;
-          min-height: 200px;
         }
 
         .items-popular::-webkit-scrollbar {

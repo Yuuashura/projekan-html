@@ -36,54 +36,72 @@ let bool = 0;
 
 
 
-// RESPONSIFE MOBILE 
+//================== RESPONSIVE MOBILE ====================
 function initMobileNavigation() {
-  const mobileMenuToggle = document.getElementById('mobileMenuToggle');
-  const mobileNavOverlay = document.getElementById('mobileNavOverlay');
-  const mobileNavClose = document.getElementById('mobileNavClose');
+    const mobileMenuToggle = document.getElementById("mobileMenuToggle");
+    const mobileNavOverlay = document.getElementById("mobileNavOverlay");
+    const mobileNavClose = document.getElementById("mobileNavClose");
+    const filterSidebar = document.querySelector(".filter-sidebar");
 
-  if (!mobileMenuToggle || !mobileNavOverlay || !mobileNavClose) {
-    return;
-  }
-
-  mobileMenuToggle.addEventListener('click', () => {
-    mobileMenuToggle.classList.toggle('active');
-    mobileNavOverlay.classList.toggle('active');
-    document.body.style.overflow = mobileNavOverlay.classList.contains('active') ? 'hidden' : 'auto';
-  });
-
-  mobileNavClose.addEventListener('click', () => {
-    mobileMenuToggle.classList.remove('active');
-    mobileNavOverlay.classList.remove('active');
-    document.body.style.overflow = 'auto';
-  });
-
-  mobileNavOverlay.addEventListener('click', (e) => {
-    if (e.target === mobileNavOverlay) {
-      mobileMenuToggle.classList.remove('active');
-      mobileNavOverlay.classList.remove('active');
-      document.body.style.overflow = 'auto';
+    if (!mobileMenuToggle || !mobileNavOverlay || !mobileNavClose) {
+        return;
     }
-  });
 
-  const navLinks = mobileNavOverlay.querySelectorAll('.nav a');
-  navLinks.forEach(link => {
-    link.addEventListener('click', () => {
-      mobileMenuToggle.classList.remove('active');
-      mobileNavOverlay.classList.remove('active');
-      document.body.style.overflow = 'auto';
+    mobileMenuToggle.addEventListener("click", () => {
+        filterSidebar.classList.toggle('active');
+        mobileMenuToggle.classList.toggle("active");
+        mobileNavOverlay.classList.toggle("active");
+        document.body.style.overflow = mobileNavOverlay.classList.contains(
+            "active"
+        )
+            ? "hidden"
+            : "auto";
     });
-  });
 
-  window.addEventListener('resize', () => {
-    if (window.innerWidth > 768) {
-      mobileMenuToggle.classList.remove('active');
-      mobileNavOverlay.classList.remove('active');
-      document.body.style.overflow = 'auto';
-    }
-  });
+    mobileNavClose.addEventListener("click", () => {
+        mobileMenuToggle.classList.remove("active");
+        mobileNavOverlay.classList.remove("active");
+        filterSidebar.classList.remove('active');
+
+        document.body.style.overflow = "auto";
+    });
+
+    mobileNavOverlay.addEventListener("click", (e) => {
+        if (e.target === mobileNavOverlay) {
+            mobileMenuToggle.classList.remove("active");
+            mobileNavOverlay.classList.remove("active");
+            filterSidebar.classList.remove('active');
+
+            document.body.style.overflow = "auto";
+        }
+    });
+
+    const navLinks = mobileNavOverlay.querySelectorAll(".nav a");
+    navLinks.forEach((link) => {
+        link.addEventListener("click", () => {
+            mobileMenuToggle.classList.remove("active");
+            mobileNavOverlay.classList.remove("active");
+            filterSidebar.classList.remove('active');
+            document.body.style.overflow = "auto";
+        });
+    });
+
+
+    window.addEventListener("resize", () => {
+        if (window.innerWidth > 768) {
+            mobileMenuToggle.classList.remove("active");
+            mobileNavOverlay.classList.remove("active");
+            filterSidebar.classList.remove('active');
+
+            document.body.style.overflow = "auto";
+        }
+    });
 }
+// ======================================================================
 
+
+
+// MENGAMBIL DATA KOMIK DARI API ========================================
 async function getData() {
   mainCOntainer.appendChild(createLoader());
   try {
@@ -107,16 +125,8 @@ async function getData() {
   }
 }
 
-window.addEventListener("scroll", function () {
-  if (window.scrollY > 50) {
-    header.classList.add("scrolled");
-    containerSearch.classList.add("cariScroll");
-  } else {
-    header.classList.remove("scrolled");
-    containerSearch.classList.remove("cariScroll");
-  }
-});
 
+// DATA YANG KIRI JIKA DI WINDOWS
 function leftData() {
   //left column
   const leftColumn = document.createElement("div");
@@ -130,7 +140,6 @@ function leftData() {
   const infoContainer = document.createElement("div");
   infoContainer.className = "info-details-container";
   infoContainer.id = "info-details";
-
   mainCOntainer.appendChild(leftColumn);
   leftColumn.appendChild(thumb);
   leftColumn.appendChild(infoTitle);
@@ -150,6 +159,8 @@ function leftData() {
   }
 }
 
+
+// DATA YANG KANAN JIKA DI WINDOWS
 function rightData() {
   // Kolom Kanan
   const rightCulumn = document.createElement("div");
@@ -209,12 +220,15 @@ function rightData() {
   });
 }
 
+
+// Membuat elemen loader
 function createLoader() {
   const loader = document.createElement("div");
   loader.className = "loader";
   return loader;
 }
 
+// MENGAMBIL KOMENTAR DARI API
 async function getComment() {
   commentContainer.appendChild(createLoader());
   console.log(commentContainer);
@@ -228,14 +242,15 @@ async function getComment() {
     const komentar = item.komentar;
     const timestamp = item.id;
 
+    
     const tanggal = new Date(timestamp);
-    const options = {
+    const data = {
       day: "numeric",
       month: "long",
       year: "numeric",
     };
-    const dateFormatted = tanggal.toLocaleDateString("id-ID", options);
 
+    const dateFormatted = tanggal.toLocaleDateString("id-ID", data);
     console.log(nama, dateFormatted, komentar);
     const commentItem = document.createElement("div");
     commentItem.className = "comment-item";
@@ -259,55 +274,43 @@ async function getComment() {
   commentContainer.removeChild(document.querySelector(".loader"));
 }
 
-
+// MEMBUAT CARD SMILIAR KOMIK DAN MEMASUKKAN KE DOM
 function createSimilarComicCard() {
-
   komikData.similiar.forEach((k) => {
-
   const cardLink = document.createElement('a');
   cardLink.className = 'card-link';
   cardLink.href = `detail-komik.html?${k.apiLink}`;
-
-  // 2. Buat elemen kartu (<div>)
   const card = document.createElement('div');
   card.className = 'card';
-
-  // 3. Buat elemen untuk thumbnail
   const logoContainer = document.createElement('div');
   logoContainer.className = 'logo-komik';
-
   const thumbnailImage = document.createElement('img');
   thumbnailImage.src = k.thumbnail;
   thumbnailImage.alt = `Sampul ${k.title}`;
-
-  // 4. Buat elemen untuk deskripsi
   const descriptionContainer = document.createElement('div');
   descriptionContainer.className = 'deskripsi-komik';
-
   const titleHeader = document.createElement('h3');
   titleHeader.textContent = k.title;
-
   const tagInfo = document.createElement('p');
   tagInfo.className = 'tag-info';
   tagInfo.textContent = `${k.genres} - ${k.type} - ${k.views}`;
-
   const synopsis = document.createElement('p');
   synopsis.className = 'synopsis';
   synopsis.textContent = k.synopsis;
-
   logoContainer.appendChild(thumbnailImage);
   descriptionContainer.appendChild(titleHeader);
   descriptionContainer.appendChild(tagInfo);
   descriptionContainer.appendChild(synopsis);
-
   card.appendChild(logoContainer);
   card.appendChild(descriptionContainer);
-
   cardLink.appendChild(card);
   divSmiliar.appendChild(cardLink);
 })
 }
+// =================================================
 
+
+// MENGAMBIL NAMA USER DARI LOCAL STORAGE
 let jsonData = localStorage.getItem('user');
 let nama = JSON.parse(jsonData)?.username;
 if (nama){
@@ -315,6 +318,7 @@ if (nama){
   name.disabled = true;
   name.style.cursor = "not-allowed";
 }
+// =================================================
 
 // KODE UNTUK POST KOMENTAR KE API
 document
@@ -371,8 +375,11 @@ document
   });
 
 
+// =================================================
 
 
+
+// KODE UNTUK MENAMPILKAN PROSES SENDING KOMENTAR
 function proccesSending() {
   const sendingContainer = document.createElement("div");
   sendingContainer.className = "sending";
@@ -390,7 +397,10 @@ function proccesSending() {
   sendingContainer.appendChild(loadingDotsContainer);
   return sendingContainer;
 }
+// =================================================
 
+
+// KODE UNTUK MENAMPILKAN PESAN SUKSES
 function createSuccessMessage() {
   const successContainer = document.createElement("div");
   successContainer.className = "sending";
@@ -401,8 +411,10 @@ function createSuccessMessage() {
   successContainer.appendChild(successText);
   return successContainer;
 }
+// =================================================
 
 
+// KODE UNTUK MENAMPILKAN PESAN GAGAL
 function createFailedMessage() {
   const successContainer = document.createElement("div");
   successContainer.className = "sending";
@@ -413,6 +425,8 @@ function createFailedMessage() {
   successContainer.appendChild(successText);
   return successContainer;
 }
+// =================================================
+
 
 
 document.addEventListener("DOMContentLoaded", () => {

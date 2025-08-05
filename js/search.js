@@ -102,7 +102,68 @@ searchInput.addEventListener("keyup", (e) => {
     if (e.key === "Enter") performSearch(searchInput.value);
 });
 
+
+  // RESPONSIFE MOBILE ====================================================================
+  function initMobileNavigation() {
+    const mobileMenuToggle = document.getElementById('mobileMenuToggle');
+    const mobileNavOverlay = document.getElementById('mobileNavOverlay');
+    const mobileNavClose = document.getElementById('mobileNavClose');
+
+    if (!mobileMenuToggle || !mobileNavOverlay || !mobileNavClose) {
+      return;
+    }
+
+    // Menampilkan menu saat tombol toggle diklik
+    mobileMenuToggle.addEventListener('click', () => {
+      mobileMenuToggle.classList.toggle('active');
+      mobileNavOverlay.classList.toggle('active');
+      document.body.style.overflow = mobileNavOverlay.classList.contains('active') ? 'hidden' : 'auto';
+    });
+
+    // Menutup menu saat tombol close diklik
+    mobileNavClose.addEventListener('click', () => {
+      mobileMenuToggle.classList.remove('active');
+      mobileNavOverlay.classList.remove('active');
+      document.body.style.overflow = 'auto';
+    });
+
+
+    // Menutup menu saat overlay diklik -- klik dimana saja
+    mobileNavOverlay.addEventListener('click', (e) => {
+      if (e.target === mobileNavOverlay) {
+        mobileMenuToggle.classList.remove('active');
+        mobileNavOverlay.classList.remove('active');
+        document.body.style.overflow = 'auto';
+      }
+    });
+
+
+    // Menutup menu saat tautan diklik
+    const navLinks = mobileNavOverlay.querySelectorAll('.nav a');
+    navLinks.forEach(link => {
+      link.addEventListener('click', () => {
+        mobileMenuToggle.classList.remove('active');
+        mobileNavOverlay.classList.remove('active');
+        document.body.style.overflow = 'auto';
+      });
+    });
+
+
+    // memastikan menu tertutup saat ukuran layar lebih besar dari 768px
+    // untuk menghindari masalah saat mengubah ukuran jendela
+    // setelah membuka menu di hp
+    window.addEventListener('resize', () => {
+      if (window.innerWidth > 768) {
+        mobileMenuToggle.classList.remove('active');
+        mobileNavOverlay.classList.remove('active');
+        document.body.style.overflow = 'auto';
+      }
+    });
+  }
+// ===============================================================================================
+
 document.addEventListener("DOMContentLoaded", () => {
+    initMobileNavigation(); 
     const params = new URLSearchParams(window.location.search);
     const query = params.get("q");
     const decoded = decodeURIComponent(query || "");
