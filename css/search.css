@@ -219,7 +219,7 @@ h1 .query-text {
     }
 
     .result-info h3 {
-        width: 400px;
+        width: 300px;
     }
 
     .result-item img {
@@ -227,6 +227,14 @@ h1 .query-text {
         height: 110px;
     }
 }
+
+
+@media (max-width: 580px){
+    .result-info h3 {
+        width: 200px;
+    }
+}
+
 
 @media (max-width: 480px) {
     .result-item {
@@ -244,5 +252,11 @@ h1 .query-text {
 
     .result-info h3 {
         width: 140px;
+    }
+}
+
+@media (max-width: 320px){
+    .result-item a{
+        display: block;
     }
 }
