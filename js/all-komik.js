@@ -86,7 +86,7 @@ document.addEventListener('DOMContentLoaded', () => {
   // --- FUNGSI UPDATE URL ---
   function updateURL(page) {
     const newUrl = `all-comics.html?page=${page}`;
-    window.history.pushState({ path: newUrl }, '', newUrl);
+    window.history.pushState({ path: newUrl }, 'Jembud', newUrl);
   }
 
   // --- FUNGSI HANDLER PAGE LOAD ---
@@ -183,7 +183,6 @@ function initMobileNavigation() {
             mobileMenuToggle.classList.remove("active");
             mobileNavOverlay.classList.remove("active");
             filterSidebar.classList.remove('active');
-
             document.body.style.overflow = "auto";
         }
     });

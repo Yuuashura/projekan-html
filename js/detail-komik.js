@@ -251,6 +251,7 @@ async function getComment() {
     };
 
     const dateFormatted = tanggal.toLocaleDateString("id-ID", data);
+  
     console.log(nama, dateFormatted, komentar);
     const commentItem = document.createElement("div");
     commentItem.className = "comment-item";

@@ -70,8 +70,7 @@ function initMobileNavigation() {
         mobileMenuToggle.classList.toggle("active");
         mobileNavOverlay.classList.toggle("active");
         document.body.style.overflow = mobileNavOverlay.classList.contains(
-            "active"
-        )
+            "active")
             ? "hidden"
             : "auto";
     });
@@ -89,7 +88,6 @@ function initMobileNavigation() {
             mobileMenuToggle.classList.remove("active");
             mobileNavOverlay.classList.remove("active");
             filterSidebar.classList.remove('active');
-
             document.body.style.overflow = "auto";
         }
     });

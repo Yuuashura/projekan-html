@@ -90,7 +90,7 @@ function performSearch(query) {
 }
 
 searchButton.addEventListener("click", () => performSearch(searchInput.value));
-searchInput.addEventListener("keyup", (e) => {
+searchInput.addEventListener("keydown", (e) => {
     if (e.key === "Enter") performSearch(searchInput.value);
 });
 
