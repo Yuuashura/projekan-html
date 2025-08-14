@@ -166,7 +166,6 @@ function buildSlider(mainSlider, data) {
     sliderItemsContainer.style.position = 'relative';
     sliderItemsContainer.style.height = 'inherit';
     // sliderItemsContainer.style.display = 'none';
-
     // mainSliderContainer.appendChild(prevButton);
     mainSliderContainer.appendChild(sliderItemsContainer);
     // mainSliderContainer.appendChild(nextButton);
